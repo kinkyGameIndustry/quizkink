@@ -85,7 +85,7 @@ const categories = [
       "Ik wil gekneveld worden of een gag proberen, met extra duidelijke stopafspraken.",
       "Ik wil bondage alleen proberen als ik snel en veilig losgemaakt kan worden.",
       "Ik wil experimenteren met vastgezet worden aan bed, stoel of ander stevig meubel.",
-      "Ik wil suspensie of gedeeltelijk opgetild worden alleen met ervaring, geschikte materialen en veiligheidsplan bespreken.",
+      "Ik wil suspensie of gedeeltelijk opgetild worden alleen met ervaring, geschikte materialen en een veiligheidsplan.",
       "Ik wil posities vermijden die ademhaling, circulatie of paniek kunnen raken.",
       "Ik wil afspraken over tijdsduur en check-ins bij elke vorm van fixatie."
     ]
@@ -95,7 +95,7 @@ const categories = [
     questions: [
       "Ik ben nieuwsgierig naar zachte impact of tikken.",
       "Ik ben nieuwsgierig naar stevigere impact binnen duidelijke grenzen.",
-      "Ik wil pijn als onderdeel van ons spel bespreken, zoals knijpen, bijten of slaan.",
+      "Ik wil pijn als onderdeel van ons spel, zoals knijpen, bijten of slaan.",
       "Ik wil experimenteren met zweepjes, paddles, floggers of andere impact-toys.",
       "Ik wil tandafdrukken, bijten of zuigen alleen op plekken die we vooraf kiezen.",
       "Ik wil spelen met temperatuur, textuur of druk.",
@@ -110,11 +110,11 @@ const categories = [
     questions: [
       "Ik voel interesse in leer, latex, lingerie of specifieke kleding.",
       "Ik wil rollenspel of een persona verkennen.",
-      "Ik wil woorden, titels of aanspreekvormen bespreken.",
+      "Ik wil woorden, titels of aanspreekvormen gebruiken.",
       "Ik wil bepaalde geuren, materialen of looks juist vermijden.",
       "Ik wil dat uiterlijk vertoon ondergeschikt blijft aan comfort en consent.",
       "Ik wil experimenteren met maskers, harnassen, collars of cuffs.",
-      "Ik wil objecten, outfits of schoenen als fetish onderdeel bespreken.",
+      "Ik wil objecten, outfits of schoenen gebruiken als fetish onderdeel.",
       "Ik wil foto's maken van outfits of poses zonder seksuele handeling.",
       "Ik wil dat kleding of fetishmateriaal nooit belangrijker wordt dan mijn fysieke comfort.",
       "Ik wil bepaalde materialen eerst aanraken of ruiken voordat ze op mijn lichaam komen."
@@ -126,9 +126,9 @@ const categories = [
       "Mag mijn partner mijn anus aanraken met vingers?",
       "Mag mijn partner mijn anus penetreren met vingers?",
       "Ik wil anaal strelen of proberen als beginner, rustig en zonder druk.",
-      "Ik wil anale penetratie met een toy bespreken.",
-      "Ik wil anale seks met een penis bespreken.",
-      "Ik wil dubbele penetratie als fantasie of mogelijke ervaring bespreken.",
+      "Ik wil anale penetratie met een toy.",
+      "Ik wil anale seks met een penis.",
+      "Ik wil dubbele penetratie als fantasie of mogelijke ervaring.",
       "Ik wil een tweede penis of toy tegelijkertijd voelen alleen als voorbereiding, veiligheid en consent duidelijk zijn.",
       "Ik wil vooraf afspraken over glijmiddel, hygiëne, condooms en stoppen.",
       "Ik wil dat anale handelingen meteen stoppen bij pijn, paniek of twijfel.",
@@ -141,13 +141,13 @@ const categories = [
       "Ik wil mijn partner oraal bevredigen terwijl die mij vasthoudt.",
       "Ik wil dat mijn hoofd, handen of tempo bij orale seks fysiek begeleid wordt.",
       "Ik wil ooit een andere vrouw oraal bevredigen.",
-      "Ik wil orale seks ontvangen van iemand anders dan mijn vaste partner bespreken.",
-      "Ik wil ejaculatie op mijn gezicht bespreken.",
-      "Ik wil ejaculatie in of rond mijn mond bespreken.",
-      "Ik wil ejaculatie op mijn borsten of lichaam bespreken.",
+      "Ik wil orale seks ontvangen van iemand anders dan mijn vaste partner.",
+      "Ik wil ejaculatie op mijn gezicht.",
+      "Ik wil ejaculatie in of rond mijn mond.",
+      "Ik wil ejaculatie op mijn borsten of lichaam.",
       "Ik wil vooraf afspreken waar ejaculatie wel en niet mag plaatsvinden.",
-      "Ik wil slikken, spugen of vermijden van sperma expliciet bespreken.",
-      "Ik wil condooms, dental dams of andere bescherming bij orale seks bespreken."
+      "Ik wil slikken, spugen of vermijden van sperma expliciet kiezen.",
+      "Ik wil condooms, dental dams of andere bescherming gebruiken bij orale seks."
     ]
   },
   {
@@ -156,8 +156,8 @@ const categories = [
       "Ik wil ervaring opdoen met BDSM-toys.",
       "Ik wil vibrators, plugs, dildo's of strokers samen ontdekken.",
       "Ik wil restraints, blinddoeken, klemmen of impact-toys rustig introduceren.",
-      "Ik wil chastity of afsluiten van geslachtsdelen als fantasie of spel bespreken.",
-      "Ik wil slotjes, cages of keyholder-dynamiek alleen met duidelijke noodafspraken bespreken.",
+      "Ik wil chastity of afsluiten van geslachtsdelen als fantasie of spel.",
+      "Ik wil slotjes, cages of keyholder-dynamiek alleen met duidelijke noodafspraken.",
       "Ik wil toys delen met anderen alleen met hygiëne, condooms en duidelijke toestemming.",
       "Ik wil elektrische, ademhalings- of risicovolle toys vermijden tenzij er kennis en veiligheidsplan is.",
       "Ik wil nieuwe toys eerst buiten seks testen.",
@@ -169,13 +169,13 @@ const categories = [
     title: "Meer Personen",
     questions: [
       "Zou je openstaan voor een trio?",
-      "Als trio bespreekbaar is, wil je dan voorkeuren rond man, vrouw of beide bespreken?",
+      "Als een trio mogelijk is, wil je dan voorkeuren rond man, vrouw of beide aangeven?",
       "Zou je openstaan voor een trio met een bekende?",
       "Zou je openstaan voor een trio met iemand die we nog niet kennen?",
       "Zou je openstaan voor een groepsseksfeest met bekenden?",
-      "Als groepsseks bespreekbaar is, wil je dan voorkeuren rond mannen, vrouwen of beide bespreken?",
+      "Als groepsseks mogelijk is, wil je dan voorkeuren rond mannen, vrouwen of beide aangeven?",
       "Wat vind je ervan om meer dan twee mensen jou tegelijk te laten plezieren, aaien of penetreren?",
-      "Zou je aangeraakt worden door meer dan vier personen tegelijk willen bespreken?",
+      "Zou je aangeraakt willen worden door meer dan vier personen tegelijk?",
       "Ik wil regels afspreken over wie mij mag aanraken, waar en hoe.",
       "Ik wil vooraf afspraken over condooms, SOA-testen, grenzen en nazorg bij meerdere personen."
     ]
@@ -186,7 +186,7 @@ const categories = [
       "Zou je openstaan om samen naar een swingersclub te gaan?",
       "Ik wil swingersclubs alleen bezoeken om te kijken en sfeer te proeven.",
       "Ik wil nieuwe mensen ontmoeten zonder verplichting tot seksuele handelingen.",
-      "Ik wil seksuele ervaringen met anderen delen binnen een open relatie-situatie bespreken.",
+      "Ik wil seksuele ervaringen met anderen delen binnen een open relatie-situatie.",
       "Ik wil vooraf duidelijke regels over zoenen, aanraken, orale seks en penetratie met anderen.",
       "Ik wil afspreken of we altijd samen blijven of ook apart contact mogen hebben.",
       "Ik wil afspraken over jaloezie, stoppen en achteraf checken.",
@@ -200,13 +200,13 @@ const categories = [
     questions: [
       "Hoe voel je over publieke displays van affectie in ruimtes waar we niet alleen zijn?",
       "Hoe voel je over erotische spanning op plekken waar anderen in de buurt kunnen zijn?",
-      "Ik wil publieke of semi-publieke situaties alleen bespreken als niemand ongewild betrokken raakt.",
+      "Ik wil publieke of semi-publieke situaties alleen als niemand ongewild betrokken raakt.",
       "Ik wil seks op kinky locaties in huis verkennen.",
       "Ik wil in huis zoeken naar plekken voor stiekeme of speelse seksavonturen.",
       "Ik wil seks buiten de slaapkamer proberen.",
       "Ik wil experimenteren met risico op betrapt worden alleen in privé- of afgesproken omgevingen.",
       "Ik wil openbare seksuele handelingen vermijden als anderen dit ongevraagd kunnen zien.",
-      "Ik wil expliciet bespreken wat wettelijk, veilig en respectvol is rond publieke erotiek.",
+      "Ik wil dat publieke erotiek wettelijk, veilig en respectvol blijft.",
       "Ik wil altijd een exitplan hebben voor locaties buiten bed of slaapkamer."
     ]
   },
@@ -219,7 +219,7 @@ const categories = [
       "Ik wil seksuele video's maken alleen voor privégebruik tussen ons.",
       "Ik wil dat naaktbeelden nooit doorgestuurd worden zonder expliciete toestemming op dat moment.",
       "Ik wil delen op websites of platforms vermijden, ook zonder gezichten.",
-      "Ik wil bespreken of anonieme publicatie ooit fantasie, bespreekbaar of een harde grens is.",
+      "Ik wil anonieme publicatie als fantasie, mogelijkheid of harde grens kunnen aangeven.",
       "Ik wil afspraken over verwijderen, opslag, wachtwoorden en cloudbackups.",
       "Ik wil geen beelden maken wanneer iemand onder invloed, moe of emotioneel kwetsbaar is.",
       "Ik wil dat het intrekken van toestemming betekent dat beelden worden verwijderd."
@@ -228,7 +228,7 @@ const categories = [
   {
     title: "Middelen & Energie",
     questions: [
-      "Hoe voel je over het bespreken van libido-verhogende middelen?",
+      "Hoe voel je over libido-verhogende middelen?",
       "Ik wil Viagra of vergelijkbare middelen alleen overwegen na medische check of professioneel advies.",
       "Ik wil drugs of alcohol vermijden bij nieuwe of intensieve BDSM-ervaringen.",
       "Ik wil nuchter blijven bij bondage, impact, anaal of groepsseks.",
