@@ -88,6 +88,12 @@ const uiText = {
     consentCheck: "I understand that consent, aftercare and clear boundaries are central.",
     continueButton: "Continue",
     progress: "Progress",
+    saveProgress: "Save progress",
+    saveReady: "Autosaved on this device.",
+    savedAt: "Saved locally at {time}.",
+    savedOfflineAt: "Offline. Saved on this device at {time}.",
+    saveError: "Could not save progress in this browser.",
+    offlineReady: "Offline ready after the first visit.",
     categories: "Categories",
     questionFallback: "Question",
     showExample: "Show example",
@@ -150,6 +156,12 @@ const uiText = {
     consentCheck: "Ik begrijp dat consent, nazorg en duidelijke grenzen centraal staan.",
     continueButton: "Ga verder",
     progress: "Voortgang",
+    saveProgress: "Opslaan",
+    saveReady: "Automatisch lokaal opgeslagen.",
+    savedAt: "Lokaal opgeslagen om {time}.",
+    savedOfflineAt: "Offline. Lokaal opgeslagen om {time}.",
+    saveError: "Voortgang kon niet worden opgeslagen in deze browser.",
+    offlineReady: "Offline klaar na het eerste bezoek.",
     categories: "Categorieën",
     questionFallback: "Vraag",
     showExample: "Toon voorbeeld",
@@ -212,6 +224,12 @@ const uiText = {
     consentCheck: "Je comprends que le consentement, l'aftercare et les limites claires sont essentiels.",
     continueButton: "Continuer",
     progress: "Progression",
+    saveProgress: "Enregistrer",
+    saveReady: "Enregistré automatiquement sur cet appareil.",
+    savedAt: "Enregistré localement à {time}.",
+    savedOfflineAt: "Hors ligne. Enregistré sur cet appareil à {time}.",
+    saveError: "Impossible d'enregistrer la progression dans ce navigateur.",
+    offlineReady: "Disponible hors ligne après la première visite.",
     categories: "Catégories",
     questionFallback: "Question",
     showExample: "Afficher un exemple",
@@ -274,6 +292,12 @@ const uiText = {
     consentCheck: "Ich verstehe, dass Consent, Nachsorge und klare Grenzen zentral sind.",
     continueButton: "Weiter",
     progress: "Fortschritt",
+    saveProgress: "Speichern",
+    saveReady: "Automatisch auf diesem Gerät gespeichert.",
+    savedAt: "Lokal gespeichert um {time}.",
+    savedOfflineAt: "Offline. Auf diesem Gerät gespeichert um {time}.",
+    saveError: "Fortschritt konnte in diesem Browser nicht gespeichert werden.",
+    offlineReady: "Nach dem ersten Besuch offline bereit.",
     categories: "Kategorien",
     questionFallback: "Frage",
     showExample: "Beispiel anzeigen",
@@ -1067,6 +1091,7 @@ const categories = [
 const storageKey = "kink-questionnaire-v1";
 const state = loadState();
 let currentIndex = 0;
+let saveStatusTimer = null;
 let pendingSharedResponses = readSharedResponsesFromHash();
 let pendingSetup = readSetupFromHash();
 let activeResultResponses = state.responses;
@@ -2933,6 +2958,8 @@ const elements = {
   progressLabel: document.querySelector("#progressLabel"),
   progressBar: document.querySelector("#progressBar"),
   liveSummary: document.querySelector("#liveSummary"),
+  saveStatus: document.querySelector("#saveStatus"),
+  saveProgressButton: document.querySelector("#saveProgressButton"),
   categoryKicker: document.querySelector("#categoryKicker"),
   title: document.querySelector("#questionnaire-title"),
   questionInfoButton: document.querySelector("#questionInfoButton"),
@@ -2966,6 +2993,7 @@ init();
 
 function init() {
   applyLanguage();
+  registerOfflineSupport();
   buildCategoryPicker();
   buildCategories();
   bindEvents();
@@ -2983,6 +3011,14 @@ function init() {
   renderQuestion();
 }
 
+function registerOfflineSupport() {
+  if (!("serviceWorker" in navigator) || !location.protocol.startsWith("http")) return;
+
+  navigator.serviceWorker.register(new URL("sw.js", location.href)).catch(() => {
+    // Local saving still works if the offline cache cannot be registered.
+  });
+}
+
 function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(storageKey));
@@ -2991,6 +3027,7 @@ function loadState() {
       language: supportedLanguages.includes(saved?.language) ? saved.language : defaultLanguage,
       selectedCategories: normalizeSelectedCategories(saved?.selectedCategories),
       expandedCategories: saved?.expandedCategories || {},
+      updatedAt: typeof saved?.updatedAt === "string" ? saved.updatedAt : "",
       responses: saved?.responses || {}
     };
   } catch {
@@ -2999,13 +3036,52 @@ function loadState() {
       language: defaultLanguage,
       selectedCategories: defaultSelectedCategories(),
       expandedCategories: {},
+      updatedAt: "",
       responses: {}
     };
   }
 }
 
 function saveState() {
-  localStorage.setItem(storageKey, JSON.stringify(state));
+  try {
+    state.updatedAt = new Date().toISOString();
+    localStorage.setItem(storageKey, JSON.stringify(state));
+    updateSaveStatus("saved", state.updatedAt);
+  } catch {
+    updateSaveStatus("error");
+  }
+}
+
+function formatSavedTime(value) {
+  const date = value ? new Date(value) : new Date();
+  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+
+function updateSaveStatus(status = "ready", savedAt = state.updatedAt) {
+  const node = document.querySelector("#saveStatus");
+  if (!node) return;
+
+  node.classList.toggle("is-error", status === "error");
+  node.classList.toggle("is-offline", !navigator.onLine && status !== "error");
+
+  if (status === "error") {
+    node.textContent = t("saveError");
+    return;
+  }
+
+  if (savedAt) {
+    const key = navigator.onLine ? "savedAt" : "savedOfflineAt";
+    node.textContent = t(key, { time: formatSavedTime(savedAt) });
+  } else {
+    node.textContent = t("saveReady");
+  }
+
+  clearTimeout(saveStatusTimer);
+  saveStatusTimer = setTimeout(() => {
+    if (!navigator.onLine) {
+      node.textContent = savedAt ? t("savedOfflineAt", { time: formatSavedTime(savedAt) }) : t("offlineReady");
+    }
+  }, 2400);
 }
 
 function defaultSelectedCategories() {
@@ -3072,6 +3148,7 @@ function applyLanguage() {
   elements.startButton.textContent = t("start");
   elements.resetButton.textContent = t("reset");
   document.querySelector(".progress-card .kicker").textContent = t("progress");
+  elements.saveProgressButton.textContent = t("saveProgress");
   document.querySelector(".sidebar").setAttribute("aria-label", t("categories"));
   document.querySelector("#answerHelp").textContent = t("answerHelp");
   document.querySelector(".notes span").textContent = t("notesLabel");
@@ -3093,6 +3170,7 @@ function applyLanguage() {
   elements.shareInviteLink.textContent = t("inviteShare");
   elements.copyInviteLink.textContent = t("inviteCopy");
   document.querySelector(".results__head .kicker").textContent = t("summary");
+  updateSaveStatus("ready");
   buildCategoryPicker();
   updateSetupUi();
 }
@@ -3249,6 +3327,12 @@ function bindEvents() {
     renderQuestion();
   });
 
+  elements.saveProgressButton.addEventListener("click", () => {
+    saveCurrentNote();
+    saveState();
+    showToast(t("savedAt", { time: formatSavedTime(state.updatedAt) }));
+  });
+
   elements.nextButton.addEventListener("click", () => {
     if (currentIndex === flatQuestions.length - 1) {
       renderResults();
@@ -3278,6 +3362,9 @@ function bindEvents() {
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && !elements.inviteModal.hidden) closeInviteModal();
   });
+  window.addEventListener("online", () => updateSaveStatus("ready"));
+  window.addEventListener("offline", () => updateSaveStatus("ready"));
+  window.addEventListener("beforeunload", saveCurrentNote);
   elements.copyShareLink.addEventListener("click", copyShareLink);
 }
 

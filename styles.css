@@ -319,9 +319,29 @@ h2 {
   font-size: 1.35rem;
 }
 
+.save-status {
+  margin: 14px 0 0;
+  color: var(--soft);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.save-status.is-offline {
+  color: var(--gold);
+}
+
+.save-status.is-error {
+  color: var(--danger);
+}
+
+.progress-card__save,
 .progress-card__link {
   width: 100%;
   margin-top: 14px;
+}
+
+.progress-card__save + .progress-card__link {
+  margin-top: 8px;
 }
 
 .progress-track {
