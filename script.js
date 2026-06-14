@@ -2406,6 +2406,7 @@ const elements = {
   adultCheck: document.querySelector("#adultCheck"),
   consentCheck: document.querySelector("#consentCheck"),
   languageSelect: document.querySelector("#languageSelect"),
+  categoryPicker: document.querySelector("#categoryPicker"),
   categoryPickerGrid: document.querySelector("#categoryPickerGrid"),
   selectAllCategories: document.querySelector("#selectAllCategories"),
   enterButton: document.querySelector("#enterButton"),
@@ -2535,6 +2536,7 @@ function applyLanguage() {
   elements.shareNote.textContent = t("shareNote");
   document.querySelector(".results__head .kicker").textContent = t("summary");
   buildCategoryPicker();
+  updateSetupUi();
 }
 
 function localizeAnswerLabel(label) {
@@ -2566,6 +2568,10 @@ function buildCategoryPicker() {
     });
     elements.categoryPickerGrid.append(label);
   });
+}
+
+function updateSetupUi() {
+  elements.categoryPicker.hidden = Boolean(pendingSetup);
 }
 
 function refreshQuestionSet() {
