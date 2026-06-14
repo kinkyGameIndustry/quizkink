@@ -402,10 +402,24 @@ h2 {
   font-weight: 850;
 }
 
+.category-row.is-disabled .category-button {
+  opacity: 0.48;
+}
+
+.category-row.is-disabled .category-button__count {
+  color: var(--danger);
+}
+
 .category-expand[aria-pressed="true"] {
   border-color: rgba(75, 179, 167, 0.62);
   background: rgba(75, 179, 167, 0.13);
   color: var(--ink);
+}
+
+.category-expand[data-mode="disabled"] {
+  border-color: rgba(255, 121, 111, 0.5);
+  background: rgba(255, 121, 111, 0.1);
+  color: var(--danger);
 }
 
 .category-button.is-active {
@@ -735,6 +749,14 @@ h2 {
   flex: 0 0 auto;
   color: var(--gold);
   font-weight: 850;
+}
+
+.invite-modal__settings li.is-disabled {
+  opacity: 0.62;
+}
+
+.invite-modal__settings li.is-disabled small {
+  color: var(--danger);
 }
 
 .invite-link-field {

@@ -115,6 +115,7 @@ const uiText = {
     inviteShare: "Share",
     inviteBasic: "Basic",
     inviteExtended: "Extended",
+    inviteDisabled: "Disabled",
     partnerLink: "Partner link",
     print: "Print",
     shareNote: "The partner link stores answers inside the link itself. Share it only with someone who may read these results.",
@@ -127,7 +128,9 @@ const uiText = {
     answered: "{answered} of {total}",
     notAnswered: "Not answered",
     expandedOff: "Basic",
-    expandedOn: "Extended"
+    expandedOn: "Extended",
+    categoryDisabled: "Disabled",
+    keepOneCategory: "Keep at least one category enabled."
   },
   nl: {
     documentTitle: "Intieme Grenzen | BDSM, Fetish & Kink Vragenlijst",
@@ -174,6 +177,7 @@ const uiText = {
     inviteShare: "Deel",
     inviteBasic: "Basis",
     inviteExtended: "Uitgebreid",
+    inviteDisabled: "Uit",
     partnerLink: "Partnerlink",
     print: "Print",
     shareNote: "De partnerlink bewaart antwoorden in de link zelf. Deel hem alleen met iemand die deze resultaten mag lezen.",
@@ -186,7 +190,9 @@ const uiText = {
     answered: "{answered} van {total}",
     notAnswered: "Niet beantwoord",
     expandedOff: "Basis",
-    expandedOn: "Uitgebreid"
+    expandedOn: "Uitgebreid",
+    categoryDisabled: "Uit",
+    keepOneCategory: "Laat minstens één categorie aan staan."
   },
   fr: {
     documentTitle: "Limites Intimes | Questionnaire BDSM, fétiche & kink",
@@ -233,6 +239,7 @@ const uiText = {
     inviteShare: "Partager",
     inviteBasic: "Base",
     inviteExtended: "Étendu",
+    inviteDisabled: "Désactivé",
     partnerLink: "Lien partenaire",
     print: "Imprimer",
     shareNote: "Le lien partenaire stocke les réponses dans le lien lui-même. Partagez-le seulement avec une personne autorisée à lire ces résultats.",
@@ -245,7 +252,9 @@ const uiText = {
     answered: "{answered} sur {total}",
     notAnswered: "Sans réponse",
     expandedOff: "Base",
-    expandedOn: "Étendu"
+    expandedOn: "Étendu",
+    categoryDisabled: "Désactivé",
+    keepOneCategory: "Gardez au moins une catégorie activée."
   },
   de: {
     documentTitle: "Intime Grenzen | BDSM-, Fetisch- & Kink-Fragebogen",
@@ -292,6 +301,7 @@ const uiText = {
     inviteShare: "Teilen",
     inviteBasic: "Basis",
     inviteExtended: "Erweitert",
+    inviteDisabled: "Aus",
     partnerLink: "Partnerlink",
     print: "Drucken",
     shareNote: "Der Partnerlink speichert Antworten im Link selbst. Teile ihn nur mit jemandem, der diese Ergebnisse lesen darf.",
@@ -304,7 +314,9 @@ const uiText = {
     answered: "{answered} von {total}",
     notAnswered: "Nicht beantwortet",
     expandedOff: "Basis",
-    expandedOn: "Erweitert"
+    expandedOn: "Erweitert",
+    categoryDisabled: "Aus",
+    keepOneCategory: "Lass mindestens eine Kategorie aktiv."
   }
 };
 
@@ -3002,7 +3014,8 @@ function defaultSelectedCategories() {
 
 function normalizeSelectedCategories(selectedCategories) {
   const hasSavedChoice = selectedCategories && typeof selectedCategories === "object";
-  return Object.fromEntries(categories.map((_, index) => [index, hasSavedChoice ? selectedCategories[index] !== false : true]));
+  const normalized = Object.fromEntries(categories.map((_, index) => [index, hasSavedChoice ? selectedCategories[index] !== false : true]));
+  return Object.values(normalized).some(Boolean) ? normalized : defaultSelectedCategories();
 }
 
 function selectedCategoryIndexes() {
@@ -3011,6 +3024,29 @@ function selectedCategoryIndexes() {
 
 function hasSelectedCategory() {
   return selectedCategoryIndexes().length > 0;
+}
+
+function getCategoryMode(index) {
+  if (state.selectedCategories?.[index] === false) return "disabled";
+  return state.expandedCategories?.[index] ? "extended" : "basic";
+}
+
+function getCategoryModeLabel(index) {
+  const mode = getCategoryMode(index);
+  if (mode === "disabled") return t("categoryDisabled");
+  return mode === "extended" ? t("expandedOn") : t("expandedOff");
+}
+
+function setCategoryMode(index, mode) {
+  state.selectedCategories[index] = mode !== "disabled";
+  state.expandedCategories[index] = mode === "extended";
+}
+
+function getNextCategoryMode(index) {
+  const mode = getCategoryMode(index);
+  if (mode === "basic") return "extended";
+  if (mode === "extended") return "disabled";
+  return "basic";
 }
 
 function t(key, replacements = {}) {
@@ -3133,7 +3169,7 @@ function buildCategoryPicker() {
 }
 
 function updateSetupUi() {
-  elements.categoryPicker.hidden = Boolean(pendingSetup);
+  elements.categoryPicker.hidden = true;
 }
 
 function refreshQuestionSet() {
@@ -3246,7 +3282,7 @@ function bindEvents() {
 }
 
 function updateEnterButtonState() {
-  elements.enterButton.disabled = !(elements.adultCheck.checked && elements.consentCheck.checked && hasSelectedCategory());
+  elements.enterButton.disabled = !(elements.adultCheck.checked && elements.consentCheck.checked);
 }
 
 function saveCurrentNote() {
@@ -3286,19 +3322,20 @@ function showQuestionnaire() {
 function buildCategories() {
   elements.categoryList.innerHTML = "";
   categories.forEach((category, index) => {
-    if (state.selectedCategories?.[index] === false) return;
-
     const row = document.createElement("div");
     row.className = "category-row";
     const fragment = elements.categoryTemplate.content.cloneNode(true);
     const button = fragment.querySelector("button");
-    const expanded = Boolean(state.expandedCategories?.[index]);
+    const mode = getCategoryMode(index);
+    const enabled = mode !== "disabled";
     const extraCount = expandedQuestionGroups[index]?.length || 0;
     const categoryQuestions = flatQuestions.filter((question) => question.categoryIndex === index);
     const answeredCount = categoryQuestions.filter((question) => state.responses[question.id]?.answer).length;
     button.dataset.category = String(index);
+    button.disabled = !enabled;
+    row.classList.toggle("is-disabled", !enabled);
     fragment.querySelector(".category-button__name").textContent = localizeCategoryTitle(category.title);
-    fragment.querySelector(".category-button__count").textContent = `${answeredCount}/${categoryQuestions.length || category.questions.length + (expanded ? extraCount : 0)}`;
+    fragment.querySelector(".category-button__count").textContent = enabled ? `${answeredCount}/${categoryQuestions.length}` : "0";
     button.addEventListener("click", () => {
       currentIndex = flatQuestions.findIndex((question) => question.categoryIndex === index);
       if (currentIndex < 0) currentIndex = 0;
@@ -3310,13 +3347,20 @@ function buildCategories() {
       const toggle = document.createElement("button");
       toggle.className = "category-expand";
       toggle.type = "button";
-      toggle.setAttribute("aria-pressed", String(expanded));
-      toggle.textContent = expanded ? t("expandedOn") : t("expandedOff");
+      toggle.dataset.mode = mode;
+      toggle.setAttribute("aria-pressed", String(mode === "extended"));
+      toggle.textContent = getCategoryModeLabel(index);
       toggle.addEventListener("click", () => {
-        state.expandedCategories[index] = !state.expandedCategories[index];
+        const nextMode = getNextCategoryMode(index);
+        if (nextMode === "disabled" && selectedCategoryIndexes().length <= 1) {
+          showToast(t("keepOneCategory"));
+          return;
+        }
+        setCategoryMode(index, nextMode);
         saveState();
         flatQuestions = buildFlatQuestions();
-        currentIndex = Math.max(0, flatQuestions.findIndex((question) => question.categoryIndex === index));
+        const targetIndex = flatQuestions.findIndex((question) => question.categoryIndex === index);
+        currentIndex = targetIndex >= 0 ? targetIndex : 0;
         buildCategories();
         renderQuestion();
       });
@@ -3490,12 +3534,15 @@ function renderInviteModal() {
   elements.shareInviteLink.hidden = typeof navigator.share !== "function";
   elements.inviteSettingsList.innerHTML = "";
 
-  selectedCategoryIndexes().forEach((categoryIndex) => {
+  categories.forEach((category, categoryIndex) => {
     const item = document.createElement("li");
     const name = document.createElement("span");
     const mode = document.createElement("small");
-    name.textContent = localizeCategoryTitle(categories[categoryIndex].title);
-    mode.textContent = state.expandedCategories?.[categoryIndex] ? t("inviteExtended") : t("inviteBasic");
+    const categoryMode = getCategoryMode(categoryIndex);
+    name.textContent = localizeCategoryTitle(category.title);
+    mode.textContent =
+      categoryMode === "disabled" ? t("inviteDisabled") : categoryMode === "extended" ? t("inviteExtended") : t("inviteBasic");
+    item.classList.toggle("is-disabled", categoryMode === "disabled");
     item.append(name, mode);
     elements.inviteSettingsList.append(item);
   });
