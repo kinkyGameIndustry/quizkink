@@ -628,6 +628,170 @@ const questionExampleTranslations = {
   }
 };
 
+const questionExamplePatternDefinitions = [
+  { key: "hardSoftLimits", patterns: ["harde grenzen", "zachte grenzen", "hard limits", "soft limits"] },
+  { key: "safeword", patterns: ["safeword", "stopteken", "stop-systeem", "traffic light", "non-verbale stoptekens"] },
+  { key: "checkIn", patterns: ["check-in", "energieniveau", "mentale staat", "intentie-check", "evalueren"] },
+  { key: "privacyImages", patterns: ["foto", "video", "audio", "opnames", "beelden", "cloud", "wachtwoorden", "delete request", "herkenbaar gezicht"] },
+  { key: "protection", patterns: ["bescherming", "condoom", "prep", "soa", "teststatus", "dental dams"] },
+  { key: "roles", patterns: ["dominante rol", "onderdanige rol", "switchen tussen rollen"] },
+  { key: "protocols", patterns: ["opdrachten", "rituelen", "protocollen", "regels en structuur", "taken", "dienstbaarheid"] },
+  { key: "orgasmControl", patterns: ["orgasmes controleert", "klaarkomen", "edging", "denial", "orgasm"] },
+  { key: "humiliation", patterns: ["vernedering", "plagerige taal", "degradatie", "verbal dominance"] },
+  { key: "bondage", patterns: ["bondage", "vastgebonden", "vastbinden", "cuffs", "touw", "fixatie", "bewegingsbeperking"] },
+  { key: "gag", patterns: ["gekneveld", "gag"] },
+  { key: "suspension", patterns: ["suspensie", "opgetild", "hangende", "hangend"] },
+  { key: "sensory", patterns: ["zintuiglijke", "blinddoek", "oordoppen", "deprivatie"] },
+  { key: "impact", patterns: ["impact", "zweep", "paddle", "flogger", "caning", "spanking", "slaan", "pijn als onderdeel"] },
+  { key: "marks", patterns: ["blauwe plekken", "zichtbare sporen", "tandafdrukken", "bijten", "zuigen"] },
+  { key: "temperature", patterns: ["waxplay", "ijs", "warm/koud", "temperatuur"] },
+  { key: "fetishMaterials", patterns: ["leer", "latex", "lingerie", "collar", "harnas", "masker", "encasement", "zentai", "fetish"] },
+  { key: "anal", patterns: ["anaal", "anale", "anus", "rimming"] },
+  { key: "doublePenetration", patterns: ["dubbele penetratie", "tweede penis"] },
+  { key: "bodyFluids", patterns: ["ejaculatie", "lichaamsvocht", "sperma", "slikken", "spugen"] },
+  { key: "toys", patterns: ["toy", "toys", "vibrator", "plug", "dildo", "strokers", "reinigen", "schoongemaakt"] },
+  { key: "chastity", patterns: ["chastity", "slotjes", "cages", "keyholder", "afsluiten van geslachtsdelen"] },
+  { key: "multiPerson", patterns: ["trio", "groepsseks", "meer dan twee", "meer dan vier", "meerdere personen"] },
+  { key: "openRelationship", patterns: ["swingers", "open relatie", "dating-apps", "flirten met anderen"] },
+  { key: "public", patterns: ["publiek", "semi-publiek", "openbare", "betrapt", "buiten de slaapkamer"] },
+  { key: "substances", patterns: ["middelen", "viagra", "drugs", "alcohol", "poppers", "cannabis", "dosering", "dronken", "high"] },
+  { key: "highRisk", patterns: ["ademhalingscontrole", "verstikking", "breath", "elektrische", "tens", "violet", "risicovol"] },
+  { key: "aftercareDrop", patterns: ["aftercare", "nazorg", "drop", "emotionele crash", "overprikkeld"] },
+  { key: "triggers", patterns: ["triggers", "trauma"] },
+  { key: "powerExchange", patterns: ["machtsdynamiek", "power-exchange", "hiërarchie", "eigenaar", "volwassen rollenspel"] }
+];
+
+const questionExamplePatternTranslations = {
+  en: {
+    hardSoftLimits: "Example: a hard limit is 'never do this'; a soft limit is 'maybe, but only slowly and with check-ins'.",
+    safeword: "Example: green means continue, yellow means slow down or adjust, red means stop immediately without discussion.",
+    checkIn: "Example: pause every 10-15 minutes and ask: 'Do you want more, softer, a pause, or stop?'",
+    privacyImages: "Example: agree no faces, no cloud upload, one private folder, and delete immediately if either person asks.",
+    protection: "Example: decide condom/dental dam use, test status, cleanup, and what stops the activity before starting.",
+    roles: "Example: dominant means guiding or deciding within agreed limits; submissive means choosing to follow while still being able to stop.",
+    protocols: "Example: a protocol can be as simple as asking permission before touching or using a chosen title during play.",
+    orgasmControl: "Example: agree whether stopping, delaying or permission to come is exciting, and what is off-limits.",
+    humiliation: "Example: choose exact words that are okay, words that are forbidden, and a signal if the tone starts to hurt.",
+    bondage: "Example: start with hands in cuffs for five minutes, check fingers and circulation, and keep a quick-release tool nearby.",
+    gag: "Example: use a hand signal or three taps as a stop sign because speaking may be difficult.",
+    suspension: "Example: only do this with someone trained, proper gear, no pressure points, and a plan to get down quickly.",
+    sensory: "Example: try a blindfold for two minutes while agreeing how to pause if it becomes too intense.",
+    impact: "Example: choose body zones, start at 2/10 intensity, check often, and avoid areas that feel unsafe.",
+    marks: "Example: decide whether red skin is okay, whether bruises are not okay, and which body areas must stay mark-free.",
+    temperature: "Example: test wax or cold on a small safe area first and stop if it burns, stings or scares you.",
+    fetishMaterials: "Example: check allergies and comfort first; the outfit or collar comes off immediately if it restricts breathing or movement.",
+    anal: "Example: go slowly, use lots of lube, agree hygiene and condoms, and stop immediately at pain or panic.",
+    doublePenetration: "Example: this can stay fantasy only, or be discussed later with preparation, lube, protection and a clear stop plan.",
+    bodyFluids: "Example: agree exactly where fluids may go, what is a no, and how cleanup happens after.",
+    toys: "Example: clean the toy, test it outside sex first, use condoms if sharing, and remove it immediately if it feels wrong.",
+    chastity: "Example: set a maximum time, keep an emergency key available, and agree that discomfort ends the play.",
+    multiPerson: "Example: decide who may touch, where, how many people maximum, and what your partner should do if you pause.",
+    openRelationship: "Example: agree what is allowed before a date or club visit: watching only, kissing, touching, or nothing more.",
+    public: "Example: keep it private and legal, avoid involving bystanders, and have a plan to leave immediately.",
+    substances: "Example: agree that new or intense play happens sober, or discuss dose, timing, medication and recovery first.",
+    highRisk: "Example: treat this as advanced risk: discuss it first, research safety, and make 'no' the default until fully prepared.",
+    aftercareDrop: "Example: after play, plan water, warmth, reassurance, quiet time and a next-day check-in.",
+    triggers: "Example: name topics, words, touches or situations that can cause panic, and what helps you feel safe again.",
+    powerExchange: "Example: the power dynamic starts and ends at agreed moments, with a clear ritual or words to return to normal."
+  },
+  nl: {
+    hardSoftLimits: "Voorbeeld: een harde grens is 'dit nooit'; een zachte grens is 'misschien, maar alleen rustig en met check-ins'.",
+    safeword: "Voorbeeld: groen betekent doorgaan, geel betekent rustiger of aanpassen, rood betekent meteen stoppen zonder discussie.",
+    checkIn: "Voorbeeld: pauzeer elke 10-15 minuten en vraag: 'wil je meer, zachter, pauze of stoppen?'",
+    privacyImages: "Voorbeeld: spreek af: geen gezichten, geen cloud, één privémap en meteen verwijderen als iemand dat vraagt.",
+    protection: "Voorbeeld: beslis vooraf over condoom/dental dam, teststatus, opruimen en wat de activiteit meteen stopt.",
+    roles: "Voorbeeld: dominant betekent sturen binnen afspraken; onderdanig betekent vrijwillig volgen en nog steeds altijd kunnen stoppen.",
+    protocols: "Voorbeeld: een protocol kan simpel zijn: toestemming vragen voor aanraking of een gekozen titel gebruiken tijdens het spel.",
+    orgasmControl: "Voorbeeld: spreek af of stoppen, uitstellen of toestemming vragen om klaar te komen spannend is, en wat niet mag.",
+    humiliation: "Voorbeeld: kies exacte woorden die oké zijn, woorden die verboden zijn en een signaal als de toon pijn doet.",
+    bondage: "Voorbeeld: start met handen in cuffs voor vijf minuten, check vingers en doorbloeding, en hou iets om snel los te maken bij de hand.",
+    gag: "Voorbeeld: gebruik een handteken of drie tikken als stopteken, omdat praten moeilijk kan zijn.",
+    suspension: "Voorbeeld: doe dit alleen met iemand met ervaring, geschikt materiaal, geen drukpunten en een plan om snel los te komen.",
+    sensory: "Voorbeeld: probeer een blinddoek twee minuten en spreek af hoe je pauzeert als het te intens wordt.",
+    impact: "Voorbeeld: kies lichaamszones, start op intensiteit 2/10, check vaak en vermijd plekken die onveilig voelen.",
+    marks: "Voorbeeld: spreek af of rode huid oké is, of blauwe plekken niet oké zijn en welke plekken spoorvrij moeten blijven.",
+    temperature: "Voorbeeld: test wax of koud eerst op een klein veilig stukje huid en stop als het brandt, steekt of angst geeft.",
+    fetishMaterials: "Voorbeeld: check allergieën en comfort; outfit of collar gaat meteen uit als ademhaling of beweging beperkt wordt.",
+    anal: "Voorbeeld: ga langzaam, gebruik veel glijmiddel, spreek hygiëne en condooms af, en stop meteen bij pijn of paniek.",
+    doublePenetration: "Voorbeeld: dit kan alleen fantasie blijven, of later besproken worden met voorbereiding, glijmiddel, bescherming en een duidelijk stopplan.",
+    bodyFluids: "Voorbeeld: spreek exact af waar lichaamsvocht wel mag, wat niet mag en hoe opruimen achteraf gebeurt.",
+    toys: "Voorbeeld: reinig de toy, test eerst buiten seks, gebruik condooms bij delen en verwijder meteen als het verkeerd voelt.",
+    chastity: "Voorbeeld: spreek een maximale duur af, hou een noodsleutel beschikbaar en laat ongemak het spel meteen stoppen.",
+    multiPerson: "Voorbeeld: bepaal wie mag aanraken, waar, hoeveel mensen maximaal en wat je partner doet als jij pauzeert.",
+    openRelationship: "Voorbeeld: spreek vóór een date of clubbezoek af wat mag: alleen kijken, zoenen, aanraken of niets meer.",
+    public: "Voorbeeld: hou het privé en wettelijk oké, betrek geen omstanders en heb een plan om meteen weg te gaan.",
+    substances: "Voorbeeld: spreek af dat nieuw of intens spel nuchter gebeurt, of bespreek eerst dosering, timing, medicatie en herstel.",
+    highRisk: "Voorbeeld: behandel dit als gevorderd risico: eerst bespreken, veiligheid uitzoeken en 'nee' als standaard tot alles voorbereid is.",
+    aftercareDrop: "Voorbeeld: plan na het spel water, warmte, geruststelling, stilte en een check-in de volgende dag.",
+    triggers: "Voorbeeld: noem onderwerpen, woorden, aanrakingen of situaties die paniek kunnen geven, en wat helpt om weer veilig te voelen.",
+    powerExchange: "Voorbeeld: de machtsdynamiek begint en eindigt op afgesproken momenten, met duidelijke woorden of een ritueel om terug normaal te worden."
+  },
+  fr: {
+    hardSoftLimits: "Exemple : une limite stricte est 'jamais'; une limite souple est 'peut-être, mais lentement et avec des check-ins'.",
+    safeword: "Exemple : vert veut dire continuer, jaune ralentir ou ajuster, rouge arrêter immédiatement sans discussion.",
+    checkIn: "Exemple : faites une pause toutes les 10-15 minutes et demandez : 'plus, plus doux, pause ou stop ?'",
+    privacyImages: "Exemple : pas de visages, pas de cloud, un dossier privé, et suppression immédiate si l'un de vous le demande.",
+    protection: "Exemple : décidez préservatif/digue dentaire, statut de test, nettoyage et ce qui arrête l'activité avant de commencer.",
+    roles: "Exemple : dominant signifie guider dans les limites convenues; soumis signifie suivre volontairement tout en pouvant arrêter.",
+    protocols: "Exemple : un protocole peut être simple : demander la permission avant de toucher ou utiliser un titre choisi.",
+    orgasmControl: "Exemple : convenez si arrêter, retarder ou demander la permission de jouir est excitant, et ce qui est interdit.",
+    humiliation: "Exemple : choisissez les mots autorisés, les mots interdits et un signal si le ton commence à blesser.",
+    bondage: "Exemple : commencez avec les mains en cuffs cinq minutes, vérifiez les doigts/la circulation et gardez un outil de libération.",
+    gag: "Exemple : utilisez un signe de main ou trois tapes comme signal d'arrêt, car parler peut être difficile.",
+    suspension: "Exemple : seulement avec une personne formée, du matériel adapté, sans points de pression et avec un plan pour descendre vite.",
+    sensory: "Exemple : essayez un bandeau deux minutes et convenez comment faire pause si cela devient trop intense.",
+    impact: "Exemple : choisissez les zones du corps, commencez à 2/10, vérifiez souvent et évitez les zones non sûres.",
+    marks: "Exemple : décidez si la peau rouge est acceptable, si les bleus ne le sont pas, et quelles zones doivent rester sans marques.",
+    temperature: "Exemple : testez cire ou froid sur une petite zone sûre et arrêtez si ça brûle, pique ou fait peur.",
+    fetishMaterials: "Exemple : vérifiez allergies et confort; la tenue ou le collar s'enlève dès que respiration ou mouvement est limité.",
+    anal: "Exemple : allez lentement, utilisez beaucoup de lubrifiant, convenez hygiène et préservatifs, et arrêtez à la douleur ou panique.",
+    doublePenetration: "Exemple : cela peut rester fantasme, ou être discuté plus tard avec préparation, lubrifiant, protection et plan d'arrêt.",
+    bodyFluids: "Exemple : convenez exactement où les fluides peuvent aller, ce qui est interdit et comment nettoyer après.",
+    toys: "Exemple : nettoyez le toy, testez-le hors sexe d'abord, utilisez un préservatif s'il est partagé, retirez-le si ça ne va pas.",
+    chastity: "Exemple : fixez une durée maximale, gardez une clé d'urgence disponible et arrêtez le jeu en cas d'inconfort.",
+    multiPerson: "Exemple : décidez qui peut toucher, où, combien de personnes maximum, et ce que fait votre partenaire si vous faites pause.",
+    openRelationship: "Exemple : avant un date ou club, convenez ce qui est permis : regarder seulement, embrasser, toucher ou rien de plus.",
+    public: "Exemple : restez privés et légaux, n'impliquez pas les passants et prévoyez de partir immédiatement.",
+    substances: "Exemple : convenez que tout jeu nouveau/intense se fait sobre, ou discutez dose, timing, médicaments et récupération.",
+    highRisk: "Exemple : traitez cela comme un risque avancé : discussion, recherche de sécurité, et 'non' par défaut jusqu'à préparation.",
+    aftercareDrop: "Exemple : après le jeu, prévoyez eau, chaleur, réassurance, calme et check-in le lendemain.",
+    triggers: "Exemple : nommez les sujets, mots, touchers ou situations qui peuvent paniquer, et ce qui aide à retrouver la sécurité.",
+    powerExchange: "Exemple : la dynamique de pouvoir commence et finit à des moments convenus, avec des mots ou un rituel de retour."
+  },
+  de: {
+    hardSoftLimits: "Beispiel: Eine harte Grenze heißt 'niemals'; eine weiche Grenze heißt 'vielleicht, aber langsam und mit Check-ins'.",
+    safeword: "Beispiel: Grün heißt weiter, Gelb heißt langsamer oder anpassen, Rot heißt sofort ohne Diskussion stoppen.",
+    checkIn: "Beispiel: Pausiert alle 10-15 Minuten und fragt: 'mehr, sanfter, Pause oder Stop?'",
+    privacyImages: "Beispiel: keine Gesichter, keine Cloud, ein privater Ordner und sofort löschen, wenn eine Person es verlangt.",
+    protection: "Beispiel: Klärt Kondom/Lecktuch, Teststatus, Reinigung und was die Aktivität stoppt, bevor ihr beginnt.",
+    roles: "Beispiel: Dominant heißt führen innerhalb vereinbarter Grenzen; devot heißt freiwillig folgen und trotzdem stoppen können.",
+    protocols: "Beispiel: Ein Protokoll kann einfach sein: vor Berührung um Erlaubnis fragen oder einen gewählten Titel nutzen.",
+    orgasmControl: "Beispiel: Klärt, ob Stoppen, Verzögern oder Erlaubnis zum Kommen spannend ist, und was tabu bleibt.",
+    humiliation: "Beispiel: Wählt genaue erlaubte Wörter, verbotene Wörter und ein Signal, wenn der Ton verletzt.",
+    bondage: "Beispiel: Startet mit Händen in Cuffs für fünf Minuten, prüft Finger/Durchblutung und haltet ein Schnelllösewerkzeug bereit.",
+    gag: "Beispiel: Nutzt ein Handzeichen oder drei Klopfzeichen als Stoppsignal, weil Sprechen schwer sein kann.",
+    suspension: "Beispiel: Nur mit geschulter Person, passender Ausrüstung, ohne Druckpunkte und mit Plan, schnell herunterzukommen.",
+    sensory: "Beispiel: Probiert eine Augenbinde zwei Minuten und vereinbart, wie pausiert wird, wenn es zu intensiv wird.",
+    impact: "Beispiel: Wählt Körperzonen, startet bei Intensität 2/10, checkt oft und meidet unsichere Stellen.",
+    marks: "Beispiel: Klärt, ob rote Haut okay ist, ob blaue Flecken tabu sind und welche Bereiche markenfrei bleiben sollen.",
+    temperature: "Beispiel: Testet Wachs oder Kälte zuerst auf einer kleinen sicheren Hautstelle und stoppt bei Brennen, Stechen oder Angst.",
+    fetishMaterials: "Beispiel: Prüft Allergien und Komfort; Outfit oder Collar kommt sofort ab, wenn Atmung oder Bewegung eingeschränkt wird.",
+    anal: "Beispiel: Geht langsam, nutzt viel Gleitmittel, klärt Hygiene und Kondome, und stoppt sofort bei Schmerz oder Panik.",
+    doublePenetration: "Beispiel: Das kann Fantasie bleiben oder später mit Vorbereitung, Gleitmittel, Schutz und Stopplan besprochen werden.",
+    bodyFluids: "Beispiel: Klärt genau, wohin Körperflüssigkeiten dürfen, was tabu ist und wie danach aufgeräumt wird.",
+    toys: "Beispiel: Reinigt das Toy, testet es zuerst außerhalb von Sex, nutzt Kondome beim Teilen und entfernt es bei falschem Gefühl.",
+    chastity: "Beispiel: Vereinbart eine maximale Dauer, haltet einen Notschlüssel bereit und beendet das Spiel bei Unbehagen.",
+    multiPerson: "Beispiel: Legt fest, wer berühren darf, wo, wie viele Personen maximal, und was dein Partner bei Pause tut.",
+    openRelationship: "Beispiel: Klärt vor Date oder Clubbesuch, was erlaubt ist: nur schauen, küssen, berühren oder nichts weiter.",
+    public: "Beispiel: Bleibt privat und legal, bezieht keine Außenstehenden ein und habt einen Plan, sofort zu gehen.",
+    substances: "Beispiel: Vereinbart, dass neues/intensives Spiel nüchtern passiert, oder klärt Dosis, Timing, Medikamente und Erholung.",
+    highRisk: "Beispiel: Behandelt das als fortgeschrittenes Risiko: erst besprechen, Sicherheit recherchieren, und 'Nein' bleibt Standard.",
+    aftercareDrop: "Beispiel: Plant nach dem Spiel Wasser, Wärme, Beruhigung, Ruhe und einen Check-in am nächsten Tag.",
+    triggers: "Beispiel: Nennt Themen, Wörter, Berührungen oder Situationen, die Panik auslösen können, und was Sicherheit zurückbringt.",
+    powerExchange: "Beispiel: Die Machtdynamik beginnt und endet zu vereinbarten Momenten, mit klaren Worten oder einem Rückkehr-Ritual."
+  }
+};
+
 const questionTranslations = {
   en: {},
   nl: {},
@@ -2872,8 +3036,10 @@ function getNotePlaceholder(question) {
 function getQuestionExample(question) {
   const examples = questionExampleTranslations[state.language] || questionExampleTranslations[defaultLanguage];
   const options = getAnswerOptions(question);
+  const patternExample = getPatternQuestionExample(question);
 
   if (examples.specific?.[question.id]) return examples.specific[question.id];
+  if (patternExample) return patternExample;
   if (options === answerSets.genderPreference) return examples.genderPreference;
   if (options === answerSets.intensity) return examples.intensity;
   if (options === answerSets.location) return examples.location;
@@ -2883,6 +3049,13 @@ function getQuestionExample(question) {
   if (options === answerSets.agreement) return examples.agreement;
 
   return examples.categories?.[question.categoryIndex] || examples.default;
+}
+
+function getPatternQuestionExample(question) {
+  const translations = questionExamplePatternTranslations[state.language] || questionExamplePatternTranslations[defaultLanguage];
+  const text = `${question.text} ${localizeQuestion(question)}`.toLowerCase();
+  const match = questionExamplePatternDefinitions.find((definition) => definition.patterns.some((pattern) => text.includes(pattern)));
+  return match ? translations[match.key] || questionExamplePatternTranslations[defaultLanguage][match.key] : "";
 }
 
 function buildCategoryPicker() {
