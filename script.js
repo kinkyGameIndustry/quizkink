@@ -86,13 +86,15 @@ const uiText = {
     back: "Back",
     startOwn: "Start own list",
     copy: "Copy",
+    quizLink: "Quiz link",
     partnerLink: "Partner link",
     print: "Print",
     shareNote: "The partner link stores answers inside the link itself. Share it only with someone who may read these results.",
     note: "Note",
     copiedSummary: "Summary copied.",
+    copiedSetup: "Quiz link copied.",
     copiedPartner: "Partner link copied.",
-    badLink: "This partner link could not be read.",
+    badLink: "This link could not be read.",
     clearConfirm: "Clear all local answers?",
     answered: "{answered} of {total}",
     notAnswered: "Not answered",
@@ -131,13 +133,15 @@ const uiText = {
     back: "Terug",
     startOwn: "Start eigen lijst",
     copy: "Kopieer",
+    quizLink: "Quizlink",
     partnerLink: "Partnerlink",
     print: "Print",
     shareNote: "De partnerlink bewaart antwoorden in de link zelf. Deel hem alleen met iemand die deze resultaten mag lezen.",
     note: "Notitie",
     copiedSummary: "Samenvatting gekopieerd.",
+    copiedSetup: "Quizlink gekopieerd.",
     copiedPartner: "Partnerlink gekopieerd.",
-    badLink: "Deze partnerlink kon niet worden gelezen.",
+    badLink: "Deze link kon niet worden gelezen.",
     clearConfirm: "Alle lokale antwoorden wissen?",
     answered: "{answered} van {total}",
     notAnswered: "Niet beantwoord",
@@ -176,13 +180,15 @@ const uiText = {
     back: "Retour",
     startOwn: "Commencer ma liste",
     copy: "Copier",
+    quizLink: "Lien quiz",
     partnerLink: "Lien partenaire",
     print: "Imprimer",
     shareNote: "Le lien partenaire stocke les réponses dans le lien lui-même. Partagez-le seulement avec une personne autorisée à lire ces résultats.",
     note: "Note",
     copiedSummary: "Résumé copié.",
+    copiedSetup: "Lien quiz copié.",
     copiedPartner: "Lien partenaire copié.",
-    badLink: "Ce lien partenaire n'a pas pu être lu.",
+    badLink: "Ce lien n'a pas pu être lu.",
     clearConfirm: "Effacer toutes les réponses locales ?",
     answered: "{answered} sur {total}",
     notAnswered: "Sans réponse",
@@ -221,13 +227,15 @@ const uiText = {
     back: "Zurück",
     startOwn: "Eigene Liste starten",
     copy: "Kopieren",
+    quizLink: "Quizlink",
     partnerLink: "Partnerlink",
     print: "Drucken",
     shareNote: "Der Partnerlink speichert Antworten im Link selbst. Teile ihn nur mit jemandem, der diese Ergebnisse lesen darf.",
     note: "Notiz",
     copiedSummary: "Zusammenfassung kopiert.",
+    copiedSetup: "Quizlink kopiert.",
     copiedPartner: "Partnerlink kopiert.",
-    badLink: "Dieser Partnerlink konnte nicht gelesen werden.",
+    badLink: "Dieser Link konnte nicht gelesen werden.",
     clearConfirm: "Alle lokalen Antworten löschen?",
     answered: "{answered} von {total}",
     notAnswered: "Nicht beantwortet",
@@ -585,6 +593,7 @@ const storageKey = "kink-questionnaire-v1";
 const state = loadState();
 let currentIndex = 0;
 let pendingSharedResponses = readSharedResponsesFromHash();
+let pendingSetup = readSetupFromHash();
 let activeResultResponses = state.responses;
 let sharedMode = false;
 
@@ -2421,6 +2430,7 @@ const elements = {
   shareNote: document.querySelector("#shareNote"),
   backToQuestions: document.querySelector("#backToQuestions"),
   copyResults: document.querySelector("#copyResults"),
+  copySetupLinks: document.querySelectorAll("[data-copy-setup-link]"),
   copyShareLink: document.querySelector("#copyShareLink"),
   printResults: document.querySelector("#printResults")
 };
@@ -2517,6 +2527,9 @@ function applyLanguage() {
   elements.noteInput.placeholder = t("notesPlaceholder");
   elements.prevButton.textContent = t("previous");
   elements.copyResults.textContent = t("copy");
+  elements.copySetupLinks.forEach((button) => {
+    button.textContent = t("quizLink");
+  });
   elements.copyShareLink.textContent = t("partnerLink");
   elements.printResults.textContent = t("print");
   elements.shareNote.textContent = t("shareNote");
@@ -2648,6 +2661,9 @@ function bindEvents() {
   elements.backToQuestions.addEventListener("click", showQuestionnaire);
   elements.printResults.addEventListener("click", () => window.print());
   elements.copyResults.addEventListener("click", copyResults);
+  elements.copySetupLinks.forEach((button) => {
+    button.addEventListener("click", copySetupLink);
+  });
   elements.copyShareLink.addEventListener("click", copyShareLink);
 }
 
@@ -2667,7 +2683,7 @@ function showQuestionnaire() {
   sharedMode = false;
   document.body.classList.remove("is-shared-view");
   activeResultResponses = state.responses;
-  if (location.hash.startsWith("#share=")) {
+  if (location.hash.startsWith("#share=") || location.hash.startsWith("#setup=")) {
     history.replaceState(null, "", `${location.pathname}${location.search}`);
   }
   elements.ageGate.hidden = true;
@@ -2865,6 +2881,13 @@ async function copyResults() {
   showToast(t("copiedSummary"));
 }
 
+async function copySetupLink() {
+  const payload = encodeSetupPayload();
+  const url = `${location.origin}${location.pathname}${location.search}#setup=${payload}`;
+  await writeClipboard(url);
+  showToast(t("copiedSetup"));
+}
+
 async function copyShareLink() {
   const payload = encodeSharePayload(state.responses);
   const url = `${location.origin}${location.pathname}${location.search}#share=${payload}`;
@@ -2968,6 +2991,17 @@ function buildSummaryItems(responses) {
     .map((label) => ({ label, count: counts.get(label) }));
 }
 
+function encodeSetupPayload() {
+  return toBase64Url(
+    JSON.stringify({
+      v: 1,
+      lang: state.language,
+      c: state.selectedCategories || defaultSelectedCategories(),
+      x: state.expandedCategories || {}
+    })
+  );
+}
+
 function encodeSharePayload(responses) {
   const compactResponses = Object.fromEntries(
     Object.entries(responses)
@@ -2982,6 +3016,35 @@ function encodeSharePayload(responses) {
     r: compactResponses
   });
   return toBase64Url(payload);
+}
+
+function readSetupFromHash() {
+  if (!location.hash.startsWith("#setup=")) return false;
+
+  try {
+    const payload = JSON.parse(fromBase64Url(location.hash.slice("#setup=".length)));
+    if (payload?.v !== 1) return false;
+
+    if (supportedLanguages.includes(payload.lang)) {
+      state.language = payload.lang;
+    }
+
+    state.selectedCategories =
+      payload.c && typeof payload.c === "object" ? normalizeSelectedCategories(payload.c) : defaultSelectedCategories();
+    state.expandedCategories = payload.x && typeof payload.x === "object" ? payload.x : {};
+    state.responses = {};
+    currentIndex = 0;
+
+    if (!hasSelectedCategory()) {
+      state.selectedCategories = defaultSelectedCategories();
+    }
+
+    saveState();
+    return true;
+  } catch {
+    showToast(t("badLink"));
+    return false;
+  }
 }
 
 function readSharedResponsesFromHash() {
