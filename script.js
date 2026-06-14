@@ -90,6 +90,8 @@ const uiText = {
     progress: "Progress",
     categories: "Categories",
     questionFallback: "Question",
+    showExample: "Show example",
+    hideExample: "Hide example",
     answerHelp: "Choose what feels honest now. You can adjust everything later.",
     notesLabel: "Note for yourself or partner",
     notesPlaceholder: "For example: context, pace, words, triggers, aftercare...",
@@ -137,6 +139,8 @@ const uiText = {
     progress: "Voortgang",
     categories: "Categorieën",
     questionFallback: "Vraag",
+    showExample: "Toon voorbeeld",
+    hideExample: "Verberg voorbeeld",
     answerHelp: "Kies wat nu eerlijk voelt. Je kunt alles later aanpassen.",
     notesLabel: "Notitie voor jezelf of partner",
     notesPlaceholder: "Bijvoorbeeld: context, tempo, woorden, triggers, nazorg...",
@@ -184,6 +188,8 @@ const uiText = {
     progress: "Progression",
     categories: "Catégories",
     questionFallback: "Question",
+    showExample: "Afficher un exemple",
+    hideExample: "Masquer l'exemple",
     answerHelp: "Choisissez ce qui vous semble honnête maintenant. Vous pourrez tout modifier plus tard.",
     notesLabel: "Note pour vous ou votre partenaire",
     notesPlaceholder: "Par exemple : contexte, rythme, mots, déclencheurs, aftercare...",
@@ -231,6 +237,8 @@ const uiText = {
     progress: "Fortschritt",
     categories: "Kategorien",
     questionFallback: "Frage",
+    showExample: "Beispiel anzeigen",
+    hideExample: "Beispiel ausblenden",
     answerHelp: "Wähle, was sich jetzt ehrlich anfühlt. Du kannst später alles ändern.",
     notesLabel: "Notiz für dich oder Partner",
     notesPlaceholder: "Zum Beispiel: Kontext, Tempo, Wörter, Trigger, Nachsorge...",
@@ -498,6 +506,125 @@ const notePlaceholderTranslations = {
     location: "Zum Beispiel: Gesicht, Mund, Brust, Körper, Aufräumen oder Tabubereiche...",
     peopleCount: "Zum Beispiel: maximale Anzahl, wer berühren darf, wo, Kondome und Nachsorge...",
     softPublic: "Zum Beispiel: diskrete Zuneigung, nur privat, Ausstiegsplan oder klares Nein..."
+  }
+};
+
+const questionExampleTranslations = {
+  en: {
+    default: "Example: write down what would make this feel safe, pleasant or completely off-limits for you.",
+    categories: [
+      "Example: you agree on a safeword, a short check-in, and which words or actions are not okay.",
+      "Example: one partner may lead the pace or give a small task, while the other can pause or stop at any time.",
+      "Example: cuffs are used for five minutes, with a release signal and scissors nearby.",
+      "Example: you start with light taps on agreed body zones and stop before marks appear.",
+      "Example: an outfit, title or material is used only if it feels good and can be removed easily.",
+      "Example: you agree on lube, hygiene, pace and a stop signal before trying anything anal.",
+      "Example: you decide beforehand where body fluids may go and what protection or cleanup is needed.",
+      "Example: a toy is cleaned, tested outside sex first, and removed immediately if it feels wrong.",
+      "Example: you agree who may touch, where they may touch, and what safer-sex rules apply.",
+      "Example: at a club you may only watch first, stay together, and leave if either of you feels unsure.",
+      "Example: flirting or teasing stays private, discreet and legal, with an exit plan.",
+      "Example: photos are only made without faces, stored securely, and deleted on request.",
+      "Example: you stay sober for new/intense play or discuss medication and recovery time first.",
+      "Example: after a scene you may need water, warmth, quiet, reassurance or a next-day message."
+    ],
+    specific: {
+      "1-3": "Example: your partner may choose the position or pace for a while, but only within rules agreed first, such as no pain, a safeword, and stopping immediately if you say stop."
+    },
+    agreement: "Example: this means setting a rule first, such as condom use, a stop signal, a time limit or a clear hard boundary.",
+    fantasyReality: "Example: you might like this only as dirty talk or fantasy now, and only consider trying it later with clear preparation.",
+    genderPreference: "Example: you can answer whether a man, woman, both, only a known person or no one feels right.",
+    intensity: "Example: you may want to start very soft, use a 1-10 intensity scale, and name body zones that are off-limits.",
+    location: "Example: you can say which places are okay, which are off-limits, and what cleanup or protection matters.",
+    peopleCount: "Example: you can set a maximum number, who may touch you, where, and what protection is required.",
+    softPublic: "Example: this could mean holding hands or teasing privately, while avoiding anything non-consenting people could notice."
+  },
+  nl: {
+    default: "Voorbeeld: noteer wat dit voor jou veilig, prettig of juist helemaal niet oké zou maken.",
+    categories: [
+      "Voorbeeld: jullie spreken een safeword, korte check-in en verboden woorden of handelingen af.",
+      "Voorbeeld: één partner mag even het tempo leiden of een kleine opdracht geven, terwijl de ander altijd kan pauzeren of stoppen.",
+      "Voorbeeld: cuffs worden vijf minuten gebruikt, met een losmaak-signaal en schaar in de buurt.",
+      "Voorbeeld: je start met lichte tikken op afgesproken lichaamszones en stopt voordat er sporen ontstaan.",
+      "Voorbeeld: een outfit, titel of materiaal wordt alleen gebruikt als het goed voelt en makkelijk uit kan.",
+      "Voorbeeld: jullie spreken glijmiddel, hygiëne, tempo en een stopteken af voordat je iets anaals probeert.",
+      "Voorbeeld: jullie beslissen vooraf waar lichaamsvocht wel of niet mag en welke bescherming of opruim nodig is.",
+      "Voorbeeld: een toy wordt gereinigd, eerst buiten seks getest en meteen verwijderd als het verkeerd voelt.",
+      "Voorbeeld: jullie spreken af wie mag aanraken, waar dat mag en welke veilige-seksregels gelden.",
+      "Voorbeeld: in een club kijk je eerst alleen, blijf je samen en vertrek je als één van jullie twijfelt.",
+      "Voorbeeld: flirten of plagen blijft privé, discreet en wettelijk oké, met een exitplan.",
+      "Voorbeeld: foto's worden alleen zonder gezicht gemaakt, veilig bewaard en verwijderd op verzoek.",
+      "Voorbeeld: je blijft nuchter bij nieuw/intens spel of bespreekt eerst medicatie en hersteltijd.",
+      "Voorbeeld: na een scène heb je misschien water, warmte, stilte, geruststelling of een bericht de volgende dag nodig."
+    ],
+    specific: {
+      "1-3": "Voorbeeld: je partner mag tijdelijk de houding of het tempo kiezen, maar alleen binnen vooraf afgesproken regels, zoals geen pijn, een safeword en meteen stoppen als jij stop zegt."
+    },
+    agreement: "Voorbeeld: dit betekent eerst een regel afspreken, zoals condoomgebruik, een stopteken, tijdslimiet of duidelijke harde grens.",
+    fantasyReality: "Voorbeeld: misschien vind je dit nu alleen leuk als fantasie of dirty talk, en pas later als echte ervaring met duidelijke voorbereiding.",
+    genderPreference: "Voorbeeld: je kunt aangeven of man, vrouw, beide, alleen een bekende of niemand goed voelt.",
+    intensity: "Voorbeeld: je wil misschien heel zacht starten, een schaal van 1-10 gebruiken en lichaamszones noemen die niet mogen.",
+    location: "Voorbeeld: je kunt zeggen welke plekken oké zijn, welke niet mogen en welke bescherming of opruim belangrijk is.",
+    peopleCount: "Voorbeeld: je kunt een maximum aantal afspreken, wie jou mag aanraken, waar, en welke bescherming verplicht is.",
+    softPublic: "Voorbeeld: dit kan hand vasthouden of privé plagen betekenen, zonder dat niet-betrokken mensen iets seksueels merken."
+  },
+  fr: {
+    default: "Exemple : notez ce qui rendrait cela sûr, agréable ou totalement interdit pour vous.",
+    categories: [
+      "Exemple : vous convenez d'un safeword, d'un court check-in et des mots ou gestes interdits.",
+      "Exemple : une personne peut guider le rythme ou donner une petite consigne, tandis que l'autre peut toujours faire pause ou arrêter.",
+      "Exemple : des cuffs sont utilisés cinq minutes, avec un signal de libération et des ciseaux à proximité.",
+      "Exemple : vous commencez par des tapes légères sur des zones convenues et arrêtez avant l'apparition de marques.",
+      "Exemple : une tenue, un titre ou un matériau est utilisé seulement si cela fait du bien et peut être retiré facilement.",
+      "Exemple : vous convenez du lubrifiant, de l'hygiène, du rythme et d'un signal d'arrêt avant d'essayer quelque chose d'anal.",
+      "Exemple : vous décidez à l'avance où les fluides corporels peuvent aller et quelle protection ou nettoyage est nécessaire.",
+      "Exemple : un toy est nettoyé, testé hors sexe d'abord, et retiré immédiatement s'il ne convient pas.",
+      "Exemple : vous convenez qui peut toucher, où, et quelles règles de sexe plus sûr s'appliquent.",
+      "Exemple : dans un club, vous pouvez seulement observer d'abord, rester ensemble et partir si l'un de vous hésite.",
+      "Exemple : le flirt ou la provocation reste privé, discret et légal, avec un plan de sortie.",
+      "Exemple : les photos sont faites sans visage, stockées en sécurité et supprimées sur demande.",
+      "Exemple : vous restez sobres pour un jeu nouveau/intense ou discutez d'abord des médicaments et du temps de récupération.",
+      "Exemple : après une scène, vous pouvez avoir besoin d'eau, de chaleur, de silence, de réassurance ou d'un message le lendemain."
+    ],
+    specific: {
+      "1-3": "Exemple : votre partenaire peut choisir la position ou le rythme pendant un moment, mais seulement selon des règles convenues avant, comme pas de douleur, un safeword et l'arrêt immédiat si vous dites stop."
+    },
+    agreement: "Exemple : cela signifie définir d'abord une règle, comme le préservatif, un signal d'arrêt, une limite de temps ou une limite stricte.",
+    fantasyReality: "Exemple : cela peut rester seulement un fantasme ou du dirty talk maintenant, et être envisagé plus tard avec une préparation claire.",
+    genderPreference: "Exemple : vous pouvez dire si homme, femme, les deux, seulement une personne connue ou personne vous convient.",
+    intensity: "Exemple : vous pouvez vouloir commencer très doux, utiliser une échelle de 1 à 10 et nommer les zones interdites.",
+    location: "Exemple : vous pouvez dire quelles zones sont acceptées, lesquelles sont interdites, et quel nettoyage ou protection compte.",
+    peopleCount: "Exemple : vous pouvez fixer un nombre maximum, qui peut vous toucher, où, et quelle protection est obligatoire.",
+    softPublic: "Exemple : cela peut être se tenir la main ou se taquiner en privé, sans que des personnes non concernées remarquent quelque chose de sexuel."
+  },
+  de: {
+    default: "Beispiel: Notiere, was das für dich sicher, angenehm oder absolut tabu machen würde.",
+    categories: [
+      "Beispiel: Ihr vereinbart ein Safeword, einen kurzen Check-in und Wörter oder Handlungen, die nicht okay sind.",
+      "Beispiel: Eine Person darf kurz Tempo oder eine kleine Aufgabe vorgeben, während die andere jederzeit pausieren oder stoppen kann.",
+      "Beispiel: Cuffs werden fünf Minuten genutzt, mit Befreiungssignal und Schere in der Nähe.",
+      "Beispiel: Ihr startet mit leichten Klapsen auf vereinbarten Körperzonen und stoppt, bevor Spuren entstehen.",
+      "Beispiel: Ein Outfit, Titel oder Material wird nur genutzt, wenn es sich gut anfühlt und leicht entfernt werden kann.",
+      "Beispiel: Ihr vereinbart Gleitmittel, Hygiene, Tempo und ein Stoppsignal, bevor ihr etwas Anales ausprobiert.",
+      "Beispiel: Ihr entscheidet vorher, wohin Körperflüssigkeiten dürfen und welcher Schutz oder welches Aufräumen nötig ist.",
+      "Beispiel: Ein Toy wird gereinigt, zuerst außerhalb von Sex getestet und sofort entfernt, wenn es sich falsch anfühlt.",
+      "Beispiel: Ihr vereinbart, wer berühren darf, wo, und welche Safer-Sex-Regeln gelten.",
+      "Beispiel: In einem Club schaut ihr zuerst nur zu, bleibt zusammen und geht, wenn eine Person unsicher wird.",
+      "Beispiel: Flirten oder Necken bleibt privat, diskret und legal, mit Ausstiegsplan.",
+      "Beispiel: Fotos werden nur ohne Gesicht gemacht, sicher gespeichert und auf Wunsch gelöscht.",
+      "Beispiel: Ihr bleibt bei neuem/intensivem Spiel nüchtern oder besprecht zuerst Medikamente und Erholungszeit.",
+      "Beispiel: Nach einer Szene brauchst du vielleicht Wasser, Wärme, Stille, Bestätigung oder eine Nachricht am nächsten Tag."
+    ],
+    specific: {
+      "1-3": "Beispiel: Dein Partner darf vorübergehend Position oder Tempo wählen, aber nur innerhalb vorher vereinbarter Regeln, etwa kein Schmerz, ein Safeword und sofort stoppen, wenn du Stop sagst."
+    },
+    agreement: "Beispiel: Das bedeutet, zuerst eine Regel festzulegen, etwa Kondomnutzung, Stoppsignal, Zeitlimit oder eine klare harte Grenze.",
+    fantasyReality: "Beispiel: Das kann aktuell nur Fantasie oder Dirty Talk sein und später nur mit klarer Vorbereitung ausprobiert werden.",
+    genderPreference: "Beispiel: Du kannst sagen, ob Mann, Frau, beide, nur eine bekannte Person oder niemand passend ist.",
+    intensity: "Beispiel: Du möchtest vielleicht sehr sanft starten, eine Skala von 1-10 nutzen und Tabuzonen nennen.",
+    location: "Beispiel: Du kannst sagen, welche Stellen okay sind, welche tabu sind und welcher Schutz oder welches Aufräumen wichtig ist.",
+    peopleCount: "Beispiel: Du kannst eine maximale Anzahl, wer dich wo berühren darf und welchen Schutz ihr braucht festlegen.",
+    softPublic: "Beispiel: Das kann Händchenhalten oder privates Necken bedeuten, ohne dass unbeteiligte Menschen etwas Sexuelles bemerken."
   }
 };
 
@@ -2592,6 +2719,8 @@ const elements = {
   liveSummary: document.querySelector("#liveSummary"),
   categoryKicker: document.querySelector("#categoryKicker"),
   title: document.querySelector("#questionnaire-title"),
+  questionInfoButton: document.querySelector("#questionInfoButton"),
+  questionExample: document.querySelector("#questionExample"),
   counter: document.querySelector("#questionCounter"),
   answerGrid: document.querySelector("#answerGrid"),
   noteInput: document.querySelector("#noteInput"),
@@ -2699,6 +2828,8 @@ function applyLanguage() {
   document.querySelector(".notes span").textContent = t("notesLabel");
   elements.noteInput.placeholder = t("notesPlaceholder");
   elements.prevButton.textContent = t("previous");
+  elements.questionInfoButton.setAttribute("aria-label", t("showExample"));
+  elements.questionInfoButton.title = t("showExample");
   elements.copyResults.textContent = t("copy");
   elements.copySetupLinks.forEach((button) => {
     button.textContent = t("quizLink");
@@ -2736,6 +2867,22 @@ function getNotePlaceholder(question) {
   if (options === answerSets.agreement) return placeholders.agreement;
 
   return placeholders.categories?.[question.categoryIndex] || placeholders.default;
+}
+
+function getQuestionExample(question) {
+  const examples = questionExampleTranslations[state.language] || questionExampleTranslations[defaultLanguage];
+  const options = getAnswerOptions(question);
+
+  if (examples.specific?.[question.id]) return examples.specific[question.id];
+  if (options === answerSets.genderPreference) return examples.genderPreference;
+  if (options === answerSets.intensity) return examples.intensity;
+  if (options === answerSets.location) return examples.location;
+  if (options === answerSets.peopleCount) return examples.peopleCount;
+  if (options === answerSets.softPublic) return examples.softPublic;
+  if (options === answerSets.fantasyReality) return examples.fantasyReality;
+  if (options === answerSets.agreement) return examples.agreement;
+
+  return examples.categories?.[question.categoryIndex] || examples.default;
 }
 
 function buildCategoryPicker() {
@@ -2850,6 +2997,7 @@ function bindEvents() {
   elements.noteInput.addEventListener("input", saveCurrentNote);
   elements.noteInput.addEventListener("change", saveCurrentNote);
   elements.noteInput.addEventListener("blur", saveCurrentNote);
+  elements.questionInfoButton.addEventListener("click", toggleQuestionExample);
 
   elements.backToQuestions.addEventListener("click", showQuestionnaire);
   elements.printResults.addEventListener("click", () => window.print());
@@ -2870,6 +3018,18 @@ function saveCurrentNote() {
   const response = getResponse(question.id);
   response.note = elements.noteInput.value;
   saveState();
+}
+
+function toggleQuestionExample() {
+  const expanded = elements.questionInfoButton.getAttribute("aria-expanded") === "true";
+  setQuestionExampleExpanded(!expanded);
+}
+
+function setQuestionExampleExpanded(expanded) {
+  elements.questionExample.hidden = !expanded;
+  elements.questionInfoButton.setAttribute("aria-expanded", String(expanded));
+  elements.questionInfoButton.setAttribute("aria-label", expanded ? t("hideExample") : t("showExample"));
+  elements.questionInfoButton.title = expanded ? t("hideExample") : t("showExample");
 }
 
 function showQuestionnaire() {
@@ -2965,6 +3125,8 @@ function renderQuestion() {
   buildAnswerOptions(question);
   elements.categoryKicker.textContent = localizeCategoryTitle(question.category);
   elements.title.textContent = localizeQuestion(question);
+  elements.questionExample.textContent = getQuestionExample(question);
+  setQuestionExampleExpanded(false);
   elements.counter.textContent = `${currentIndex + 1} / ${flatQuestions.length}`;
   elements.noteInput.value = response.note || "";
   elements.noteInput.placeholder = getNotePlaceholder(question);

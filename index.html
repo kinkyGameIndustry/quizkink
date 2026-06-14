@@ -80,7 +80,19 @@
           <div class="panel-head">
             <div>
               <p class="kicker" id="categoryKicker">Categorie</p>
-              <h2 id="questionnaire-title">Vraag</h2>
+              <div class="question-title-row">
+                <h2 id="questionnaire-title">Vraag</h2>
+                <button
+                  class="info-button"
+                  id="questionInfoButton"
+                  type="button"
+                  aria-controls="questionExample"
+                  aria-expanded="false"
+                  aria-label="Voorbeeld tonen"
+                  title="Voorbeeld tonen"
+                >i</button>
+              </div>
+              <p class="question-example" id="questionExample" hidden></p>
             </div>
             <span class="counter" id="questionCounter">1 / 1</span>
           </div>
