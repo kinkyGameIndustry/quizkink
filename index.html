@@ -132,6 +132,31 @@
         <div class="summary-strip" id="summaryStrip"></div>
         <div class="results-grid" id="resultsGrid"></div>
       </section>
+
+      <section class="invite-modal" id="inviteModal" aria-labelledby="inviteTitle" role="dialog" aria-modal="true" hidden>
+        <div class="invite-modal__panel">
+          <div class="invite-modal__head">
+            <div>
+              <p class="kicker" data-i18n="inviteKicker">Invite</p>
+              <h2 id="inviteTitle" data-i18n="inviteTitle">Invite settings</h2>
+            </div>
+            <button class="ghost-btn invite-modal__close" id="closeInviteModal" type="button" data-i18n="inviteClose">Close</button>
+          </div>
+          <p class="invite-modal__intro" id="inviteIntro">This invite contains the selected categories and basic/extended settings, not your answers.</p>
+          <div class="invite-modal__settings">
+            <strong id="inviteSettingsLabel">Selected settings</strong>
+            <ul id="inviteSettingsList"></ul>
+          </div>
+          <label class="invite-link-field">
+            <span id="inviteLinkLabel">Invite link</span>
+            <input id="inviteLinkInput" type="text" readonly>
+          </label>
+          <div class="invite-modal__actions">
+            <button class="ghost-btn" id="shareInviteLink" type="button">Share</button>
+            <button class="primary-btn" id="copyInviteLink" type="button">Copy invite link</button>
+          </div>
+        </div>
+      </section>
     </main>
 
     <template id="categoryButtonTemplate">

@@ -658,6 +658,109 @@ h2 {
   font-weight: 850;
 }
 
+.invite-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(4, 5, 7, 0.76);
+  backdrop-filter: blur(12px);
+}
+
+.invite-modal__panel {
+  width: min(680px, 100%);
+  max-height: calc(100vh - 36px);
+  overflow: auto;
+  padding: clamp(18px, 4vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.invite-modal__head {
+  display: flex;
+  gap: 16px;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.invite-modal__close {
+  min-height: 38px;
+}
+
+.invite-modal__intro {
+  margin: 18px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.invite-modal__settings {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(244, 239, 232, 0.055);
+}
+
+.invite-modal__settings strong,
+.invite-link-field span {
+  display: block;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 850;
+}
+
+.invite-modal__settings ul {
+  display: grid;
+  gap: 8px;
+  max-height: 220px;
+  margin: 12px 0 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.invite-modal__settings li {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.invite-modal__settings small {
+  flex: 0 0 auto;
+  color: var(--gold);
+  font-weight: 850;
+}
+
+.invite-link-field {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.invite-link-field input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(6, 7, 8, 0.58);
+  color: var(--muted);
+}
+
+.invite-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
 .toast {
   position: fixed;
   right: 18px;

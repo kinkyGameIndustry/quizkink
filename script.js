@@ -105,6 +105,16 @@ const uiText = {
     startOwn: "Start own list",
     copy: "Copy",
     quizLink: "Invite",
+    inviteKicker: "Invite",
+    inviteTitle: "Invite settings",
+    inviteIntro: "This invite contains the selected categories and basic/extended settings, not your answers.",
+    inviteSettingsLabel: "Selected settings",
+    inviteLinkLabel: "Invite link",
+    inviteClose: "Close",
+    inviteCopy: "Copy invite link",
+    inviteShare: "Share",
+    inviteBasic: "Basic",
+    inviteExtended: "Extended",
     partnerLink: "Partner link",
     print: "Print",
     shareNote: "The partner link stores answers inside the link itself. Share it only with someone who may read these results.",
@@ -154,6 +164,16 @@ const uiText = {
     startOwn: "Start eigen lijst",
     copy: "Kopieer",
     quizLink: "Invite",
+    inviteKicker: "Invite",
+    inviteTitle: "Invite-instellingen",
+    inviteIntro: "Deze invite bevat de gekozen categorieën en basis/uitgebreide instelling, niet je antwoorden.",
+    inviteSettingsLabel: "Gekozen instellingen",
+    inviteLinkLabel: "Invite-link",
+    inviteClose: "Sluiten",
+    inviteCopy: "Kopieer invite-link",
+    inviteShare: "Deel",
+    inviteBasic: "Basis",
+    inviteExtended: "Uitgebreid",
     partnerLink: "Partnerlink",
     print: "Print",
     shareNote: "De partnerlink bewaart antwoorden in de link zelf. Deel hem alleen met iemand die deze resultaten mag lezen.",
@@ -203,6 +223,16 @@ const uiText = {
     startOwn: "Commencer ma liste",
     copy: "Copier",
     quizLink: "Invite",
+    inviteKicker: "Invite",
+    inviteTitle: "Paramètres de l'invitation",
+    inviteIntro: "Cette invitation contient les catégories choisies et le réglage base/étendu, pas vos réponses.",
+    inviteSettingsLabel: "Paramètres choisis",
+    inviteLinkLabel: "Lien d'invitation",
+    inviteClose: "Fermer",
+    inviteCopy: "Copier le lien d'invitation",
+    inviteShare: "Partager",
+    inviteBasic: "Base",
+    inviteExtended: "Étendu",
     partnerLink: "Lien partenaire",
     print: "Imprimer",
     shareNote: "Le lien partenaire stocke les réponses dans le lien lui-même. Partagez-le seulement avec une personne autorisée à lire ces résultats.",
@@ -252,6 +282,16 @@ const uiText = {
     startOwn: "Eigene Liste starten",
     copy: "Kopieren",
     quizLink: "Invite",
+    inviteKicker: "Invite",
+    inviteTitle: "Invite-Einstellungen",
+    inviteIntro: "Diese Invite enthält die gewählten Kategorien und die Basis/Erweitert-Einstellung, nicht deine Antworten.",
+    inviteSettingsLabel: "Gewählte Einstellungen",
+    inviteLinkLabel: "Invite-Link",
+    inviteClose: "Schließen",
+    inviteCopy: "Invite-Link kopieren",
+    inviteShare: "Teilen",
+    inviteBasic: "Basis",
+    inviteExtended: "Erweitert",
     partnerLink: "Partnerlink",
     print: "Drucken",
     shareNote: "Der Partnerlink speichert Antworten im Link selbst. Teile ihn nur mit jemandem, der diese Ergebnisse lesen darf.",
@@ -2898,7 +2938,16 @@ const elements = {
   copyResults: document.querySelector("#copyResults"),
   copySetupLinks: document.querySelectorAll("[data-copy-setup-link]"),
   copyShareLink: document.querySelector("#copyShareLink"),
-  printResults: document.querySelector("#printResults")
+  printResults: document.querySelector("#printResults"),
+  inviteModal: document.querySelector("#inviteModal"),
+  inviteIntro: document.querySelector("#inviteIntro"),
+  inviteSettingsLabel: document.querySelector("#inviteSettingsLabel"),
+  inviteSettingsList: document.querySelector("#inviteSettingsList"),
+  inviteLinkLabel: document.querySelector("#inviteLinkLabel"),
+  inviteLinkInput: document.querySelector("#inviteLinkInput"),
+  closeInviteModal: document.querySelector("#closeInviteModal"),
+  shareInviteLink: document.querySelector("#shareInviteLink"),
+  copyInviteLink: document.querySelector("#copyInviteLink")
 };
 
 init();
@@ -3001,6 +3050,12 @@ function applyLanguage() {
   elements.copyShareLink.textContent = t("partnerLink");
   elements.printResults.textContent = t("print");
   elements.shareNote.textContent = t("shareNote");
+  elements.inviteIntro.textContent = t("inviteIntro");
+  elements.inviteSettingsLabel.textContent = t("inviteSettingsLabel");
+  elements.inviteLinkLabel.textContent = t("inviteLinkLabel");
+  elements.closeInviteModal.textContent = t("inviteClose");
+  elements.shareInviteLink.textContent = t("inviteShare");
+  elements.copyInviteLink.textContent = t("inviteCopy");
   document.querySelector(".results__head .kicker").textContent = t("summary");
   buildCategoryPicker();
   updateSetupUi();
@@ -3176,7 +3231,16 @@ function bindEvents() {
   elements.printResults.addEventListener("click", () => window.print());
   elements.copyResults.addEventListener("click", copyResults);
   elements.copySetupLinks.forEach((button) => {
-    button.addEventListener("click", copySetupLink);
+    button.addEventListener("click", openInviteModal);
+  });
+  elements.closeInviteModal.addEventListener("click", closeInviteModal);
+  elements.inviteModal.addEventListener("click", (event) => {
+    if (event.target === elements.inviteModal) closeInviteModal();
+  });
+  elements.copyInviteLink.addEventListener("click", copySetupLink);
+  elements.shareInviteLink.addEventListener("click", shareSetupLink);
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !elements.inviteModal.hidden) closeInviteModal();
   });
   elements.copyShareLink.addEventListener("click", copyShareLink);
 }
@@ -3410,9 +3474,55 @@ async function copyResults() {
   showToast(t("copiedSummary"));
 }
 
-async function copySetupLink() {
+function openInviteModal() {
+  renderInviteModal();
+  elements.inviteModal.hidden = false;
+  elements.copyInviteLink.focus();
+}
+
+function closeInviteModal() {
+  elements.inviteModal.hidden = true;
+}
+
+function renderInviteModal() {
+  const url = buildSetupUrl();
+  elements.inviteLinkInput.value = url;
+  elements.shareInviteLink.hidden = typeof navigator.share !== "function";
+  elements.inviteSettingsList.innerHTML = "";
+
+  selectedCategoryIndexes().forEach((categoryIndex) => {
+    const item = document.createElement("li");
+    const name = document.createElement("span");
+    const mode = document.createElement("small");
+    name.textContent = localizeCategoryTitle(categories[categoryIndex].title);
+    mode.textContent = state.expandedCategories?.[categoryIndex] ? t("inviteExtended") : t("inviteBasic");
+    item.append(name, mode);
+    elements.inviteSettingsList.append(item);
+  });
+}
+
+function buildSetupUrl() {
   const payload = encodeSetupPayload();
-  const url = `${location.origin}${location.pathname}${location.search}#setup=${payload}`;
+  const baseUrl = location.href.split("#")[0];
+  return `${baseUrl}#setup=${payload}`;
+}
+
+async function copySetupLink() {
+  await writeClipboard(elements.inviteLinkInput.value || buildSetupUrl());
+  showToast(t("copiedSetup"));
+}
+
+async function shareSetupLink() {
+  const url = elements.inviteLinkInput.value || buildSetupUrl();
+  if (typeof navigator.share === "function") {
+    try {
+      await navigator.share({ title: t("inviteTitle"), text: t("inviteIntro"), url });
+      return;
+    } catch (error) {
+      if (error?.name === "AbortError") return;
+    }
+  }
+
   await writeClipboard(url);
   showToast(t("copiedSetup"));
 }
@@ -3685,8 +3795,12 @@ function fromBase64Url(value) {
 
 async function writeClipboard(value) {
   if (navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(value);
-    return;
+    try {
+      await navigator.clipboard.writeText(value);
+      return;
+    } catch {
+      // Fall back to the selection-based copy path below.
+    }
   }
 
   const textarea = document.createElement("textarea");
