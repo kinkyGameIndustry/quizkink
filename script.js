@@ -491,6 +491,7 @@ function updateProgress() {
 function renderResults(responses = state.responses, options = {}) {
   activeResultResponses = responses;
   sharedMode = Boolean(options.shared);
+  document.body.classList.toggle("is-shared-view", sharedMode);
   elements.questionnaire.hidden = true;
   elements.ageGate.hidden = true;
   elements.results.hidden = false;
@@ -501,7 +502,10 @@ function renderResults(responses = state.responses, options = {}) {
   elements.copyShareLink.hidden = sharedMode;
   elements.shareNote.hidden = sharedMode;
 
-  buildSummaryItems(responses).forEach((answer) => {
+  const summaryItems = buildSummaryItems(responses);
+  elements.summaryStrip.hidden = sharedMode && summaryItems.length === 0;
+
+  summaryItems.forEach((answer) => {
     const item = document.createElement("div");
     item.className = "summary-pill";
     item.innerHTML = `<strong>${answer.count}</strong><span>${answer.label}</span>`;
@@ -509,23 +513,43 @@ function renderResults(responses = state.responses, options = {}) {
   });
 
   categories.forEach((category, categoryIndex) => {
-    const card = document.createElement("article");
-    card.className = "result-card";
-    const list = category.questions
+    const items = category.questions
       .map((question, questionIndex) => {
         const id = `${categoryIndex}-${questionIndex}`;
         const response = responses[id] || {};
-        const answer = getAnswerLabel({ text: question }, response.answer);
-        const note = response.note ? `<span class="result-note"><strong>Notitie</strong> <span>${escapeHtml(response.note)}</span></span>` : "";
-        return `<li><span>${escapeHtml(question)}</span><span class="result-answer">${answer}</span>${note}</li>`;
+        return { question, response };
       })
-      .join("");
+      .filter((item) => !sharedMode || item.response.answer || item.response.note);
 
-    card.innerHTML = `<h3>${category.title}</h3><ul class="result-list">${list}</ul>`;
-    elements.resultsGrid.append(card);
+    if (sharedMode && items.length === 0) return;
+
+    elements.resultsGrid.append(buildResultCategory(category.title, items, { expandable: sharedMode }));
   });
 
   elements.results.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function buildResultCategory(title, items, options = {}) {
+  const list = items
+    .map(({ question, response }) => {
+      const answer = getAnswerLabel({ text: question }, response.answer);
+      const note = response.note ? `<span class="result-note"><strong>Notitie</strong> <span>${escapeHtml(response.note)}</span></span>` : "";
+      return `<li><span>${escapeHtml(question)}</span><span class="result-answer">${answer}</span>${note}</li>`;
+    })
+    .join("");
+
+  if (options.expandable) {
+    const details = document.createElement("details");
+    details.className = "result-card result-card--expandable";
+    details.open = true;
+    details.innerHTML = `<summary><span>${escapeHtml(title)}</span><small>${items.length}</small></summary><ul class="result-list">${list}</ul>`;
+    return details;
+  }
+
+  const card = document.createElement("article");
+  card.className = "result-card";
+  card.innerHTML = `<h3>${escapeHtml(title)}</h3><ul class="result-list">${list}</ul>`;
+  return card;
 }
 
 async function copyResults() {
