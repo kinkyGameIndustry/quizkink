@@ -43,6 +43,13 @@
               <option value="de">Deutsch</option>
             </select>
           </label>
+          <div class="category-picker">
+            <div class="category-picker__head">
+              <span data-i18n="chooseCategories">Choose categories</span>
+              <button class="ghost-btn category-picker__all" id="selectAllCategories" type="button" data-i18n="selectAllCategories">Select all</button>
+            </div>
+            <div class="category-picker__grid" id="categoryPickerGrid"></div>
+          </div>
           <label class="checkline">
             <input type="checkbox" id="adultCheck">
             <span data-i18n="adultCheck">I am 18 years or older.</span>
@@ -63,6 +70,7 @@
             <div class="progress-track" aria-hidden="true">
               <span id="progressBar"></span>
             </div>
+            <div class="live-summary" id="liveSummary" hidden></div>
           </div>
           <nav class="category-list" id="categoryList"></nav>
         </aside>

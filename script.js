@@ -2,6 +2,7 @@ const answers = [
   { key: "yes", label: "Ja" },
   { key: "curious", label: "Nieuwsgierig" },
   { key: "talk", label: "Alleen bespreken" },
+  { key: "later", label: "Later bespreken" },
   { key: "no", label: "Nee" },
   { key: "limit", label: "Hard limit" }
 ];
@@ -12,12 +13,14 @@ const answerSets = {
     { key: "man", label: "Man" },
     { key: "woman", label: "Vrouw" },
     { key: "both", label: "Beide" },
-    { key: "talk", label: "Bespreken" }
+    { key: "talk", label: "Bespreken" },
+    { key: "later", label: "Later bespreken" }
   ],
   softPublic: [
     { key: "subtle", label: "Subtiel" },
     { key: "private", label: "Alleen privé" },
     { key: "talk", label: "Bespreken" },
+    { key: "later", label: "Later bespreken" },
     { key: "no", label: "Nee" },
     { key: "limit", label: "Hard limit" }
   ],
@@ -25,6 +28,7 @@ const answerSets = {
     { key: "yes", label: "Ja" },
     { key: "interest", label: "Interesse" },
     { key: "build", label: "Opbouwen" },
+    { key: "later", label: "Later bespreken" },
     { key: "no", label: "Nee" },
     { key: "limit", label: "Hard limit" }
   ],
@@ -33,13 +37,15 @@ const answerSets = {
     { key: "mouth", label: "Mond" },
     { key: "chest", label: "Borsten" },
     { key: "body", label: "Lichaam" },
-    { key: "talk", label: "Bespreken" }
+    { key: "talk", label: "Bespreken" },
+    { key: "later", label: "Later bespreken" }
   ],
   peopleCount: [
     { key: "two", label: "2+" },
     { key: "three", label: "3+" },
     { key: "four", label: "4+" },
     { key: "talk", label: "Bespreken" },
+    { key: "later", label: "Later bespreken" },
     { key: "no", label: "Nee" }
   ]
 };
@@ -60,6 +66,8 @@ const uiText = {
     adultTitle: "Adults only",
     adultCopy: "This questionnaire is about sexuality, power, play, boundaries and consent. Continue only if you are 18 or older and you want to fill this in voluntarily.",
     languageLabel: "Language",
+    chooseCategories: "Choose categories",
+    selectAllCategories: "Select all",
     adultCheck: "I am 18 years or older.",
     consentCheck: "I understand that consent, aftercare and clear boundaries are central.",
     continueButton: "Continue",
@@ -103,6 +111,8 @@ const uiText = {
     adultTitle: "Alleen voor volwassenen",
     adultCopy: "Deze vragenlijst gaat over seksualiteit, macht, spel, grenzen en consent. Ga alleen verder als je 18 jaar of ouder bent en dit vrijwillig wilt invullen.",
     languageLabel: "Taal",
+    chooseCategories: "Kies categorieën",
+    selectAllCategories: "Alles selecteren",
     adultCheck: "Ik ben 18 jaar of ouder.",
     consentCheck: "Ik begrijp dat consent, nazorg en duidelijke grenzen centraal staan.",
     continueButton: "Ga verder",
@@ -146,6 +156,8 @@ const uiText = {
     adultTitle: "Adultes uniquement",
     adultCopy: "Ce questionnaire parle de sexualité, pouvoir, jeu, limites et consentement. Continuez seulement si vous avez 18 ans ou plus et si vous voulez le remplir volontairement.",
     languageLabel: "Langue",
+    chooseCategories: "Choisir les catégories",
+    selectAllCategories: "Tout sélectionner",
     adultCheck: "J'ai 18 ans ou plus.",
     consentCheck: "Je comprends que le consentement, l'aftercare et les limites claires sont essentiels.",
     continueButton: "Continuer",
@@ -189,6 +201,8 @@ const uiText = {
     adultTitle: "Nur für Erwachsene",
     adultCopy: "Dieser Fragebogen behandelt Sexualität, Macht, Spiel, Grenzen und Consent. Fahre nur fort, wenn du mindestens 18 Jahre alt bist und ihn freiwillig ausfüllen möchtest.",
     languageLabel: "Sprache",
+    chooseCategories: "Kategorien wählen",
+    selectAllCategories: "Alle auswählen",
     adultCheck: "Ich bin 18 Jahre oder älter.",
     consentCheck: "Ich verstehe, dass Consent, Nachsorge und klare Grenzen zentral sind.",
     continueButton: "Weiter",
@@ -227,6 +241,7 @@ const answerLabelTranslations = {
     "Ja": "Yes",
     "Nieuwsgierig": "Curious",
     "Alleen bespreken": "Discuss only",
+    "Later bespreken": "Discuss later",
     "Nee": "No",
     "Hard limit": "Hard limit",
     "Man": "Man",
@@ -250,6 +265,7 @@ const answerLabelTranslations = {
     "Ja": "Oui",
     "Nieuwsgierig": "Curieux",
     "Alleen bespreken": "Discuter seulement",
+    "Later bespreken": "Discuter plus tard",
     "Nee": "Non",
     "Hard limit": "Limite absolue",
     "Man": "Homme",
@@ -272,6 +288,7 @@ const answerLabelTranslations = {
     "Ja": "Ja",
     "Nieuwsgierig": "Neugierig",
     "Alleen bespreken": "Nur besprechen",
+    "Later bespreken": "Später besprechen",
     "Nee": "Nein",
     "Hard limit": "Absolute Grenze",
     "Man": "Mann",
@@ -1820,6 +1837,8 @@ let flatQuestions = buildFlatQuestions();
 
 function buildFlatQuestions() {
   return categories.flatMap((category, categoryIndex) => {
+    if (state.selectedCategories?.[categoryIndex] === false) return [];
+
     const baseQuestions = category.questions.map((text, questionIndex) => ({
       id: `${categoryIndex}-${questionIndex}`,
       text,
@@ -2378,6 +2397,8 @@ const elements = {
   adultCheck: document.querySelector("#adultCheck"),
   consentCheck: document.querySelector("#consentCheck"),
   languageSelect: document.querySelector("#languageSelect"),
+  categoryPickerGrid: document.querySelector("#categoryPickerGrid"),
+  selectAllCategories: document.querySelector("#selectAllCategories"),
   enterButton: document.querySelector("#enterButton"),
   startButton: document.querySelector("#startButton"),
   resetButton: document.querySelector("#resetButton"),
@@ -2386,6 +2407,7 @@ const elements = {
   categoryTemplate: document.querySelector("#categoryButtonTemplate"),
   progressLabel: document.querySelector("#progressLabel"),
   progressBar: document.querySelector("#progressBar"),
+  liveSummary: document.querySelector("#liveSummary"),
   categoryKicker: document.querySelector("#categoryKicker"),
   title: document.querySelector("#questionnaire-title"),
   counter: document.querySelector("#questionCounter"),
@@ -2407,6 +2429,7 @@ init();
 
 function init() {
   applyLanguage();
+  buildCategoryPicker();
   buildCategories();
   bindEvents();
   updateEnterButtonState();
@@ -2429,16 +2452,40 @@ function loadState() {
     return {
       allowed: Boolean(saved?.allowed),
       language: supportedLanguages.includes(saved?.language) ? saved.language : defaultLanguage,
+      selectedCategories: normalizeSelectedCategories(saved?.selectedCategories),
       expandedCategories: saved?.expandedCategories || {},
       responses: saved?.responses || {}
     };
   } catch {
-    return { allowed: false, language: defaultLanguage, expandedCategories: {}, responses: {} };
+    return {
+      allowed: false,
+      language: defaultLanguage,
+      selectedCategories: defaultSelectedCategories(),
+      expandedCategories: {},
+      responses: {}
+    };
   }
 }
 
 function saveState() {
   localStorage.setItem(storageKey, JSON.stringify(state));
+}
+
+function defaultSelectedCategories() {
+  return Object.fromEntries(categories.map((_, index) => [index, true]));
+}
+
+function normalizeSelectedCategories(selectedCategories) {
+  const hasSavedChoice = selectedCategories && typeof selectedCategories === "object";
+  return Object.fromEntries(categories.map((_, index) => [index, hasSavedChoice ? selectedCategories[index] !== false : true]));
+}
+
+function selectedCategoryIndexes() {
+  return categories.map((_, index) => index).filter((index) => state.selectedCategories?.[index] !== false);
+}
+
+function hasSelectedCategory() {
+  return selectedCategoryIndexes().length > 0;
 }
 
 function t(key, replacements = {}) {
@@ -2474,6 +2521,7 @@ function applyLanguage() {
   elements.printResults.textContent = t("print");
   elements.shareNote.textContent = t("shareNote");
   document.querySelector(".results__head .kicker").textContent = t("summary");
+  buildCategoryPicker();
 }
 
 function localizeAnswerLabel(label) {
@@ -2488,6 +2536,36 @@ function localizeQuestion(question) {
   return questionTranslations[state.language]?.[question.id] || question.text;
 }
 
+function buildCategoryPicker() {
+  elements.categoryPickerGrid.innerHTML = "";
+
+  categories.forEach((category, index) => {
+    const label = document.createElement("label");
+    label.className = "category-choice";
+    label.innerHTML = `<input type="checkbox" value="${index}"><span>${escapeHtml(localizeCategoryTitle(category.title))}</span>`;
+    const checkbox = label.querySelector("input");
+    checkbox.checked = state.selectedCategories?.[index] !== false;
+    checkbox.addEventListener("change", () => {
+      state.selectedCategories[index] = checkbox.checked;
+      saveState();
+      refreshQuestionSet();
+      updateEnterButtonState();
+    });
+    elements.categoryPickerGrid.append(label);
+  });
+}
+
+function refreshQuestionSet() {
+  flatQuestions = buildFlatQuestions();
+  currentIndex = Math.max(0, Math.min(currentIndex, flatQuestions.length - 1));
+  buildCategories();
+  if (flatQuestions.length) {
+    renderQuestion();
+  } else {
+    updateProgress();
+  }
+}
+
 function bindEvents() {
   elements.languageSelect.addEventListener("change", () => {
     state.language = elements.languageSelect.value;
@@ -2498,6 +2576,14 @@ function bindEvents() {
     if (!elements.results.hidden) {
       renderResults(activeResultResponses, { shared: sharedMode });
     }
+    updateEnterButtonState();
+  });
+
+  elements.selectAllCategories.addEventListener("click", () => {
+    state.selectedCategories = defaultSelectedCategories();
+    saveState();
+    refreshQuestionSet();
+    buildCategoryPicker();
     updateEnterButtonState();
   });
 
@@ -2534,6 +2620,7 @@ function bindEvents() {
     localStorage.removeItem(storageKey);
     state.allowed = false;
     state.language = defaultLanguage;
+    state.selectedCategories = defaultSelectedCategories();
     state.expandedCategories = {};
     state.responses = {};
     currentIndex = 0;
@@ -2565,7 +2652,7 @@ function bindEvents() {
 }
 
 function updateEnterButtonState() {
-  elements.enterButton.disabled = !(elements.adultCheck.checked && elements.consentCheck.checked);
+  elements.enterButton.disabled = !(elements.adultCheck.checked && elements.consentCheck.checked && hasSelectedCategory());
 }
 
 function saveCurrentNote() {
@@ -2593,17 +2680,22 @@ function showQuestionnaire() {
 function buildCategories() {
   elements.categoryList.innerHTML = "";
   categories.forEach((category, index) => {
+    if (state.selectedCategories?.[index] === false) return;
+
     const row = document.createElement("div");
     row.className = "category-row";
     const fragment = elements.categoryTemplate.content.cloneNode(true);
     const button = fragment.querySelector("button");
     const expanded = Boolean(state.expandedCategories?.[index]);
     const extraCount = expandedQuestionGroups[index]?.length || 0;
+    const categoryQuestions = flatQuestions.filter((question) => question.categoryIndex === index);
+    const answeredCount = categoryQuestions.filter((question) => state.responses[question.id]?.answer).length;
     button.dataset.category = String(index);
     fragment.querySelector(".category-button__name").textContent = localizeCategoryTitle(category.title);
-    fragment.querySelector(".category-button__count").textContent = expanded ? `${category.questions.length}+${extraCount}` : `${category.questions.length}`;
+    fragment.querySelector(".category-button__count").textContent = `${answeredCount}/${categoryQuestions.length || category.questions.length + (expanded ? extraCount : 0)}`;
     button.addEventListener("click", () => {
       currentIndex = flatQuestions.findIndex((question) => question.categoryIndex === index);
+      if (currentIndex < 0) currentIndex = 0;
       renderQuestion();
     });
     row.append(fragment);
@@ -2645,6 +2737,7 @@ function buildAnswerOptions(question) {
       const response = getResponse(question.id);
       response.answer = event.target.value;
       saveState();
+      buildCategories();
       updateProgress();
     });
     elements.answerGrid.append(label);
@@ -2652,6 +2745,11 @@ function buildAnswerOptions(question) {
 }
 
 function renderQuestion() {
+  if (!flatQuestions.length) {
+    updateProgress();
+    return;
+  }
+
   const question = flatQuestions[currentIndex];
   const response = getResponse(question.id);
 
@@ -2681,9 +2779,18 @@ function getResponse(id) {
 
 function updateProgress() {
   const answered = flatQuestions.filter((question) => state.responses[question.id]?.answer).length;
-  const percent = Math.round((answered / flatQuestions.length) * 100);
+  const percent = flatQuestions.length ? Math.round((answered / flatQuestions.length) * 100) : 0;
   elements.progressLabel.textContent = t("answered", { answered, total: flatQuestions.length });
   elements.progressBar.style.width = `${percent}%`;
+  renderLiveSummary();
+}
+
+function renderLiveSummary() {
+  const summaryItems = buildSummaryItems(state.responses);
+  elements.liveSummary.hidden = summaryItems.length === 0;
+  elements.liveSummary.innerHTML = summaryItems
+    .map((item) => `<span class="live-chip"><strong>${item.count}</strong>${escapeHtml(item.label)}</span>`)
+    .join("");
 }
 
 function renderResults(responses = state.responses, options = {}) {
@@ -2721,7 +2828,7 @@ function renderResults(responses = state.responses, options = {}) {
       }))
       .filter((item) => !sharedMode || item.response.answer || item.response.note);
 
-    if (sharedMode && items.length === 0) return;
+    if (items.length === 0) return;
 
     elements.resultsGrid.append(buildResultCategory(localizeCategoryTitle(category.title), items, { expandable: sharedMode }));
   });
@@ -2775,8 +2882,10 @@ function buildResultsText(responses) {
         const note = response.note ? ` | ${t("note")}: ${response.note}` : "";
         return `- ${localizeQuestion(question)}: ${answer}${note}`;
       });
+      if (lines.length === 0) return "";
       return `${localizeCategoryTitle(category.title)}\n${lines.join("\n")}`;
     })
+    .filter(Boolean)
     .join("\n\n");
 }
 
@@ -2833,6 +2942,7 @@ function buildSummaryItems(responses) {
     "Opbouwen",
     "Alleen bespreken",
     "Bespreken",
+    "Later bespreken",
     "Man",
     "Vrouw",
     "Beide",
@@ -2864,7 +2974,13 @@ function encodeSharePayload(responses) {
       .filter(([, response]) => response?.answer || response?.note)
       .map(([id, response]) => [id, [response.answer || "", response.note || ""]])
   );
-  const payload = JSON.stringify({ v: 1, lang: state.language, x: state.expandedCategories || {}, r: compactResponses });
+  const payload = JSON.stringify({
+    v: 1,
+    lang: state.language,
+    c: state.selectedCategories || defaultSelectedCategories(),
+    x: state.expandedCategories || {},
+    r: compactResponses
+  });
   return toBase64Url(payload);
 }
 
@@ -2877,6 +2993,10 @@ function readSharedResponsesFromHash() {
     if (supportedLanguages.includes(payload.lang)) {
       state.language = payload.lang;
     }
+    state.selectedCategories =
+      payload.c && typeof payload.c === "object"
+        ? normalizeSelectedCategories(payload.c)
+        : Object.fromEntries(categories.map((_, index) => [index, false]));
     state.expandedCategories = payload.x && typeof payload.x === "object" ? payload.x : {};
 
     const responses = Object.fromEntries(
@@ -2891,7 +3011,12 @@ function readSharedResponsesFromHash() {
     Object.keys(responses).forEach((id) => {
       const match = id.match(/^x-(\d+)-/);
       if (match) state.expandedCategories[match[1]] = true;
+      const categoryMatch = id.match(/^(?:x-)?(\d+)-/);
+      if (!payload.c && categoryMatch) state.selectedCategories[categoryMatch[1]] = true;
     });
+    if (!hasSelectedCategory()) {
+      state.selectedCategories = defaultSelectedCategories();
+    }
     return responses;
   } catch {
     showToast(t("badLink"));

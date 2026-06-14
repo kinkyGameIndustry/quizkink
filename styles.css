@@ -247,6 +247,54 @@ h2 {
   color: var(--ink);
 }
 
+.category-picker {
+  display: grid;
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.category-picker__head {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-weight: 850;
+}
+
+.category-picker__all {
+  min-height: 38px;
+  padding: 0 12px;
+  font-size: 0.82rem;
+}
+
+.category-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.category-choice {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 9px;
+  align-items: center;
+  min-height: 44px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(244, 239, 232, 0.055);
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 760;
+}
+
+.category-choice input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--teal);
+}
+
 .workspace {
   width: min(1200px, calc(100% - 32px));
   margin: -36px auto 72px;
@@ -285,6 +333,33 @@ h2 {
   height: 100%;
   background: linear-gradient(90deg, var(--teal), var(--accent-strong), var(--gold));
   transition: width 180ms ease;
+}
+
+.live-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.live-chip {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(244, 239, 232, 0.06);
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.live-chip strong {
+  display: inline;
+  color: var(--ink);
+  font-size: inherit;
 }
 
 .category-list {
@@ -364,7 +439,7 @@ h2 {
 
 .answer-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 10px;
   margin: 34px 0 0;
   padding: 0;
@@ -669,6 +744,10 @@ h2 {
 }
 
 @media (max-width: 560px) {
+  .category-picker__grid {
+    grid-template-columns: 1fr;
+  }
+
   .category-list {
     grid-template-columns: 1fr;
   }
