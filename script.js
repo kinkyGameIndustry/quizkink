@@ -222,6 +222,9 @@ const categories = [
 const storageKey = "kink-questionnaire-v1";
 const state = loadState();
 let currentIndex = 0;
+let pendingSharedResponses = readSharedResponsesFromHash();
+let activeResultResponses = state.responses;
+let sharedMode = false;
 
 const flatQuestions = categories.flatMap((category, categoryIndex) =>
   category.questions.map((text, questionIndex) => ({
@@ -254,8 +257,10 @@ const elements = {
   results: document.querySelector("#results"),
   summaryStrip: document.querySelector("#summaryStrip"),
   resultsGrid: document.querySelector("#resultsGrid"),
+  shareNote: document.querySelector("#shareNote"),
   backToQuestions: document.querySelector("#backToQuestions"),
   copyResults: document.querySelector("#copyResults"),
+  copyShareLink: document.querySelector("#copyShareLink"),
   printResults: document.querySelector("#printResults")
 };
 
@@ -265,6 +270,11 @@ function init() {
   buildCategories();
   buildAnswerOptions();
   bindEvents();
+
+  if (pendingSharedResponses && state.allowed) {
+    renderResults(pendingSharedResponses, { shared: true });
+    return;
+  }
 
   if (state.allowed) {
     showQuestionnaire();
@@ -299,6 +309,10 @@ function bindEvents() {
   elements.enterButton.addEventListener("click", () => {
     state.allowed = true;
     saveState();
+    if (pendingSharedResponses) {
+      renderResults(pendingSharedResponses, { shared: true });
+      return;
+    }
     showQuestionnaire();
   });
 
@@ -343,9 +357,15 @@ function bindEvents() {
   elements.backToQuestions.addEventListener("click", showQuestionnaire);
   elements.printResults.addEventListener("click", () => window.print());
   elements.copyResults.addEventListener("click", copyResults);
+  elements.copyShareLink.addEventListener("click", copyShareLink);
 }
 
 function showQuestionnaire() {
+  sharedMode = false;
+  activeResultResponses = state.responses;
+  if (location.hash.startsWith("#share=")) {
+    history.replaceState(null, "", `${location.pathname}${location.search}`);
+  }
   elements.ageGate.hidden = true;
   elements.results.hidden = true;
   elements.questionnaire.hidden = false;
@@ -425,14 +445,21 @@ function updateProgress() {
   elements.progressBar.style.width = `${percent}%`;
 }
 
-function renderResults() {
+function renderResults(responses = state.responses, options = {}) {
+  activeResultResponses = responses;
+  sharedMode = Boolean(options.shared);
   elements.questionnaire.hidden = true;
+  elements.ageGate.hidden = true;
   elements.results.hidden = false;
   elements.summaryStrip.innerHTML = "";
   elements.resultsGrid.innerHTML = "";
+  document.querySelector("#results-title").textContent = sharedMode ? "Gedeelde kaart" : "Jouw kaart";
+  elements.backToQuestions.textContent = sharedMode ? "Start eigen lijst" : "Terug";
+  elements.copyShareLink.hidden = sharedMode;
+  elements.shareNote.hidden = sharedMode;
 
   answers.forEach((answer) => {
-    const count = flatQuestions.filter((question) => state.responses[question.id]?.answer === answer.key).length;
+    const count = flatQuestions.filter((question) => responses[question.id]?.answer === answer.key).length;
     const item = document.createElement("div");
     item.className = "summary-pill";
     item.innerHTML = `<strong>${count}</strong><span>${answer.label}</span>`;
@@ -445,7 +472,7 @@ function renderResults() {
     const list = category.questions
       .map((question, questionIndex) => {
         const id = `${categoryIndex}-${questionIndex}`;
-        const response = state.responses[id] || {};
+        const response = responses[id] || {};
         const answer = answers.find((item) => item.key === response.answer)?.label || "Niet beantwoord";
         const note = response.note ? `<span class="result-note">${escapeHtml(response.note)}</span>` : "";
         return `<li><span>${escapeHtml(question)}</span><span class="result-answer">${answer}</span>${note}</li>`;
@@ -460,11 +487,24 @@ function renderResults() {
 }
 
 async function copyResults() {
-  const text = categories
+  const text = buildResultsText(activeResultResponses);
+  await writeClipboard(text);
+  showToast("Samenvatting gekopieerd.");
+}
+
+async function copyShareLink() {
+  const payload = encodeSharePayload(state.responses);
+  const url = `${location.origin}${location.pathname}${location.search}#share=${payload}`;
+  await writeClipboard(url);
+  showToast("Partnerlink gekopieerd.");
+}
+
+function buildResultsText(responses) {
+  return categories
     .map((category, categoryIndex) => {
       const lines = category.questions.map((question, questionIndex) => {
         const id = `${categoryIndex}-${questionIndex}`;
-        const response = state.responses[id] || {};
+        const response = responses[id] || {};
         const answer = answers.find((item) => item.key === response.answer)?.label || "Niet beantwoord";
         const note = response.note ? ` | Notitie: ${response.note}` : "";
         return `- ${question}: ${answer}${note}`;
@@ -472,9 +512,71 @@ async function copyResults() {
       return `${category.title}\n${lines.join("\n")}`;
     })
     .join("\n\n");
+}
 
-  await navigator.clipboard.writeText(text);
-  showToast("Samenvatting gekopieerd.");
+function encodeSharePayload(responses) {
+  const compactResponses = Object.fromEntries(
+    Object.entries(responses)
+      .filter(([, response]) => response?.answer || response?.note)
+      .map(([id, response]) => [id, [response.answer || "", response.note || ""]])
+  );
+  const payload = JSON.stringify({ v: 1, r: compactResponses });
+  return toBase64Url(payload);
+}
+
+function readSharedResponsesFromHash() {
+  if (!location.hash.startsWith("#share=")) return null;
+
+  try {
+    const payload = JSON.parse(fromBase64Url(location.hash.slice("#share=".length)));
+    if (payload?.v !== 1 || !payload.r || typeof payload.r !== "object") return null;
+
+    return Object.fromEntries(
+      Object.entries(payload.r).map(([id, value]) => [
+        id,
+        {
+          answer: typeof value?.[0] === "string" ? value[0] : "",
+          note: typeof value?.[1] === "string" ? value[1] : ""
+        }
+      ])
+    );
+  } catch {
+    showToast("Deze partnerlink kon niet worden gelezen.");
+    return null;
+  }
+}
+
+function toBase64Url(value) {
+  const bytes = new TextEncoder().encode(value);
+  let binary = "";
+  bytes.forEach((byte) => {
+    binary += String.fromCharCode(byte);
+  });
+  return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replaceAll("=", "");
+}
+
+function fromBase64Url(value) {
+  const base64 = value.replaceAll("-", "+").replaceAll("_", "/").padEnd(Math.ceil(value.length / 4) * 4, "=");
+  const binary = atob(base64);
+  const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+async function writeClipboard(value) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = value;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  document.body.append(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  textarea.remove();
 }
 
 function showToast(message) {
