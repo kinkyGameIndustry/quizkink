@@ -608,6 +608,7 @@ function init() {
   applyLanguage();
   buildCategories();
   bindEvents();
+  updateEnterButtonState();
 
   if (pendingSharedResponses && state.allowed) {
     renderResults(pendingSharedResponses, { shared: true });
@@ -695,15 +696,20 @@ function bindEvents() {
     if (!elements.results.hidden) {
       renderResults(activeResultResponses, { shared: sharedMode });
     }
+    updateEnterButtonState();
   });
 
-  [elements.adultCheck, elements.consentCheck].forEach((checkbox) => {
-    checkbox.addEventListener("change", () => {
-      elements.enterButton.disabled = !(elements.adultCheck.checked && elements.consentCheck.checked);
+  ["change", "input", "click"].forEach((eventName) => {
+    [elements.adultCheck, elements.consentCheck].forEach((checkbox) => {
+      checkbox.addEventListener(eventName, updateEnterButtonState);
     });
   });
 
+  window.addEventListener("pageshow", updateEnterButtonState);
+
   elements.enterButton.addEventListener("click", () => {
+    updateEnterButtonState();
+    if (elements.enterButton.disabled) return;
     state.allowed = true;
     saveState();
     if (pendingSharedResponses) {
@@ -753,6 +759,10 @@ function bindEvents() {
   elements.printResults.addEventListener("click", () => window.print());
   elements.copyResults.addEventListener("click", copyResults);
   elements.copyShareLink.addEventListener("click", copyShareLink);
+}
+
+function updateEnterButtonState() {
+  elements.enterButton.disabled = !(elements.adultCheck.checked && elements.consentCheck.checked);
 }
 
 function saveCurrentNote() {
