@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="nl">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,23 +26,32 @@
         </div>
       </section>
 
-      <section class="age-gate" id="ageGate" aria-labelledby="age-title">
+      <section class="age-gate" id="ageGate" aria-labelledby="age-title" role="dialog" aria-modal="true">
         <div class="age-gate__panel">
-          <p class="kicker">18+</p>
-          <h2 id="age-title">Alleen voor volwassenen</h2>
-          <p>
-            Deze vragenlijst gaat over seksualiteit, macht, spel, grenzen en consent. Ga alleen verder als je 18 jaar
-            of ouder bent en dit vrijwillig wilt invullen.
+          <p class="kicker" data-i18n="adultKicker">18+</p>
+          <h2 id="age-title" data-i18n="adultTitle">Adults only</h2>
+          <p data-i18n="adultCopy">
+            This questionnaire is about sexuality, power, play, boundaries and consent. Continue only if you are 18 or
+            older and you want to fill this in voluntarily.
           </p>
+          <label class="language-field" for="languageSelect">
+            <span data-i18n="languageLabel">Language</span>
+            <select id="languageSelect">
+              <option value="en">English</option>
+              <option value="nl">Nederlands</option>
+              <option value="fr">Français</option>
+              <option value="de">Deutsch</option>
+            </select>
+          </label>
           <label class="checkline">
             <input type="checkbox" id="adultCheck">
-            <span>Ik ben 18 jaar of ouder.</span>
+            <span data-i18n="adultCheck">I am 18 years or older.</span>
           </label>
           <label class="checkline">
             <input type="checkbox" id="consentCheck">
-            <span>Ik begrijp dat consent, nazorg en duidelijke grenzen centraal staan.</span>
+            <span data-i18n="consentCheck">I understand that consent, aftercare and clear boundaries are central.</span>
           </label>
-          <button class="primary-btn" id="enterButton" type="button" disabled>Ga verder</button>
+          <button class="primary-btn" id="enterButton" type="button" disabled data-i18n="continueButton">Continue</button>
         </div>
       </section>
 

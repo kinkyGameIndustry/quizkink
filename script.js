@@ -44,6 +44,305 @@ const answerSets = {
   ]
 };
 
+const defaultLanguage = "en";
+const supportedLanguages = ["en", "nl", "fr", "de"];
+
+const uiText = {
+  en: {
+    documentTitle: "Intimate Boundaries | BDSM, Fetish & Kink Questionnaire",
+    description: "A privacy-friendly BDSM, fetish and kink questionnaire for adults.",
+    heroKicker: "Private, local, adult",
+    heroTitle: "BDSM, Fetish & Kink Questionnaire",
+    intro: "Explore desires, curiosity and boundaries with clear language. Your answers stay in this browser.",
+    start: "Start questionnaire",
+    reset: "Clear answers",
+    adultKicker: "18+",
+    adultTitle: "Adults only",
+    adultCopy: "This questionnaire is about sexuality, power, play, boundaries and consent. Continue only if you are 18 or older and you want to fill this in voluntarily.",
+    languageLabel: "Language",
+    adultCheck: "I am 18 years or older.",
+    consentCheck: "I understand that consent, aftercare and clear boundaries are central.",
+    continueButton: "Continue",
+    progress: "Progress",
+    categories: "Categories",
+    questionFallback: "Question",
+    answerHelp: "Choose what feels honest now. You can adjust everything later.",
+    notesLabel: "Note for yourself or partner",
+    notesPlaceholder: "For example: context, pace, words, triggers, aftercare...",
+    previous: "Previous",
+    next: "Next",
+    viewResults: "View result",
+    summary: "Summary",
+    yourCard: "Your card",
+    sharedCard: "Shared card",
+    back: "Back",
+    startOwn: "Start own list",
+    copy: "Copy",
+    partnerLink: "Partner link",
+    print: "Print",
+    shareNote: "The partner link stores answers inside the link itself. Share it only with someone who may read these results.",
+    note: "Note",
+    copiedSummary: "Summary copied.",
+    copiedPartner: "Partner link copied.",
+    badLink: "This partner link could not be read.",
+    clearConfirm: "Clear all local answers?",
+    answered: "{answered} of {total}",
+    notAnswered: "Not answered"
+  },
+  nl: {
+    documentTitle: "Intieme Grenzen | BDSM, Fetish & Kink Vragenlijst",
+    description: "Een privacyvriendelijke BDSM, fetish en kink vragenlijst voor volwassenen.",
+    heroKicker: "Privé, lokaal, volwassen",
+    heroTitle: "BDSM, Fetish & Kink Vragenlijst",
+    intro: "Verken verlangens, nieuwsgierigheid en grenzen met duidelijke taal. Je antwoorden blijven in deze browser.",
+    start: "Start vragenlijst",
+    reset: "Wis antwoorden",
+    adultKicker: "18+",
+    adultTitle: "Alleen voor volwassenen",
+    adultCopy: "Deze vragenlijst gaat over seksualiteit, macht, spel, grenzen en consent. Ga alleen verder als je 18 jaar of ouder bent en dit vrijwillig wilt invullen.",
+    languageLabel: "Taal",
+    adultCheck: "Ik ben 18 jaar of ouder.",
+    consentCheck: "Ik begrijp dat consent, nazorg en duidelijke grenzen centraal staan.",
+    continueButton: "Ga verder",
+    progress: "Voortgang",
+    categories: "Categorieën",
+    questionFallback: "Vraag",
+    answerHelp: "Kies wat nu eerlijk voelt. Je kunt alles later aanpassen.",
+    notesLabel: "Notitie voor jezelf of partner",
+    notesPlaceholder: "Bijvoorbeeld: context, tempo, woorden, triggers, nazorg...",
+    previous: "Vorige",
+    next: "Volgende",
+    viewResults: "Bekijk resultaat",
+    summary: "Samenvatting",
+    yourCard: "Jouw kaart",
+    sharedCard: "Gedeelde kaart",
+    back: "Terug",
+    startOwn: "Start eigen lijst",
+    copy: "Kopieer",
+    partnerLink: "Partnerlink",
+    print: "Print",
+    shareNote: "De partnerlink bewaart antwoorden in de link zelf. Deel hem alleen met iemand die deze resultaten mag lezen.",
+    note: "Notitie",
+    copiedSummary: "Samenvatting gekopieerd.",
+    copiedPartner: "Partnerlink gekopieerd.",
+    badLink: "Deze partnerlink kon niet worden gelezen.",
+    clearConfirm: "Alle lokale antwoorden wissen?",
+    answered: "{answered} van {total}",
+    notAnswered: "Niet beantwoord"
+  },
+  fr: {
+    documentTitle: "Limites Intimes | Questionnaire BDSM, fétiche & kink",
+    description: "Un questionnaire BDSM, fétiche et kink respectueux de la vie privée pour adultes.",
+    heroKicker: "Privé, local, adulte",
+    heroTitle: "Questionnaire BDSM, fétiche & kink",
+    intro: "Explorez désirs, curiosité et limites avec un langage clair. Vos réponses restent dans ce navigateur.",
+    start: "Commencer",
+    reset: "Effacer les réponses",
+    adultKicker: "18+",
+    adultTitle: "Adultes uniquement",
+    adultCopy: "Ce questionnaire parle de sexualité, pouvoir, jeu, limites et consentement. Continuez seulement si vous avez 18 ans ou plus et si vous voulez le remplir volontairement.",
+    languageLabel: "Langue",
+    adultCheck: "J'ai 18 ans ou plus.",
+    consentCheck: "Je comprends que le consentement, l'aftercare et les limites claires sont essentiels.",
+    continueButton: "Continuer",
+    progress: "Progression",
+    categories: "Catégories",
+    questionFallback: "Question",
+    answerHelp: "Choisissez ce qui vous semble honnête maintenant. Vous pourrez tout modifier plus tard.",
+    notesLabel: "Note pour vous ou votre partenaire",
+    notesPlaceholder: "Par exemple : contexte, rythme, mots, déclencheurs, aftercare...",
+    previous: "Précédent",
+    next: "Suivant",
+    viewResults: "Voir le résultat",
+    summary: "Résumé",
+    yourCard: "Votre carte",
+    sharedCard: "Carte partagée",
+    back: "Retour",
+    startOwn: "Commencer ma liste",
+    copy: "Copier",
+    partnerLink: "Lien partenaire",
+    print: "Imprimer",
+    shareNote: "Le lien partenaire stocke les réponses dans le lien lui-même. Partagez-le seulement avec une personne autorisée à lire ces résultats.",
+    note: "Note",
+    copiedSummary: "Résumé copié.",
+    copiedPartner: "Lien partenaire copié.",
+    badLink: "Ce lien partenaire n'a pas pu être lu.",
+    clearConfirm: "Effacer toutes les réponses locales ?",
+    answered: "{answered} sur {total}",
+    notAnswered: "Sans réponse"
+  },
+  de: {
+    documentTitle: "Intime Grenzen | BDSM-, Fetisch- & Kink-Fragebogen",
+    description: "Ein datenschutzfreundlicher BDSM-, Fetisch- und Kink-Fragebogen für Erwachsene.",
+    heroKicker: "Privat, lokal, erwachsen",
+    heroTitle: "BDSM-, Fetisch- & Kink-Fragebogen",
+    intro: "Erkunde Wünsche, Neugier und Grenzen mit klarer Sprache. Deine Antworten bleiben in diesem Browser.",
+    start: "Fragebogen starten",
+    reset: "Antworten löschen",
+    adultKicker: "18+",
+    adultTitle: "Nur für Erwachsene",
+    adultCopy: "Dieser Fragebogen behandelt Sexualität, Macht, Spiel, Grenzen und Consent. Fahre nur fort, wenn du mindestens 18 Jahre alt bist und ihn freiwillig ausfüllen möchtest.",
+    languageLabel: "Sprache",
+    adultCheck: "Ich bin 18 Jahre oder älter.",
+    consentCheck: "Ich verstehe, dass Consent, Nachsorge und klare Grenzen zentral sind.",
+    continueButton: "Weiter",
+    progress: "Fortschritt",
+    categories: "Kategorien",
+    questionFallback: "Frage",
+    answerHelp: "Wähle, was sich jetzt ehrlich anfühlt. Du kannst später alles ändern.",
+    notesLabel: "Notiz für dich oder Partner",
+    notesPlaceholder: "Zum Beispiel: Kontext, Tempo, Wörter, Trigger, Nachsorge...",
+    previous: "Zurück",
+    next: "Weiter",
+    viewResults: "Ergebnis ansehen",
+    summary: "Zusammenfassung",
+    yourCard: "Deine Karte",
+    sharedCard: "Geteilte Karte",
+    back: "Zurück",
+    startOwn: "Eigene Liste starten",
+    copy: "Kopieren",
+    partnerLink: "Partnerlink",
+    print: "Drucken",
+    shareNote: "Der Partnerlink speichert Antworten im Link selbst. Teile ihn nur mit jemandem, der diese Ergebnisse lesen darf.",
+    note: "Notiz",
+    copiedSummary: "Zusammenfassung kopiert.",
+    copiedPartner: "Partnerlink kopiert.",
+    badLink: "Dieser Partnerlink konnte nicht gelesen werden.",
+    clearConfirm: "Alle lokalen Antworten löschen?",
+    answered: "{answered} von {total}",
+    notAnswered: "Nicht beantwortet"
+  }
+};
+
+const answerLabelTranslations = {
+  en: {
+    "Ja": "Yes",
+    "Nieuwsgierig": "Curious",
+    "Alleen bespreken": "Discuss only",
+    "Nee": "No",
+    "Hard limit": "Hard limit",
+    "Man": "Man",
+    "Vrouw": "Woman",
+    "Beide": "Both",
+    "Bespreken": "Discuss",
+    "Subtiel": "Subtle",
+    "Alleen privé": "Private only",
+    "Interesse": "Interested",
+    "Opbouwen": "Build up",
+    "Gezicht": "Face",
+    "Mond": "Mouth",
+    "Borsten": "Chest",
+    "Lichaam": "Body",
+    "Zacht": "Soft",
+    "Middel": "Medium",
+    "Stevig": "Firm"
+  },
+  nl: {},
+  fr: {
+    "Ja": "Oui",
+    "Nieuwsgierig": "Curieux",
+    "Alleen bespreken": "Discuter seulement",
+    "Nee": "Non",
+    "Hard limit": "Limite absolue",
+    "Man": "Homme",
+    "Vrouw": "Femme",
+    "Beide": "Les deux",
+    "Bespreken": "Discuter",
+    "Subtiel": "Subtil",
+    "Alleen privé": "Seulement en privé",
+    "Interesse": "Intéressé",
+    "Opbouwen": "Progressivement",
+    "Gezicht": "Visage",
+    "Mond": "Bouche",
+    "Borsten": "Poitrine",
+    "Lichaam": "Corps",
+    "Zacht": "Doux",
+    "Middel": "Moyen",
+    "Stevig": "Intense"
+  },
+  de: {
+    "Ja": "Ja",
+    "Nieuwsgierig": "Neugierig",
+    "Alleen bespreken": "Nur besprechen",
+    "Nee": "Nein",
+    "Hard limit": "Absolute Grenze",
+    "Man": "Mann",
+    "Vrouw": "Frau",
+    "Beide": "Beide",
+    "Bespreken": "Besprechen",
+    "Subtiel": "Dezent",
+    "Alleen privé": "Nur privat",
+    "Interesse": "Interesse",
+    "Opbouwen": "Langsam aufbauen",
+    "Gezicht": "Gesicht",
+    "Mond": "Mund",
+    "Borsten": "Brust",
+    "Lichaam": "Körper",
+    "Zacht": "Sanft",
+    "Middel": "Mittel",
+    "Stevig": "Stark"
+  }
+};
+
+const categoryTitleTranslations = {
+  en: {
+    "Consent & Communicatie": "Consent & Communication",
+    "Dynamiek": "Dynamics",
+    "Bondage & Beperking": "Bondage & Restraint",
+    "Impact & Sensatie": "Impact & Sensation",
+    "Fetish & Esthetiek": "Fetish & Aesthetics",
+    "Anaal & Penetratie": "Anal & Penetration",
+    "Orale Seks & Lichaamsvocht": "Oral Sex & Body Fluids",
+    "Toys & Hulpmiddelen": "Toys & Tools",
+    "Meer Personen": "More People",
+    "Swingers & Open Relatie": "Swingers & Open Relationship",
+    "Publiek & Locaties": "Public & Locations",
+    "Foto, Video & Privacy": "Photo, Video & Privacy",
+    "Middelen & Energie": "Substances & Energy",
+    "Nazorg & Veiligheid": "Aftercare & Safety"
+  },
+  nl: {},
+  fr: {
+    "Consent & Communicatie": "Consentement & communication",
+    "Dynamiek": "Dynamiques",
+    "Bondage & Beperking": "Bondage & restriction",
+    "Impact & Sensatie": "Impact & sensation",
+    "Fetish & Esthetiek": "Fétiche & esthétique",
+    "Anaal & Penetratie": "Anal & pénétration",
+    "Orale Seks & Lichaamsvocht": "Sexe oral & fluides corporels",
+    "Toys & Hulpmiddelen": "Jouets & accessoires",
+    "Meer Personen": "Plusieurs personnes",
+    "Swingers & Open Relatie": "Swingers & relation ouverte",
+    "Publiek & Locaties": "Public & lieux",
+    "Foto, Video & Privacy": "Photo, vidéo & confidentialité",
+    "Middelen & Energie": "Substances & énergie",
+    "Nazorg & Veiligheid": "Aftercare & sécurité"
+  },
+  de: {
+    "Consent & Communicatie": "Consent & Kommunikation",
+    "Dynamiek": "Dynamiken",
+    "Bondage & Beperking": "Bondage & Einschränkung",
+    "Impact & Sensatie": "Impact & Empfindung",
+    "Fetish & Esthetiek": "Fetisch & Ästhetik",
+    "Anaal & Penetratie": "Anal & Penetration",
+    "Orale Seks & Lichaamsvocht": "Oralsex & Körperflüssigkeiten",
+    "Toys & Hulpmiddelen": "Toys & Hilfsmittel",
+    "Meer Personen": "Mehr Personen",
+    "Swingers & Open Relatie": "Swinger & offene Beziehung",
+    "Publiek & Locaties": "Öffentlichkeit & Orte",
+    "Foto, Video & Privacy": "Foto, Video & Privatsphäre",
+    "Middelen & Energie": "Substanzen & Energie",
+    "Nazorg & Veiligheid": "Nachsorge & Sicherheit"
+  }
+};
+
+const questionTranslations = {
+  en: {},
+  nl: {},
+  fr: {},
+  de: {}
+};
+
 const categories = [
   {
     title: "Consent & Communicatie",
@@ -277,6 +576,7 @@ const elements = {
   ageGate: document.querySelector("#ageGate"),
   adultCheck: document.querySelector("#adultCheck"),
   consentCheck: document.querySelector("#consentCheck"),
+  languageSelect: document.querySelector("#languageSelect"),
   enterButton: document.querySelector("#enterButton"),
   startButton: document.querySelector("#startButton"),
   resetButton: document.querySelector("#resetButton"),
@@ -305,6 +605,7 @@ const elements = {
 init();
 
 function init() {
+  applyLanguage();
   buildCategories();
   bindEvents();
 
@@ -325,10 +626,11 @@ function loadState() {
     const saved = JSON.parse(localStorage.getItem(storageKey));
     return {
       allowed: Boolean(saved?.allowed),
+      language: supportedLanguages.includes(saved?.language) ? saved.language : defaultLanguage,
       responses: saved?.responses || {}
     };
   } catch {
-    return { allowed: false, responses: {} };
+    return { allowed: false, language: defaultLanguage, responses: {} };
   }
 }
 
@@ -336,7 +638,65 @@ function saveState() {
   localStorage.setItem(storageKey, JSON.stringify(state));
 }
 
+function t(key, replacements = {}) {
+  const value = uiText[state.language]?.[key] || uiText[defaultLanguage][key] || key;
+  return Object.entries(replacements).reduce((text, [name, replacement]) => text.replaceAll(`{${name}}`, replacement), value);
+}
+
+function applyLanguage() {
+  const language = supportedLanguages.includes(state.language) ? state.language : defaultLanguage;
+  state.language = language;
+  document.documentElement.lang = language;
+  document.title = t("documentTitle");
+  document.querySelector("meta[name='description']")?.setAttribute("content", t("description"));
+  elements.languageSelect.value = language;
+
+  document.querySelectorAll("[data-i18n]").forEach((node) => {
+    node.textContent = t(node.dataset.i18n);
+  });
+
+  document.querySelector(".hero .kicker").textContent = t("heroKicker");
+  document.querySelector("#page-title").textContent = t("heroTitle");
+  document.querySelector(".intro").textContent = t("intro");
+  elements.startButton.textContent = t("start");
+  elements.resetButton.textContent = t("reset");
+  document.querySelector(".progress-card .kicker").textContent = t("progress");
+  document.querySelector(".sidebar").setAttribute("aria-label", t("categories"));
+  document.querySelector("#answerHelp").textContent = t("answerHelp");
+  document.querySelector(".notes span").textContent = t("notesLabel");
+  elements.noteInput.placeholder = t("notesPlaceholder");
+  elements.prevButton.textContent = t("previous");
+  elements.copyResults.textContent = t("copy");
+  elements.copyShareLink.textContent = t("partnerLink");
+  elements.printResults.textContent = t("print");
+  elements.shareNote.textContent = t("shareNote");
+  document.querySelector(".results__head .kicker").textContent = t("summary");
+}
+
+function localizeAnswerLabel(label) {
+  return answerLabelTranslations[state.language]?.[label] || label;
+}
+
+function localizeCategoryTitle(title) {
+  return categoryTitleTranslations[state.language]?.[title] || title;
+}
+
+function localizeQuestion(question) {
+  return questionTranslations[state.language]?.[question.id] || question.text;
+}
+
 function bindEvents() {
+  elements.languageSelect.addEventListener("change", () => {
+    state.language = elements.languageSelect.value;
+    saveState();
+    applyLanguage();
+    buildCategories();
+    renderQuestion();
+    if (!elements.results.hidden) {
+      renderResults(activeResultResponses, { shared: sharedMode });
+    }
+  });
+
   [elements.adultCheck, elements.consentCheck].forEach((checkbox) => {
     checkbox.addEventListener("change", () => {
       elements.enterButton.disabled = !(elements.adultCheck.checked && elements.consentCheck.checked);
@@ -355,16 +715,17 @@ function bindEvents() {
 
   elements.startButton.addEventListener("click", () => {
     if (!state.allowed) {
-      elements.ageGate.scrollIntoView({ behavior: "smooth", block: "center" });
+      elements.ageGate.hidden = false;
       return;
     }
     showQuestionnaire();
   });
 
   elements.resetButton.addEventListener("click", () => {
-    if (!confirm("Alle lokale antwoorden wissen?")) return;
+    if (!confirm(t("clearConfirm"))) return;
     localStorage.removeItem(storageKey);
     state.allowed = false;
+    state.language = defaultLanguage;
     state.responses = {};
     currentIndex = 0;
     location.reload();
@@ -404,6 +765,7 @@ function saveCurrentNote() {
 
 function showQuestionnaire() {
   sharedMode = false;
+  document.body.classList.remove("is-shared-view");
   activeResultResponses = state.responses;
   if (location.hash.startsWith("#share=")) {
     history.replaceState(null, "", `${location.pathname}${location.search}`);
@@ -421,7 +783,7 @@ function buildCategories() {
     const fragment = elements.categoryTemplate.content.cloneNode(true);
     const button = fragment.querySelector("button");
     button.dataset.category = String(index);
-    fragment.querySelector(".category-button__name").textContent = category.title;
+    fragment.querySelector(".category-button__name").textContent = localizeCategoryTitle(category.title);
     fragment.querySelector(".category-button__count").textContent = `${category.questions.length}`;
     button.addEventListener("click", () => {
       currentIndex = flatQuestions.findIndex((question) => question.categoryIndex === index);
@@ -435,13 +797,13 @@ function buildAnswerOptions(question) {
   elements.answerGrid.innerHTML = "";
   const legend = document.createElement("legend");
   legend.className = "sr-only";
-  legend.textContent = "Antwoord";
+  legend.textContent = t("questionFallback");
   elements.answerGrid.append(legend);
 
   getAnswerOptions(question).forEach((answer) => {
     const label = document.createElement("label");
     label.className = "answer-option";
-    label.innerHTML = `<input type="radio" name="answer" value="${answer.key}"><span>${answer.label}</span>`;
+    label.innerHTML = `<input type="radio" name="answer" value="${answer.key}"><span>${localizeAnswerLabel(answer.label)}</span>`;
     label.querySelector("input").addEventListener("change", (event) => {
       const question = flatQuestions[currentIndex];
       const response = getResponse(question.id);
@@ -458,12 +820,12 @@ function renderQuestion() {
   const response = getResponse(question.id);
 
   buildAnswerOptions(question);
-  elements.categoryKicker.textContent = question.category;
-  elements.title.textContent = question.text;
+  elements.categoryKicker.textContent = localizeCategoryTitle(question.category);
+  elements.title.textContent = localizeQuestion(question);
   elements.counter.textContent = `${currentIndex + 1} / ${flatQuestions.length}`;
   elements.noteInput.value = response.note || "";
   elements.prevButton.disabled = currentIndex === 0;
-  elements.nextButton.textContent = currentIndex === flatQuestions.length - 1 ? "Bekijk resultaat" : "Volgende";
+  elements.nextButton.textContent = currentIndex === flatQuestions.length - 1 ? t("viewResults") : t("next");
 
   document.querySelectorAll("[name='answer']").forEach((input) => {
     input.checked = input.value === response.answer;
@@ -484,7 +846,7 @@ function getResponse(id) {
 function updateProgress() {
   const answered = flatQuestions.filter((question) => state.responses[question.id]?.answer).length;
   const percent = Math.round((answered / flatQuestions.length) * 100);
-  elements.progressLabel.textContent = `${answered} van ${flatQuestions.length}`;
+  elements.progressLabel.textContent = t("answered", { answered, total: flatQuestions.length });
   elements.progressBar.style.width = `${percent}%`;
 }
 
@@ -497,8 +859,8 @@ function renderResults(responses = state.responses, options = {}) {
   elements.results.hidden = false;
   elements.summaryStrip.innerHTML = "";
   elements.resultsGrid.innerHTML = "";
-  document.querySelector("#results-title").textContent = sharedMode ? "Gedeelde kaart" : "Jouw kaart";
-  elements.backToQuestions.textContent = sharedMode ? "Start eigen lijst" : "Terug";
+  document.querySelector("#results-title").textContent = sharedMode ? t("sharedCard") : t("yourCard");
+  elements.backToQuestions.textContent = sharedMode ? t("startOwn") : t("back");
   elements.copyShareLink.hidden = sharedMode;
   elements.shareNote.hidden = sharedMode;
 
@@ -517,13 +879,13 @@ function renderResults(responses = state.responses, options = {}) {
       .map((question, questionIndex) => {
         const id = `${categoryIndex}-${questionIndex}`;
         const response = responses[id] || {};
-        return { question, response };
+        return { id, question, response };
       })
       .filter((item) => !sharedMode || item.response.answer || item.response.note);
 
     if (sharedMode && items.length === 0) return;
 
-    elements.resultsGrid.append(buildResultCategory(category.title, items, { expandable: sharedMode }));
+    elements.resultsGrid.append(buildResultCategory(localizeCategoryTitle(category.title), items, { expandable: sharedMode }));
   });
 
   elements.results.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -531,10 +893,10 @@ function renderResults(responses = state.responses, options = {}) {
 
 function buildResultCategory(title, items, options = {}) {
   const list = items
-    .map(({ question, response }) => {
-      const answer = getAnswerLabel({ text: question }, response.answer);
-      const note = response.note ? `<span class="result-note"><strong>Notitie</strong> <span>${escapeHtml(response.note)}</span></span>` : "";
-      return `<li><span>${escapeHtml(question)}</span><span class="result-answer">${answer}</span>${note}</li>`;
+    .map(({ id, question, response }) => {
+      const answer = getAnswerLabel({ id, text: question }, response.answer);
+      const note = response.note ? `<span class="result-note"><strong>${t("note")}</strong> <span>${escapeHtml(response.note)}</span></span>` : "";
+      return `<li><span>${escapeHtml(localizeQuestion({ id, text: question }))}</span><span class="result-answer">${answer}</span>${note}</li>`;
     })
     .join("");
 
@@ -555,14 +917,14 @@ function buildResultCategory(title, items, options = {}) {
 async function copyResults() {
   const text = buildResultsText(activeResultResponses);
   await writeClipboard(text);
-  showToast("Samenvatting gekopieerd.");
+  showToast(t("copiedSummary"));
 }
 
 async function copyShareLink() {
   const payload = encodeSharePayload(state.responses);
   const url = `${location.origin}${location.pathname}${location.search}#share=${payload}`;
   await writeClipboard(url);
-  showToast("Partnerlink gekopieerd.");
+  showToast(t("copiedPartner"));
 }
 
 function buildResultsText(responses) {
@@ -571,11 +933,11 @@ function buildResultsText(responses) {
       const lines = category.questions.map((question, questionIndex) => {
         const id = `${categoryIndex}-${questionIndex}`;
         const response = responses[id] || {};
-        const answer = getAnswerLabel({ text: question }, response.answer);
-        const note = response.note ? ` | Notitie: ${response.note}` : "";
-        return `- ${question}: ${answer}${note}`;
+        const answer = getAnswerLabel({ id, text: question }, response.answer);
+        const note = response.note ? ` | ${t("note")}: ${response.note}` : "";
+        return `- ${localizeQuestion({ id, text: question })}: ${answer}${note}`;
       });
-      return `${category.title}\n${lines.join("\n")}`;
+      return `${localizeCategoryTitle(category.title)}\n${lines.join("\n")}`;
     })
     .join("\n\n");
 }
@@ -607,13 +969,14 @@ function getAnswerOptions(question) {
 }
 
 function getAnswerLabel(question, key) {
-  if (!key) return "Niet beantwoord";
+  if (!key) return t("notAnswered");
   const legacyLabels = {
     soft: "Zacht",
     medium: "Middel",
     strong: "Stevig"
   };
-  return getAnswerOptions(question).find((answer) => answer.key === key)?.label || answers.find((answer) => answer.key === key)?.label || legacyLabels[key] || key;
+  const label = getAnswerOptions(question).find((answer) => answer.key === key)?.label || answers.find((answer) => answer.key === key)?.label || legacyLabels[key] || key;
+  return localizeAnswerLabel(label);
 }
 
 function buildSummaryItems(responses) {
@@ -621,7 +984,7 @@ function buildSummaryItems(responses) {
 
   flatQuestions.forEach((question) => {
     const label = getAnswerLabel(question, responses[question.id]?.answer);
-    if (label === "Niet beantwoord") return;
+    if (label === t("notAnswered")) return;
     counts.set(label, (counts.get(label) || 0) + 1);
   });
 
@@ -652,6 +1015,7 @@ function buildSummaryItems(responses) {
   ];
 
   return preferredOrder
+    .map((label) => localizeAnswerLabel(label))
     .filter((label) => counts.has(label))
     .map((label) => ({ label, count: counts.get(label) }));
 }
@@ -662,7 +1026,7 @@ function encodeSharePayload(responses) {
       .filter(([, response]) => response?.answer || response?.note)
       .map(([id, response]) => [id, [response.answer || "", response.note || ""]])
   );
-  const payload = JSON.stringify({ v: 1, r: compactResponses });
+  const payload = JSON.stringify({ v: 1, lang: state.language, r: compactResponses });
   return toBase64Url(payload);
 }
 
@@ -672,6 +1036,9 @@ function readSharedResponsesFromHash() {
   try {
     const payload = JSON.parse(fromBase64Url(location.hash.slice("#share=".length)));
     if (payload?.v !== 1 || !payload.r || typeof payload.r !== "object") return null;
+    if (supportedLanguages.includes(payload.lang)) {
+      state.language = payload.lang;
+    }
 
     return Object.fromEntries(
       Object.entries(payload.r).map(([id, value]) => [
@@ -683,7 +1050,7 @@ function readSharedResponsesFromHash() {
       ])
     );
   } catch {
-    showToast("Deze partnerlink kon niet worden gelezen.");
+    showToast(t("badLink"));
     return null;
   }
 }
