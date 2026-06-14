@@ -22,10 +22,10 @@ const answerSets = {
     { key: "limit", label: "Hard limit" }
   ],
   intensity: [
-    { key: "soft", label: "Zacht" },
-    { key: "medium", label: "Middel" },
-    { key: "strong", label: "Stevig" },
-    { key: "talk", label: "Bespreken" },
+    { key: "yes", label: "Ja" },
+    { key: "interest", label: "Interesse" },
+    { key: "build", label: "Opbouwen" },
+    { key: "no", label: "Nee" },
     { key: "limit", label: "Hard limit" }
   ],
   location: [
@@ -584,7 +584,12 @@ function getAnswerOptions(question) {
 
 function getAnswerLabel(question, key) {
   if (!key) return "Niet beantwoord";
-  return getAnswerOptions(question).find((answer) => answer.key === key)?.label || answers.find((answer) => answer.key === key)?.label || key;
+  const legacyLabels = {
+    soft: "Zacht",
+    medium: "Middel",
+    strong: "Stevig"
+  };
+  return getAnswerOptions(question).find((answer) => answer.key === key)?.label || answers.find((answer) => answer.key === key)?.label || legacyLabels[key] || key;
 }
 
 function buildSummaryItems(responses) {
@@ -599,6 +604,8 @@ function buildSummaryItems(responses) {
   const preferredOrder = [
     "Ja",
     "Nieuwsgierig",
+    "Interesse",
+    "Opbouwen",
     "Alleen bespreken",
     "Bespreken",
     "Man",
