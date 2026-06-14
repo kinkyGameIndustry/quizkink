@@ -14,7 +14,12 @@ const categories = [
       "Ik wil een safeword of stopteken afspreken.",
       "Ik wil na afloop samen de ervaring nabespreken.",
       "Ik wil dat grenzen tussendoor zonder uitleg kunnen veranderen.",
-      "Ik wil duidelijke afspraken over privacy en discretie."
+      "Ik wil duidelijke afspraken over privacy en discretie.",
+      "Ik wil voor nieuwe dingen eerst een rustige fantasie- of gesprekronde zonder druk.",
+      "Ik wil dat er tijdens het spel regelmatig wordt ingecheckt.",
+      "Ik wil dat een 'misschien' altijd als 'nog niet' wordt behandeld.",
+      "Ik wil per activiteit kunnen aangeven of het alleen fantasie, bespreekbaar of echt wenselijk is.",
+      "Ik wil vooraf woorden afspreken die wel of juist niet gebruikt mogen worden."
     ]
   },
   {
@@ -24,27 +29,42 @@ const categories = [
       "Ik ben benieuwd naar een onderdanige rol.",
       "Ik vind switchen tussen rollen interessant.",
       "Ik wil controle overgeven binnen strak afgesproken grenzen.",
-      "Ik wil spelen met opdrachten, rituelen of protocollen."
+      "Ik wil spelen met opdrachten, rituelen of protocollen.",
+      "Ik wil dat mijn partner mij fysiek vasthoudt tijdens seksuele handelingen.",
+      "Ik wil dat mijn partner bepaalt wanneer ik mag bewegen, spreken of klaarkomen.",
+      "Ik wil experimenteren met belonen, plagen of ontzeggen.",
+      "Ik wil vernedering of plagerige taal alleen als we de woorden vooraf hebben afgesproken.",
+      "Ik wil dat machtsdynamiek stopt zodra ik onzeker, bang of ongemakkelijk word."
     ]
   },
   {
-    title: "Sensatie",
+    title: "Bondage & Beperking",
+    questions: [
+      "Ik wil graag vastgebonden worden tijdens seks.",
+      "Ik wil mijn partner vastbinden tijdens seks.",
+      "Ik wil lichte bondage proberen met handen, sjaal, cuffs of touw.",
+      "Ik wil blinddoeken gebruiken als onderdeel van sensuele spelletjes.",
+      "Ik wil gekneveld worden of een gag proberen, met extra duidelijke stopafspraken.",
+      "Ik wil bondage alleen proberen als ik snel en veilig losgemaakt kan worden.",
+      "Ik wil experimenteren met vastgezet worden aan bed, stoel of ander stevig meubel.",
+      "Ik wil suspensie of gedeeltelijk opgetild worden alleen met ervaring, geschikte materialen en veiligheidsplan bespreken.",
+      "Ik wil posities vermijden die ademhaling, circulatie of paniek kunnen raken.",
+      "Ik wil afspraken over tijdsduur en check-ins bij elke vorm van fixatie."
+    ]
+  },
+  {
+    title: "Impact & Sensatie",
     questions: [
       "Ik ben nieuwsgierig naar zachte impact of tikken.",
       "Ik ben nieuwsgierig naar stevigere impact binnen duidelijke grenzen.",
+      "Ik wil pijn als onderdeel van ons spel bespreken, zoals knijpen, bijten of slaan.",
+      "Ik wil experimenteren met zweepjes, paddles, floggers of andere impact-toys.",
+      "Ik wil tandafdrukken, bijten of zuigen alleen op plekken die we vooraf kiezen.",
       "Ik wil spelen met temperatuur, textuur of druk.",
-      "Ik wil zintuiglijke beperking verkennen, zoals blinddoek of geluid.",
-      "Ik wil expliciet afspreken welke intensiteit veilig en prettig is."
-    ]
-  },
-  {
-    title: "Fixatie & Ruimte",
-    questions: [
-      "Ik ben benieuwd naar lichte bondage of beperkt bewegen.",
-      "Ik wil vooraf testen of materiaal comfortabel en veilig zit.",
-      "Ik wil altijd zelfstandig kunnen aangeven dat iets stopt.",
-      "Ik wil posities vermijden die ademhaling, circulatie of paniek kunnen raken.",
-      "Ik wil afspraken over tijdsduur en check-ins."
+      "Ik wil zintuiglijke beperking verkennen, zoals blinddoek, oordoppen of muziek.",
+      "Ik wil waxplay, ijs of warm/koud spel alleen met veilige materialen proberen.",
+      "Ik wil expliciet afspreken welke intensiteit veilig en prettig is.",
+      "Ik wil blauwe plekken, zichtbare sporen of pijn achteraf vermijden."
     ]
   },
   {
@@ -54,7 +74,132 @@ const categories = [
       "Ik wil rollenspel of een persona verkennen.",
       "Ik wil woorden, titels of aanspreekvormen bespreken.",
       "Ik wil bepaalde geuren, materialen of looks juist vermijden.",
-      "Ik wil dat uiterlijk vertoon ondergeschikt blijft aan comfort en consent."
+      "Ik wil dat uiterlijk vertoon ondergeschikt blijft aan comfort en consent.",
+      "Ik wil experimenteren met maskers, harnassen, collars of cuffs.",
+      "Ik wil objecten, outfits of schoenen als fetish onderdeel bespreken.",
+      "Ik wil foto's maken van outfits of poses zonder seksuele handeling.",
+      "Ik wil dat kleding of fetishmateriaal nooit belangrijker wordt dan mijn fysieke comfort.",
+      "Ik wil bepaalde materialen eerst aanraken of ruiken voordat ze op mijn lichaam komen."
+    ]
+  },
+  {
+    title: "Anaal & Penetratie",
+    questions: [
+      "Mag mijn partner mijn anus aanraken met vingers?",
+      "Mag mijn partner mijn anus penetreren met vingers?",
+      "Ik wil anaal strelen of proberen als beginner, rustig en zonder druk.",
+      "Ik wil anale penetratie met een toy bespreken.",
+      "Ik wil anale seks met een penis bespreken.",
+      "Ik wil dubbele penetratie als fantasie of mogelijke ervaring bespreken.",
+      "Ik wil een tweede penis of toy tegelijkertijd voelen alleen als voorbereiding, veiligheid en consent duidelijk zijn.",
+      "Ik wil vooraf afspraken over glijmiddel, hygiëne, condooms en stoppen.",
+      "Ik wil dat anale handelingen meteen stoppen bij pijn, paniek of twijfel.",
+      "Ik wil anaal alleen proberen wanneer ik zelf het tempo bepaal."
+    ]
+  },
+  {
+    title: "Orale Seks & Lichaamsvocht",
+    questions: [
+      "Ik wil mijn partner oraal bevredigen terwijl die mij vasthoudt.",
+      "Ik wil dat mijn hoofd, handen of tempo bij orale seks fysiek begeleid wordt.",
+      "Ik wil ooit een andere vrouw oraal bevredigen.",
+      "Ik wil orale seks ontvangen van iemand anders dan mijn vaste partner bespreken.",
+      "Ik wil ejaculatie op mijn gezicht bespreken.",
+      "Ik wil ejaculatie in of rond mijn mond bespreken.",
+      "Ik wil ejaculatie op mijn borsten of lichaam bespreken.",
+      "Ik wil vooraf afspreken waar ejaculatie wel en niet mag plaatsvinden.",
+      "Ik wil slikken, spugen of vermijden van sperma expliciet bespreken.",
+      "Ik wil condooms, dental dams of andere bescherming bij orale seks bespreken."
+    ]
+  },
+  {
+    title: "Toys & Hulpmiddelen",
+    questions: [
+      "Ik wil ervaring opdoen met BDSM-toys.",
+      "Ik wil vibrators, plugs, dildo's of strokers samen ontdekken.",
+      "Ik wil restraints, blinddoeken, klemmen of impact-toys rustig introduceren.",
+      "Ik wil chastity of afsluiten van geslachtsdelen als fantasie of spel bespreken.",
+      "Ik wil slotjes, cages of keyholder-dynamiek alleen met duidelijke noodafspraken bespreken.",
+      "Ik wil toys delen met anderen alleen met hygiëne, condooms en duidelijke toestemming.",
+      "Ik wil elektrische, ademhalings- of risicovolle toys vermijden tenzij er kennis en veiligheidsplan is.",
+      "Ik wil nieuwe toys eerst buiten seks testen.",
+      "Ik wil dat toys direct verwijderd worden als iets gevoelloos, pijnlijk of onveilig voelt.",
+      "Ik wil samen een lijst maken van toys die nieuwsgierig maken."
+    ]
+  },
+  {
+    title: "Meer Personen",
+    questions: [
+      "Zou je openstaan voor een trio?",
+      "Als trio bespreekbaar is, wil je dan voorkeuren rond man, vrouw of beide bespreken?",
+      "Zou je openstaan voor een trio met een bekende?",
+      "Zou je openstaan voor een trio met iemand die we nog niet kennen?",
+      "Zou je openstaan voor een groepsseksfeest met bekenden?",
+      "Als groepsseks bespreekbaar is, wil je dan voorkeuren rond mannen, vrouwen of beide bespreken?",
+      "Wat vind je ervan om meer dan twee mensen jou tegelijk te laten plezieren, aaien of penetreren?",
+      "Zou je aangeraakt worden door meer dan vier personen tegelijk willen bespreken?",
+      "Ik wil regels afspreken over wie mij mag aanraken, waar en hoe.",
+      "Ik wil vooraf afspraken over condooms, SOA-testen, grenzen en nazorg bij meerdere personen."
+    ]
+  },
+  {
+    title: "Swingers & Open Relatie",
+    questions: [
+      "Zou je openstaan om samen naar een swingersclub te gaan?",
+      "Ik wil swingersclubs alleen bezoeken om te kijken en sfeer te proeven.",
+      "Ik wil nieuwe mensen ontmoeten zonder verplichting tot seksuele handelingen.",
+      "Ik wil seksuele ervaringen met anderen delen binnen een open relatie-situatie bespreken.",
+      "Ik wil vooraf duidelijke regels over zoenen, aanraken, orale seks en penetratie met anderen.",
+      "Ik wil afspreken of we altijd samen blijven of ook apart contact mogen hebben.",
+      "Ik wil afspraken over jaloezie, stoppen en achteraf checken.",
+      "Ik wil daten, chatten of flirten met anderen alleen transparant doen.",
+      "Ik wil dat open relatie-ervaringen niet worden gebruikt om druk op mij te zetten.",
+      "Ik wil onze relatieafspraken schriftelijk of heel expliciet vastleggen."
+    ]
+  },
+  {
+    title: "Publiek & Locaties",
+    questions: [
+      "Hoe voel je over publieke displays van affectie in ruimtes waar we niet alleen zijn?",
+      "Hoe voel je over erotische spanning op plekken waar anderen in de buurt kunnen zijn?",
+      "Ik wil publieke of semi-publieke situaties alleen bespreken als niemand ongewild betrokken raakt.",
+      "Ik wil seks op kinky locaties in huis verkennen.",
+      "Ik wil in huis zoeken naar plekken voor stiekeme of speelse seksavonturen.",
+      "Ik wil seks buiten de slaapkamer proberen.",
+      "Ik wil experimenteren met risico op betrapt worden alleen in privé- of afgesproken omgevingen.",
+      "Ik wil openbare seksuele handelingen vermijden als anderen dit ongevraagd kunnen zien.",
+      "Ik wil expliciet bespreken wat wettelijk, veilig en respectvol is rond publieke erotiek.",
+      "Ik wil altijd een exitplan hebben voor locaties buiten bed of slaapkamer."
+    ]
+  },
+  {
+    title: "Foto, Video & Privacy",
+    questions: [
+      "Hoe denk je over het uitwisselen van seksuele foto's of video's met je partner?",
+      "Hoe denk je over het uitwisselen van seksuele foto's of video's met anderen?",
+      "Ik wil erotische foto's maken zonder herkenbaar gezicht.",
+      "Ik wil seksuele video's maken alleen voor privégebruik tussen ons.",
+      "Ik wil dat naaktbeelden nooit doorgestuurd worden zonder expliciete toestemming op dat moment.",
+      "Ik wil delen op websites of platforms vermijden, ook zonder gezichten.",
+      "Ik wil bespreken of anonieme publicatie ooit fantasie, bespreekbaar of een harde grens is.",
+      "Ik wil afspraken over verwijderen, opslag, wachtwoorden en cloudbackups.",
+      "Ik wil geen beelden maken wanneer iemand onder invloed, moe of emotioneel kwetsbaar is.",
+      "Ik wil dat het intrekken van toestemming betekent dat beelden worden verwijderd."
+    ]
+  },
+  {
+    title: "Middelen & Energie",
+    questions: [
+      "Hoe voel je over het bespreken van libido-verhogende middelen?",
+      "Ik wil Viagra of vergelijkbare middelen alleen overwegen na medische check of professioneel advies.",
+      "Ik wil drugs of alcohol vermijden bij nieuwe of intensieve BDSM-ervaringen.",
+      "Ik wil nuchter blijven bij bondage, impact, anaal of groepsseks.",
+      "Ik wil afspraken over pauzes, water, eten en slaap.",
+      "Ik wil stoppen als middelen mijn grenzen, consent of herinnering kunnen beïnvloeden.",
+      "Ik wil supplementen, medicatie of stimulerende middelen nooit als drukmiddel gebruiken.",
+      "Ik wil vooraf delen welke medicatie of gezondheidsrisico's relevant zijn.",
+      "Ik wil dat seksuele avonturen ook zonder middelen goed genoeg mogen zijn.",
+      "Ik wil energie, cyclus, stress of mentale toestand meenemen in onze planning."
     ]
   },
   {
@@ -64,7 +209,12 @@ const categories = [
       "Ik wil emotionele nazorg zoals geruststelling of stilte.",
       "Ik wil een check-in later op de dag of de volgende dag.",
       "Ik wil medische, trauma- of triggerinformatie vooraf kunnen delen.",
-      "Ik wil een duidelijke afspraak voor stoppen, pauzeren en opruimen."
+      "Ik wil een duidelijke afspraak voor stoppen, pauzeren en opruimen.",
+      "Ik wil afspraken over wat helpt als ik dichtklap, huil of overprikkeld raak.",
+      "Ik wil dat teleurstelling nooit wordt afgereageerd als ik nee zeg.",
+      "Ik wil na intens spel tijd zonder nieuwe seksuele druk.",
+      "Ik wil grenzen die in deze vragenlijst staan regelmatig opnieuw kunnen herzien.",
+      "Ik wil dat hard limits altijd zonder discussie worden gerespecteerd."
     ]
   }
 ];

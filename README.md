@@ -1,6 +1,6 @@
 # BDSM, Fetish & Kink Vragenlijst
 
-Een statische, privacyvriendelijke vragenlijst voor volwassenen. De site draait volledig in de browser en bewaart antwoorden alleen lokaal via `localStorage`.
+Een statische, privacyvriendelijke vragenlijst voor volwassenen met 140 vragen verdeeld over 14 categorieën. De site draait volledig in de browser en bewaart antwoorden alleen lokaal via `localStorage`.
 
 ## Lokaal openen
 
