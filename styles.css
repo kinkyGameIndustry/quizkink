@@ -424,9 +424,27 @@ h2 {
 }
 
 .summary-pill span,
-.result-meta,
-.result-note {
+.result-meta {
   color: var(--muted);
+}
+
+.result-note {
+  margin-top: 4px;
+  padding: 9px 10px;
+  border-left: 3px solid var(--teal);
+  border-radius: var(--radius);
+  background: rgba(75, 179, 167, 0.08);
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.result-note strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--teal);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .results-grid {

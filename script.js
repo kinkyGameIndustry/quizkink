@@ -384,17 +384,22 @@ function bindEvents() {
     renderQuestion();
   });
 
-  elements.noteInput.addEventListener("input", () => {
-    const question = flatQuestions[currentIndex];
-    const response = getResponse(question.id);
-    response.note = elements.noteInput.value;
-    saveState();
-  });
+  elements.noteInput.addEventListener("input", saveCurrentNote);
+  elements.noteInput.addEventListener("change", saveCurrentNote);
+  elements.noteInput.addEventListener("blur", saveCurrentNote);
 
   elements.backToQuestions.addEventListener("click", showQuestionnaire);
   elements.printResults.addEventListener("click", () => window.print());
   elements.copyResults.addEventListener("click", copyResults);
   elements.copyShareLink.addEventListener("click", copyShareLink);
+}
+
+function saveCurrentNote() {
+  if (!flatQuestions[currentIndex]) return;
+  const question = flatQuestions[currentIndex];
+  const response = getResponse(question.id);
+  response.note = elements.noteInput.value;
+  saveState();
 }
 
 function showQuestionnaire() {
@@ -511,7 +516,7 @@ function renderResults(responses = state.responses, options = {}) {
         const id = `${categoryIndex}-${questionIndex}`;
         const response = responses[id] || {};
         const answer = getAnswerLabel({ text: question }, response.answer);
-        const note = response.note ? `<span class="result-note">${escapeHtml(response.note)}</span>` : "";
+        const note = response.note ? `<span class="result-note"><strong>Notitie</strong> <span>${escapeHtml(response.note)}</span></span>` : "";
         return `<li><span>${escapeHtml(question)}</span><span class="result-answer">${answer}</span>${note}</li>`;
       })
       .join("");
