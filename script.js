@@ -47,6 +47,22 @@ const answerSets = {
     { key: "talk", label: "Bespreken" },
     { key: "later", label: "Later bespreken" },
     { key: "no", label: "Nee" }
+  ],
+  agreement: [
+    { key: "yes", label: "Ja" },
+    { key: "conditions", label: "Alleen met afspraken" },
+    { key: "talk", label: "Bespreken" },
+    { key: "later", label: "Later bespreken" },
+    { key: "no", label: "Nee" },
+    { key: "limit", label: "Hard limit" }
+  ],
+  fantasyReality: [
+    { key: "fantasy", label: "Fantasie" },
+    { key: "talk", label: "Bespreken" },
+    { key: "experience", label: "Ervaring" },
+    { key: "later", label: "Later bespreken" },
+    { key: "no", label: "Nee" },
+    { key: "limit", label: "Hard limit" }
   ]
 };
 
@@ -250,6 +266,9 @@ const answerLabelTranslations = {
     "Nieuwsgierig": "Curious",
     "Alleen bespreken": "Discuss only",
     "Later bespreken": "Discuss later",
+    "Alleen met afspraken": "Only with agreements",
+    "Fantasie": "Fantasy",
+    "Ervaring": "Experience",
     "Nee": "No",
     "Hard limit": "Hard limit",
     "Man": "Man",
@@ -274,6 +293,9 @@ const answerLabelTranslations = {
     "Nieuwsgierig": "Curieux",
     "Alleen bespreken": "Discuter seulement",
     "Later bespreken": "Discuter plus tard",
+    "Alleen met afspraken": "Seulement avec accords",
+    "Fantasie": "Fantasme",
+    "Ervaring": "Expérience",
     "Nee": "Non",
     "Hard limit": "Limite absolue",
     "Man": "Homme",
@@ -297,6 +319,9 @@ const answerLabelTranslations = {
     "Nieuwsgierig": "Neugierig",
     "Alleen bespreken": "Nur besprechen",
     "Later bespreken": "Später besprechen",
+    "Alleen met afspraken": "Nur mit Absprachen",
+    "Fantasie": "Fantasie",
+    "Ervaring": "Erfahrung",
     "Nee": "Nein",
     "Hard limit": "Absolute Grenze",
     "Man": "Mann",
@@ -366,6 +391,113 @@ const categoryTitleTranslations = {
     "Foto, Video & Privacy": "Foto, Video & Privatsphäre",
     "Middelen & Energie": "Substanzen & Energie",
     "Nazorg & Veiligheid": "Nachsorge & Sicherheit"
+  }
+};
+
+const notePlaceholderTranslations = {
+  en: {
+    default: "Example: context, pace, words, triggers, aftercare...",
+    categories: [
+      "Example: safeword, check-in timing, words to avoid, aftercare...",
+      "Example: role, tone, commands, what makes it too intense...",
+      "Example: material, position, release signal, maximum time...",
+      "Example: body zones, intensity, marks, aftercare for skin...",
+      "Example: outfit, material, title, look or sensory no-go...",
+      "Example: pace, lube, hygiene, preparation, stop signal...",
+      "Example: where yes/no, protection, taste, cleanup...",
+      "Example: toy type, cleaning, condom use, first test outside sex...",
+      "Example: who, maximum number, touch rules, safer sex...",
+      "Example: club/date rules, jealousy check, stay together or apart...",
+      "Example: private only, discreet only, exit plan, legal limits...",
+      "Example: face/no face, storage, deletion, who may see it...",
+      "Example: sober only, medication, dosage boundary, recovery time...",
+      "Example: water, warmth, words, silence, next-day check-in..."
+    ],
+    agreement: "Example: which agreement, condition or hard boundary matters here...",
+    fantasyReality: "Example: fantasy only, maybe later, or real experience under these conditions...",
+    genderPreference: "Example: man, woman, both, only known people, or still unsure...",
+    intensity: "Example: start soft, build slowly, maximum intensity, places to avoid...",
+    location: "Example: face, mouth, chest, body, cleanup, or places that are off-limits...",
+    peopleCount: "Example: maximum number, who may touch, where, condoms and aftercare...",
+    softPublic: "Example: discreet affection, private only, exit plan, or hard no..."
+  },
+  nl: {
+    default: "Bijvoorbeeld: context, tempo, woorden, triggers, nazorg...",
+    categories: [
+      "Bijvoorbeeld: safeword, check-in moment, woorden vermijden, nazorg...",
+      "Bijvoorbeeld: rol, toon, opdrachten, wanneer het te intens wordt...",
+      "Bijvoorbeeld: materiaal, positie, losmaak-signaal, maximale duur...",
+      "Bijvoorbeeld: lichaamszones, intensiteit, sporen, nazorg voor huid...",
+      "Bijvoorbeeld: outfit, materiaal, titel, look of zintuiglijke no-go...",
+      "Bijvoorbeeld: tempo, glijmiddel, hygiëne, voorbereiding, stopteken...",
+      "Bijvoorbeeld: waar wel/niet, bescherming, smaak, opruimen...",
+      "Bijvoorbeeld: type toy, reinigen, condoomgebruik, eerst testen buiten seks...",
+      "Bijvoorbeeld: wie, maximum aantal, aanraakregels, veilige seks...",
+      "Bijvoorbeeld: club/date-regels, jaloeziecheck, samen blijven of apart...",
+      "Bijvoorbeeld: alleen privé, discreet, exitplan, wettelijke grenzen...",
+      "Bijvoorbeeld: gezicht wel/niet, opslag, verwijderen, wie mag het zien...",
+      "Bijvoorbeeld: alleen nuchter, medicatie, doseringsgrens, hersteltijd...",
+      "Bijvoorbeeld: water, warmte, woorden, stilte, check-in volgende dag..."
+    ],
+    agreement: "Bijvoorbeeld: welke afspraak, voorwaarde of harde grens hier belangrijk is...",
+    fantasyReality: "Bijvoorbeeld: alleen fantasie, later misschien, of echte ervaring onder deze voorwaarden...",
+    genderPreference: "Bijvoorbeeld: man, vrouw, beide, alleen bekenden of nog onzeker...",
+    intensity: "Bijvoorbeeld: zacht starten, rustig opbouwen, maximale intensiteit, plekken vermijden...",
+    location: "Bijvoorbeeld: gezicht, mond, borst, lichaam, opruimen of plekken die niet mogen...",
+    peopleCount: "Bijvoorbeeld: maximum aantal, wie mag aanraken, waar, condooms en nazorg...",
+    softPublic: "Bijvoorbeeld: alleen discreet affectie, alleen privé, exitplan of harde nee..."
+  },
+  fr: {
+    default: "Par exemple : contexte, rythme, mots, déclencheurs, aftercare...",
+    categories: [
+      "Par exemple : safeword, moment de check-in, mots à éviter, aftercare...",
+      "Par exemple : rôle, ton, consignes, ce qui rend la scène trop intense...",
+      "Par exemple : matériau, position, signal de libération, durée maximale...",
+      "Par exemple : zones du corps, intensité, marques, soin de la peau...",
+      "Par exemple : tenue, matériau, titre, look ou limite sensorielle...",
+      "Par exemple : rythme, lubrifiant, hygiène, préparation, signal d'arrêt...",
+      "Par exemple : où oui/non, protection, goût, nettoyage...",
+      "Par exemple : type de toy, nettoyage, préservatif, test hors sexe...",
+      "Par exemple : qui, nombre maximum, règles de toucher, sexe plus sûr...",
+      "Par exemple : règles club/date, jalousie, rester ensemble ou séparés...",
+      "Par exemple : privé seulement, discret, plan de sortie, limites légales...",
+      "Par exemple : visage ou non, stockage, suppression, qui peut voir...",
+      "Par exemple : sobre seulement, médicament, limite de dosage, récupération...",
+      "Par exemple : eau, chaleur, mots, silence, check-in le lendemain..."
+    ],
+    agreement: "Par exemple : quel accord, condition ou limite stricte compte ici...",
+    fantasyReality: "Par exemple : fantasme seulement, peut-être plus tard, ou expérience réelle sous conditions...",
+    genderPreference: "Par exemple : homme, femme, les deux, seulement des personnes connues, ou incertain...",
+    intensity: "Par exemple : commencer doux, augmenter lentement, intensité maximale, zones à éviter...",
+    location: "Par exemple : visage, bouche, poitrine, corps, nettoyage ou zones interdites...",
+    peopleCount: "Par exemple : nombre maximum, qui peut toucher, où, préservatifs et aftercare...",
+    softPublic: "Par exemple : affection discrète, privé seulement, plan de sortie ou non ferme..."
+  },
+  de: {
+    default: "Zum Beispiel: Kontext, Tempo, Wörter, Trigger, Nachsorge...",
+    categories: [
+      "Zum Beispiel: Safeword, Check-in-Zeitpunkt, Wörter vermeiden, Nachsorge...",
+      "Zum Beispiel: Rolle, Ton, Anweisungen, wann es zu intensiv wird...",
+      "Zum Beispiel: Material, Position, Befreiungssignal, maximale Dauer...",
+      "Zum Beispiel: Körperzonen, Intensität, Spuren, Haut-Nachsorge...",
+      "Zum Beispiel: Outfit, Material, Titel, Look oder sensorisches No-Go...",
+      "Zum Beispiel: Tempo, Gleitmittel, Hygiene, Vorbereitung, Stoppsignal...",
+      "Zum Beispiel: wo ja/nein, Schutz, Geschmack, Aufräumen...",
+      "Zum Beispiel: Toy-Art, Reinigung, Kondomnutzung, zuerst außerhalb von Sex testen...",
+      "Zum Beispiel: wer, maximale Anzahl, Berührungsregeln, Safer Sex...",
+      "Zum Beispiel: Club-/Date-Regeln, Eifersuchtscheck, zusammen oder getrennt bleiben...",
+      "Zum Beispiel: nur privat, diskret, Ausstiegsplan, rechtliche Grenzen...",
+      "Zum Beispiel: Gesicht ja/nein, Speicherung, Löschung, wer es sehen darf...",
+      "Zum Beispiel: nur nüchtern, Medikamente, Dosierungsgrenze, Erholungszeit...",
+      "Zum Beispiel: Wasser, Wärme, Worte, Stille, Check-in am nächsten Tag..."
+    ],
+    agreement: "Zum Beispiel: welche Absprache, Bedingung oder harte Grenze hier wichtig ist...",
+    fantasyReality: "Zum Beispiel: nur Fantasie, vielleicht später, oder reale Erfahrung unter diesen Bedingungen...",
+    genderPreference: "Zum Beispiel: Mann, Frau, beide, nur bekannte Personen oder noch unsicher...",
+    intensity: "Zum Beispiel: sanft starten, langsam steigern, maximale Intensität, Bereiche vermeiden...",
+    location: "Zum Beispiel: Gesicht, Mund, Brust, Körper, Aufräumen oder Tabubereiche...",
+    peopleCount: "Zum Beispiel: maximale Anzahl, wer berühren darf, wo, Kondome und Nachsorge...",
+    softPublic: "Zum Beispiel: diskrete Zuneigung, nur privat, Ausstiegsplan oder klares Nein..."
   }
 };
 
@@ -612,7 +744,7 @@ const expandedQuestionGroups = [
     "Ik heb behoefte aan een 'traffic light system' (groen = ga door, geel = langzaam/aanpassen, rood = stop).",
     "Ik wil dat we vooraf afspreken wie verantwoordelijk is voor hygiëne en schoonmaak.",
     "Ik wil duidelijkheid over hoe we omgaan met onvoorziene situaties (bijv. iemand voelt zich plots niet lekker).",
-    "Ik wil dat we afspraken maken over hoe we communiceren als een van ons dronken of high is.",
+    "Ik wil afspreken dat we geen nieuwe of intensieve activiteiten doen als iemand dronken of high is.",
     "Ik vind het belangrijk dat we elkaars energieniveau en mentale staat vooraf checken.",
     "Ik wil per sessie een korte 'intentie-check' doen: wat wil ik vandaag voelen/ervaren?",
     "Ik wil dat we achteraf evalueren wat we volgende keer anders of hetzelfde willen doen.",
@@ -631,10 +763,10 @@ const expandedQuestionGroups = [
     "Ik vind het spannend om taken of huishoudelijke dienstbaarheid te doen voor mijn partner.",
     "Ik wil afspreken hoe 'speels' versus 'serieus' de machtsdynamiek mag zijn.",
     "Ik wil de mogelijkheid hebben om tijdelijk in een 'drop' of aftercare-rol te vallen als de dynamiek te intens wordt.",
-    "Ik ben geïnteresseerd in pet play, age play of roleplay binnen een dynamiek.",
+    "Ik ben geïnteresseerd in pet play of volwassen rollenspel rond zorg, regels of afhankelijkheid.",
     "Ik wil spelen met sensatie en zintuiglijke deprivatie (blinddoek, oordoppen, etc.).",
-    "Ik wil dat mijn partner mij 'gebruikt' voor zijn/haar plezier binnen afgesproken grenzen.",
-    "Ik vind het opwindend om te worden genegeerd of genegeerd te worden als vorm van machtsspel.",
+    "Ik wil dienstbaarheid of gebruikt-worden als fantasie bespreken, binnen vooraf afgesproken grenzen.",
+    "Ik vind het opwindend om tijdelijk genegeerd te worden als vorm van machtsspel.",
     "Ik wil duidelijke signalen afspreken voor wanneer de dynamiek intenser of juist zachter mag worden.",
     "Ik wil experimenteren met langdurige machtsdynamiek (bijv. een hele avond of weekend).",
     "Ik wil dat mijn partner mij fysiek domineert (vasthouden, verplaatsen, vastbinden).",
@@ -675,12 +807,12 @@ const expandedQuestionGroups = [
     "Ik wil dat we een signaal afspreken om de intensiteit te verhogen, verlagen of pauzeren.",
     "Ik wil geen blijvende sporen, maar tijdelijke rode plekken zijn oké.",
     "Ik wil vooraf testen hoe mijn huid reageert op bepaalde toys of technieken.",
-    "Ik ben benieuwd naar elektrische stimulatie (TENS-unit of violet wand).",
-    "Ik wil spelen met ademhalingscontrole of lichte verstikking (breath play) binnen veilige grenzen.",
+    "Ik wil elektrische stimulatie alleen bespreken met kennis, geschikte apparatuur en duidelijke veiligheidsafspraken.",
+    "Ik wil ademhalingscontrole of verstikkingsspel alleen als risicovol onderwerp bespreken voordat het ooit gebeurt.",
     "Ik vind het spannend om vastgehouden of vastgepind te worden tijdens impact.",
     "Ik wil caning, spanking of flogging op specifieke zones (billen, dijen, rug, voetzolen).",
     "Ik wil sensatie spelen met krabben, haar trekken of drukpunten.",
-    "Ik wil dat mijn partner mij vertelt wat hij/zij gaat doen vlak voordat het gebeurt (of juist verrassen).",
+    "Ik wil dat mijn partner mij vertelt wat die gaat doen vlak voordat het gebeurt, of juist bewust verrast binnen afspraken.",
     "Ik wil verschillende intensiteitsniveaus uitproberen en die vooraf een cijfer geven (1-10).",
     "Ik wil impact als voorspel of als opbouw naar seks.",
     "Ik wil afspraken over hoe vaak en hoe hard er geslagen mag worden per zone.",
@@ -709,7 +841,7 @@ const expandedQuestionGroups = [
     "Ik wil experimenteren met verschillende stijlen (gothic, military, bimbo, puppy, etc.)."
   ],
   [
-    "Ik wil rimming (anilingus) geven of ontvangen.",
+    "Ik wil externe anale stimulatie bespreken, zoals aanraken rond de anus zonder penetratie.",
     "Ik wil prostaatstimulatie (P-spot) verkennen.",
     "Ik wil langzaam opbouwen met kleinere toys voordat we grotere dingen proberen.",
     "Ik wil dat we altijd veel glijmiddel gebruiken en regelmatig bijsmeren.",
@@ -834,7 +966,7 @@ const expandedQuestionGroups = [
     "Ik wil afspraken over hoe ver we mogen gaan in een bioscoop, restaurant, park of lift.",
     "Ik wil dat we foto's of filmpjes maken op spannende locaties (alleen met expliciete toestemming).",
     "Ik wil dat we een balans vinden tussen spanning en echte veiligheid.",
-    "Ik wil dat we nooit publieke seks doen op plekken waar kinderen, families of onschuldige mensen in de buurt zijn.",
+    "Ik wil dat we nooit seksuele handelingen doen op plekken waar kinderen, families of niet-betrokken mensen in de buurt zijn.",
     "Ik wil dat we een noodplan hebben (bijv. een deken, extra kleding, snel kunnen stoppen).",
     "Ik wil achteraf altijd bespreken wat lekker was en wat we nooit meer doen.",
     "Ik wil dat de focus ligt op de spanning en connectie, niet op het zo extreem mogelijk maken.",
@@ -2401,6 +2533,46 @@ Object.entries(expandedQuestionTranslations).forEach(([language, categoryGroups]
   });
 });
 
+const manualQuestionTranslationOverrides = {
+  en: {
+    "x-0-13": "I want to agree that we do not try new or intense activities when someone is drunk or high.",
+    "x-1-10": "I am interested in pet play or adult roleplay around care, rules or dependency.",
+    "x-1-12": "I want to discuss service or being-used as a fantasy, within boundaries agreed in advance.",
+    "x-1-13": "I find it exciting to be temporarily ignored as a form of power play.",
+    "x-3-10": "I only want to discuss electrical stimulation with knowledge, suitable equipment and clear safety agreements.",
+    "x-3-11": "I only want to discuss breath control or choking play as a high-risk topic before it ever happens.",
+    "x-3-15": "I want my partner to tell me what they are about to do, or to surprise me only within agreements.",
+    "x-5-0": "I want to discuss external anal stimulation, such as touching around the anus without penetration.",
+    "x-10-15": "I want us to never do sexual acts in places where children, families or uninvolved people are nearby."
+  },
+  fr: {
+    "x-0-13": "Je veux convenir que nous n'essayons pas d'activités nouvelles ou intenses quand quelqu'un est ivre ou sous influence.",
+    "x-1-10": "Je m'intéresse au pet play ou au jeu de rôle adulte autour du soin, des règles ou de la dépendance.",
+    "x-1-12": "Je veux discuter du service ou du fait d'être utilisé comme fantasme, dans des limites définies à l'avance.",
+    "x-1-13": "Je trouve excitant d'être temporairement ignoré comme forme de jeu de pouvoir.",
+    "x-3-10": "Je veux discuter de la stimulation électrique seulement avec des connaissances, du matériel adapté et des accords de sécurité clairs.",
+    "x-3-11": "Je veux discuter du contrôle de la respiration ou du jeu d'étranglement uniquement comme sujet à haut risque avant que cela n'arrive.",
+    "x-3-15": "Je veux que mon partenaire me dise ce qu'il va faire, ou me surprenne seulement dans les accords prévus.",
+    "x-5-0": "Je veux discuter de stimulation anale externe, comme toucher autour de l'anus sans pénétration.",
+    "x-10-15": "Je veux que nous ne fassions jamais d'actes sexuels dans des lieux où des enfants, des familles ou des personnes non concernées sont à proximité."
+  },
+  de: {
+    "x-0-13": "Ich möchte vereinbaren, dass wir keine neuen oder intensiven Aktivitäten ausprobieren, wenn jemand betrunken oder high ist.",
+    "x-1-10": "Ich interessiere mich für Pet Play oder erwachsenes Rollenspiel rund um Fürsorge, Regeln oder Abhängigkeit.",
+    "x-1-12": "Ich möchte Dienstbarkeit oder Benutztwerden als Fantasie besprechen, innerhalb vorher vereinbarter Grenzen.",
+    "x-1-13": "Ich finde es spannend, als Form von Machtspiel vorübergehend ignoriert zu werden.",
+    "x-3-10": "Ich möchte elektrische Stimulation nur mit Wissen, geeigneter Ausrüstung und klaren Sicherheitsabsprachen besprechen.",
+    "x-3-11": "Ich möchte Atemkontrolle oder Würgespiel nur als risikoreiches Thema besprechen, bevor es jemals passiert.",
+    "x-3-15": "Ich möchte, dass mein Partner mir sagt, was gleich passiert, oder mich nur innerhalb unserer Absprachen überrascht.",
+    "x-5-0": "Ich möchte externe anale Stimulation besprechen, etwa Berührung rund um den Anus ohne Penetration.",
+    "x-10-15": "Ich möchte, dass wir niemals sexuelle Handlungen an Orten ausüben, an denen Kinder, Familien oder unbeteiligte Menschen in der Nähe sind."
+  }
+};
+
+Object.entries(manualQuestionTranslationOverrides).forEach(([language, overrides]) => {
+  Object.assign(questionTranslations[language], overrides);
+});
+
 const elements = {
   ageGate: document.querySelector("#ageGate"),
   adultCheck: document.querySelector("#adultCheck"),
@@ -2549,6 +2721,21 @@ function localizeCategoryTitle(title) {
 
 function localizeQuestion(question) {
   return questionTranslations[state.language]?.[question.id] || question.text;
+}
+
+function getNotePlaceholder(question) {
+  const placeholders = notePlaceholderTranslations[state.language] || notePlaceholderTranslations[defaultLanguage];
+  const options = getAnswerOptions(question);
+
+  if (options === answerSets.genderPreference) return placeholders.genderPreference;
+  if (options === answerSets.intensity) return placeholders.intensity;
+  if (options === answerSets.location) return placeholders.location;
+  if (options === answerSets.peopleCount) return placeholders.peopleCount;
+  if (options === answerSets.softPublic) return placeholders.softPublic;
+  if (options === answerSets.fantasyReality) return placeholders.fantasyReality;
+  if (options === answerSets.agreement) return placeholders.agreement;
+
+  return placeholders.categories?.[question.categoryIndex] || placeholders.default;
 }
 
 function buildCategoryPicker() {
@@ -2780,6 +2967,7 @@ function renderQuestion() {
   elements.title.textContent = localizeQuestion(question);
   elements.counter.textContent = `${currentIndex + 1} / ${flatQuestions.length}`;
   elements.noteInput.value = response.note || "";
+  elements.noteInput.placeholder = getNotePlaceholder(question);
   elements.prevButton.disabled = currentIndex === 0;
   elements.nextButton.textContent = currentIndex === flatQuestions.length - 1 ? t("viewResults") : t("next");
 
@@ -2925,7 +3113,7 @@ function getAnswerOptions(question) {
     return answerSets.genderPreference;
   }
 
-  if (text.includes("publieke displays") || text.includes("publieke of semi-publieke") || text.includes("wettelijk, veilig en respectvol")) {
+  if (text.includes("publieke displays") || text.includes("publieke of semi-publieke") || text.includes("wettelijk, veilig en respectvol") || text.includes("openbare seksuele")) {
     return answerSets.softPublic;
   }
 
@@ -2941,7 +3129,55 @@ function getAnswerOptions(question) {
     return answerSets.peopleCount;
   }
 
+  if (text.includes("fantasie") || text.includes("mogelijke ervaring")) {
+    return answerSets.fantasyReality;
+  }
+
+  if (isAgreementQuestion(text)) {
+    return answerSets.agreement;
+  }
+
   return answerSets.default;
+}
+
+function isAgreementQuestion(text) {
+  const normalized = text.toLowerCase();
+  const agreementPatterns = [
+    "afspreken",
+    "afspraken",
+    "expliciet bespreken",
+    "safeword",
+    "stopteken",
+    "stop-systeem",
+    "check-in",
+    "privacy",
+    "discretie",
+    "veilig",
+    "bescherming",
+    "condoom",
+    "prep",
+    "teststatus",
+    "hygiëne",
+    "glijmiddel",
+    "nazorg",
+    "vermijden",
+    "alleen als",
+    "alleen wanneer",
+    "nooit",
+    "altijd",
+    "exitplan",
+    "veiligheidsplan",
+    "risicovol",
+    "toestemming",
+    "verwijderd",
+    "opslag",
+    "wachtwoorden",
+    "nuchter",
+    "medische",
+    "professioneel advies"
+  ];
+
+  return agreementPatterns.some((pattern) => normalized.includes(pattern));
 }
 
 function getAnswerLabel(question, key) {
@@ -2972,6 +3208,9 @@ function buildSummaryItems(responses) {
     "Alleen bespreken",
     "Bespreken",
     "Later bespreken",
+    "Alleen met afspraken",
+    "Fantasie",
+    "Ervaring",
     "Man",
     "Vrouw",
     "Beide",
