@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Een privacyvriendelijke BDSM, fetish en kink vragenlijst voor volwassenen.">
+    <title>Intieme Grenzen | BDSM, Fetish & Kink Vragenlijst</title>
+    <link rel="preload" as="image" href="assets/hero-bg.png">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero__media" aria-hidden="true"></div>
+        <div class="hero__shade" aria-hidden="true"></div>
+        <div class="hero__content">
+          <p class="kicker">Privé, lokaal, volwassen</p>
+          <h1 id="page-title">BDSM, Fetish & Kink Vragenlijst</h1>
+          <p class="intro">
+            Verken verlangens, nieuwsgierigheid en grenzen met duidelijke taal. Je antwoorden blijven in deze browser.
+          </p>
+          <div class="hero__actions">
+            <button class="primary-btn" id="startButton" type="button">Start vragenlijst</button>
+            <button class="ghost-btn" id="resetButton" type="button">Wis antwoorden</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="age-gate" id="ageGate" aria-labelledby="age-title">
+        <div class="age-gate__panel">
+          <p class="kicker">18+</p>
+          <h2 id="age-title">Alleen voor volwassenen</h2>
+          <p>
+            Deze vragenlijst gaat over seksualiteit, macht, spel, grenzen en consent. Ga alleen verder als je 18 jaar
+            of ouder bent en dit vrijwillig wilt invullen.
+          </p>
+          <label class="checkline">
+            <input type="checkbox" id="adultCheck">
+            <span>Ik ben 18 jaar of ouder.</span>
+          </label>
+          <label class="checkline">
+            <input type="checkbox" id="consentCheck">
+            <span>Ik begrijp dat consent, nazorg en duidelijke grenzen centraal staan.</span>
+          </label>
+          <button class="primary-btn" id="enterButton" type="button" disabled>Ga verder</button>
+        </div>
+      </section>
+
+      <section class="workspace" id="questionnaire" aria-labelledby="questionnaire-title" hidden>
+        <aside class="sidebar" aria-label="Categorieën">
+          <div class="progress-card">
+            <p class="kicker">Voortgang</p>
+            <strong id="progressLabel">0 van 0</strong>
+            <div class="progress-track" aria-hidden="true">
+              <span id="progressBar"></span>
+            </div>
+          </div>
+          <nav class="category-list" id="categoryList"></nav>
+        </aside>
+
+        <section class="question-panel">
+          <div class="panel-head">
+            <div>
+              <p class="kicker" id="categoryKicker">Categorie</p>
+              <h2 id="questionnaire-title">Vraag</h2>
+            </div>
+            <span class="counter" id="questionCounter">1 / 1</span>
+          </div>
+
+          <fieldset class="answer-grid" id="answerGrid" aria-describedby="answerHelp"></fieldset>
+          <p class="answer-help" id="answerHelp">Kies wat nu eerlijk voelt. Je kunt alles later aanpassen.</p>
+
+          <label class="notes">
+            <span>Notitie voor jezelf of partner</span>
+            <textarea id="noteInput" rows="4" placeholder="Bijvoorbeeld: context, tempo, woorden, triggers, nazorg..."></textarea>
+          </label>
+
+          <div class="panel-actions">
+            <button class="ghost-btn" id="prevButton" type="button">Vorige</button>
+            <button class="primary-btn" id="nextButton" type="button">Volgende</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="results" id="results" aria-labelledby="results-title" hidden>
+        <div class="results__head">
+          <div>
+            <p class="kicker">Samenvatting</p>
+            <h2 id="results-title">Jouw kaart</h2>
+          </div>
+          <div class="results__actions">
+            <button class="ghost-btn" id="backToQuestions" type="button">Terug</button>
+            <button class="ghost-btn" id="copyResults" type="button">Kopieer</button>
+            <button class="primary-btn" id="printResults" type="button">Print</button>
+          </div>
+        </div>
+        <div class="summary-strip" id="summaryStrip"></div>
+        <div class="results-grid" id="resultsGrid"></div>
+      </section>
+    </main>
+
+    <template id="categoryButtonTemplate">
+      <button class="category-button" type="button">
+        <span class="category-button__name"></span>
+        <span class="category-button__count"></span>
+      </button>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>
