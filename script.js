@@ -6,6 +6,44 @@ const answers = [
   { key: "limit", label: "Hard limit" }
 ];
 
+const answerSets = {
+  default: answers,
+  genderPreference: [
+    { key: "man", label: "Man" },
+    { key: "woman", label: "Vrouw" },
+    { key: "both", label: "Beide" },
+    { key: "talk", label: "Bespreken" }
+  ],
+  softPublic: [
+    { key: "subtle", label: "Subtiel" },
+    { key: "private", label: "Alleen privé" },
+    { key: "talk", label: "Bespreken" },
+    { key: "no", label: "Nee" },
+    { key: "limit", label: "Hard limit" }
+  ],
+  intensity: [
+    { key: "soft", label: "Zacht" },
+    { key: "medium", label: "Middel" },
+    { key: "strong", label: "Stevig" },
+    { key: "talk", label: "Bespreken" },
+    { key: "limit", label: "Hard limit" }
+  ],
+  location: [
+    { key: "face", label: "Gezicht" },
+    { key: "mouth", label: "Mond" },
+    { key: "chest", label: "Borsten" },
+    { key: "body", label: "Lichaam" },
+    { key: "talk", label: "Bespreken" }
+  ],
+  peopleCount: [
+    { key: "two", label: "2+" },
+    { key: "three", label: "3+" },
+    { key: "four", label: "4+" },
+    { key: "talk", label: "Bespreken" },
+    { key: "no", label: "Nee" }
+  ]
+};
+
 const categories = [
   {
     title: "Consent & Communicatie",
@@ -268,7 +306,6 @@ init();
 
 function init() {
   buildCategories();
-  buildAnswerOptions();
   bindEvents();
 
   if (pendingSharedResponses && state.allowed) {
@@ -389,14 +426,14 @@ function buildCategories() {
   });
 }
 
-function buildAnswerOptions() {
+function buildAnswerOptions(question) {
   elements.answerGrid.innerHTML = "";
   const legend = document.createElement("legend");
   legend.className = "sr-only";
   legend.textContent = "Antwoord";
   elements.answerGrid.append(legend);
 
-  answers.forEach((answer) => {
+  getAnswerOptions(question).forEach((answer) => {
     const label = document.createElement("label");
     label.className = "answer-option";
     label.innerHTML = `<input type="radio" name="answer" value="${answer.key}"><span>${answer.label}</span>`;
@@ -415,6 +452,7 @@ function renderQuestion() {
   const question = flatQuestions[currentIndex];
   const response = getResponse(question.id);
 
+  buildAnswerOptions(question);
   elements.categoryKicker.textContent = question.category;
   elements.title.textContent = question.text;
   elements.counter.textContent = `${currentIndex + 1} / ${flatQuestions.length}`;
@@ -458,11 +496,10 @@ function renderResults(responses = state.responses, options = {}) {
   elements.copyShareLink.hidden = sharedMode;
   elements.shareNote.hidden = sharedMode;
 
-  answers.forEach((answer) => {
-    const count = flatQuestions.filter((question) => responses[question.id]?.answer === answer.key).length;
+  buildSummaryItems(responses).forEach((answer) => {
     const item = document.createElement("div");
     item.className = "summary-pill";
-    item.innerHTML = `<strong>${count}</strong><span>${answer.label}</span>`;
+    item.innerHTML = `<strong>${answer.count}</strong><span>${answer.label}</span>`;
     elements.summaryStrip.append(item);
   });
 
@@ -473,7 +510,7 @@ function renderResults(responses = state.responses, options = {}) {
       .map((question, questionIndex) => {
         const id = `${categoryIndex}-${questionIndex}`;
         const response = responses[id] || {};
-        const answer = answers.find((item) => item.key === response.answer)?.label || "Niet beantwoord";
+        const answer = getAnswerLabel({ text: question }, response.answer);
         const note = response.note ? `<span class="result-note">${escapeHtml(response.note)}</span>` : "";
         return `<li><span>${escapeHtml(question)}</span><span class="result-answer">${answer}</span>${note}</li>`;
       })
@@ -505,13 +542,82 @@ function buildResultsText(responses) {
       const lines = category.questions.map((question, questionIndex) => {
         const id = `${categoryIndex}-${questionIndex}`;
         const response = responses[id] || {};
-        const answer = answers.find((item) => item.key === response.answer)?.label || "Niet beantwoord";
+        const answer = getAnswerLabel({ text: question }, response.answer);
         const note = response.note ? ` | Notitie: ${response.note}` : "";
         return `- ${question}: ${answer}${note}`;
       });
       return `${category.title}\n${lines.join("\n")}`;
     })
     .join("\n\n");
+}
+
+function getAnswerOptions(question) {
+  const text = question?.text || "";
+
+  if (text.includes("voorkeuren rond man, vrouw") || text.includes("voorkeuren rond mannen, vrouwen")) {
+    return answerSets.genderPreference;
+  }
+
+  if (text.includes("publieke displays") || text.includes("publieke of semi-publieke") || text.includes("wettelijk, veilig en respectvol")) {
+    return answerSets.softPublic;
+  }
+
+  if (text.includes("welke intensiteit") || text.includes("zachte impact") || text.includes("stevigere impact")) {
+    return answerSets.intensity;
+  }
+
+  if (text.includes("waar ejaculatie wel en niet")) {
+    return answerSets.location;
+  }
+
+  if (text.includes("meer dan twee mensen") || text.includes("meer dan vier personen")) {
+    return answerSets.peopleCount;
+  }
+
+  return answerSets.default;
+}
+
+function getAnswerLabel(question, key) {
+  if (!key) return "Niet beantwoord";
+  return getAnswerOptions(question).find((answer) => answer.key === key)?.label || answers.find((answer) => answer.key === key)?.label || key;
+}
+
+function buildSummaryItems(responses) {
+  const counts = new Map();
+
+  flatQuestions.forEach((question) => {
+    const label = getAnswerLabel(question, responses[question.id]?.answer);
+    if (label === "Niet beantwoord") return;
+    counts.set(label, (counts.get(label) || 0) + 1);
+  });
+
+  const preferredOrder = [
+    "Ja",
+    "Nieuwsgierig",
+    "Alleen bespreken",
+    "Bespreken",
+    "Man",
+    "Vrouw",
+    "Beide",
+    "Subtiel",
+    "Alleen privé",
+    "Zacht",
+    "Middel",
+    "Stevig",
+    "Gezicht",
+    "Mond",
+    "Borsten",
+    "Lichaam",
+    "2+",
+    "3+",
+    "4+",
+    "Nee",
+    "Hard limit"
+  ];
+
+  return preferredOrder
+    .filter((label) => counts.has(label))
+    .map((label) => ({ label, count: counts.get(label) }));
 }
 
 function encodeSharePayload(responses) {
