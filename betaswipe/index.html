@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Beta Swipe Quiz</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Verborgen beta</p>
+          <h1>Swipe quiz</h1>
+        </div>
+        <div class="top-actions">
+          <select id="languageSelect" aria-label="Taal"></select>
+          <button class="icon-button" id="settingsButton" type="button" aria-label="Categorieen">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </header>
+
+      <section class="progress-wrap" aria-label="Voortgang">
+        <div class="progress-meta">
+          <span id="progressText">0 / 0</span>
+          <span id="saveText">Opgeslagen op dit toestel</span>
+        </div>
+        <div class="progress-track">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+      </section>
+
+      <section id="settingsPanel" class="settings-panel" hidden>
+        <div class="panel-title-row">
+          <h2 id="settingsTitle">Categorieen</h2>
+          <button id="resetButton" type="button">Reset beta</button>
+        </div>
+        <div id="categoryModes" class="category-modes"></div>
+      </section>
+
+      <section class="card-stage" aria-live="polite">
+        <article id="questionCard" class="question-card">
+          <p id="categoryLabel" class="category-label"></p>
+          <div class="question-row">
+            <h2 id="questionText"></h2>
+            <button id="infoButton" class="info-button" type="button" aria-expanded="false" aria-label="Voorbeeld">i</button>
+          </div>
+          <p id="exampleText" class="example-text" hidden></p>
+
+          <div class="answer-area">
+            <p id="answerLabel" class="answer-label">Schuif om te antwoorden</p>
+            <input id="answerSlider" class="answer-slider" type="range" min="0" max="5" step="1" value="2" />
+            <div id="answerTicks" class="answer-ticks" aria-hidden="true"></div>
+          </div>
+        </article>
+      </section>
+
+      <nav class="nav-row" aria-label="Vraag navigatie">
+        <button id="previousButton" type="button">Vorige</button>
+        <button id="nextButton" type="button">Volgende</button>
+      </nav>
+
+      <form class="story-comment" id="commentForm">
+        <textarea id="noteInput" rows="1" autocomplete="off"></textarea>
+      </form>
+    </main>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
