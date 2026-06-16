@@ -322,6 +322,7 @@ function renderQuestion() {
 
   if (!activeQuestion) {
     refs.questionCard.classList.add("empty-state");
+    delete refs.questionCard.dataset.category;
     refs.categoryLabel.textContent = "";
     refs.questionText.textContent = t("emptyTitle");
     refs.exampleText.hidden = false;
@@ -336,6 +337,7 @@ function renderQuestion() {
   }
 
   refs.questionCard.classList.remove("empty-state");
+  refs.questionCard.dataset.category = String(activeQuestion.categoryIndex);
   refs.infoButton.hidden = false;
   refs.answerLabel.hidden = false;
   refs.answerSlider.hidden = false;
