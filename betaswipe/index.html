@@ -42,7 +42,7 @@
         <div id="categoryModes" class="category-modes"></div>
       </section>
 
-      <section class="card-stage" aria-live="polite">
+      <section id="cardStage" class="card-stage" aria-live="polite">
         <article id="questionCard" class="question-card">
           <p id="categoryLabel" class="category-label"></p>
           <div class="question-row">
@@ -53,13 +53,26 @@
 
           <div class="answer-area">
             <p id="answerLabel" class="answer-label">Schuif om te antwoorden</p>
-            <input id="answerSlider" class="answer-slider" type="range" min="0" max="5" step="1" value="2" />
+            <div class="slider-row">
+              <input id="answerSlider" class="answer-slider" type="range" min="0" max="5" step="1" value="2" />
+              <button id="skipButton" class="skip-button" type="button">Skip voor nu</button>
+            </div>
             <div id="answerTicks" class="answer-ticks" aria-hidden="true"></div>
           </div>
         </article>
       </section>
 
-      <nav class="nav-row" aria-label="Vraag navigatie">
+      <section id="resultsView" class="results-view" hidden>
+        <div class="results-head">
+          <p class="eyebrow" id="resultsKicker">Resultaten</p>
+          <h2 id="resultsTitle">Jouw antwoorden</h2>
+          <p id="resultsIntro">Vergelijk per categorie wat ingevuld is.</p>
+          <button id="backToQuizButton" type="button">Terug naar quiz</button>
+        </div>
+        <div id="resultsList" class="results-list"></div>
+      </section>
+
+      <nav id="navRow" class="nav-row" aria-label="Vraag navigatie">
         <button id="previousButton" type="button">Vorige</button>
         <button id="nextButton" type="button">Volgende</button>
       </nav>

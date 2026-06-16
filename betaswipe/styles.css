@@ -236,100 +236,125 @@ button:disabled {
   border: 1px solid var(--line);
   border-radius: 28px;
   box-shadow: var(--shadow);
+  transition: opacity 180ms ease, transform 220ms ease;
+  will-change: opacity, transform;
 }
 
-.question-card[data-category="0"] {
+.question-card.is-leaving {
+  opacity: 0;
+  transform: translateX(var(--slide-direction, 22px)) scale(0.985);
+}
+
+.question-card.is-entering {
+  animation: card-enter 220ms ease both;
+}
+
+.question-card[data-category="0"],
+.result-card[data-category="0"] {
   --card-a: #4b3647;
   --card-b: #1d3337;
   --card-accent: #f08ab4;
   --card-accent-2: #67c8c0;
 }
 
-.question-card[data-category="1"] {
+.question-card[data-category="1"],
+.result-card[data-category="1"] {
   --card-a: #45315b;
   --card-b: #202c4b;
   --card-accent: #c598ff;
   --card-accent-2: #78a6ff;
 }
 
-.question-card[data-category="2"] {
+.question-card[data-category="2"],
+.result-card[data-category="2"] {
   --card-a: #583738;
   --card-b: #342742;
   --card-accent: #ff8d7a;
   --card-accent-2: #c597ff;
 }
 
-.question-card[data-category="3"] {
+.question-card[data-category="3"],
+.result-card[data-category="3"] {
   --card-a: #5a342c;
   --card-b: #3b3020;
   --card-accent: #ff9b5f;
   --card-accent-2: #d7ba68;
 }
 
-.question-card[data-category="4"] {
+.question-card[data-category="4"],
+.result-card[data-category="4"] {
   --card-a: #3d394f;
   --card-b: #243638;
   --card-accent: #b2a2ff;
   --card-accent-2: #7dd6be;
 }
 
-.question-card[data-category="5"] {
+.question-card[data-category="5"],
+.result-card[data-category="5"] {
   --card-a: #54313f;
   --card-b: #283c31;
   --card-accent: #ff7fa0;
   --card-accent-2: #8bd486;
 }
 
-.question-card[data-category="6"] {
+.question-card[data-category="6"],
+.result-card[data-category="6"] {
   --card-a: #5a2f3c;
   --card-b: #382f50;
   --card-accent: #ff8296;
   --card-accent-2: #b995ff;
 }
 
-.question-card[data-category="7"] {
+.question-card[data-category="7"],
+.result-card[data-category="7"] {
   --card-a: #334758;
   --card-b: #402f32;
   --card-accent: #80c7ff;
   --card-accent-2: #ff9f88;
 }
 
-.question-card[data-category="8"] {
+.question-card[data-category="8"],
+.result-card[data-category="8"] {
   --card-a: #45385f;
   --card-b: #394323;
   --card-accent: #bd9bff;
   --card-accent-2: #c8d56f;
 }
 
-.question-card[data-category="9"] {
+.question-card[data-category="9"],
+.result-card[data-category="9"] {
   --card-a: #2f4551;
   --card-b: #51343b;
   --card-accent: #6ed0e8;
   --card-accent-2: #ff8fa3;
 }
 
-.question-card[data-category="10"] {
+.question-card[data-category="10"],
+.result-card[data-category="10"] {
   --card-a: #3f4630;
   --card-b: #243c4b;
   --card-accent: #b8d36b;
   --card-accent-2: #79c7f2;
 }
 
-.question-card[data-category="11"] {
+.question-card[data-category="11"],
+.result-card[data-category="11"] {
   --card-a: #33395a;
   --card-b: #50323c;
   --card-accent: #8fa7ff;
   --card-accent-2: #ff89a8;
 }
 
-.question-card[data-category="12"] {
+.question-card[data-category="12"],
+.result-card[data-category="12"] {
   --card-a: #4b3f2a;
   --card-b: #2e3e4d;
   --card-accent: #e6be67;
   --card-accent-2: #83bde8;
 }
 
-.question-card[data-category="13"] {
+.question-card[data-category="13"],
+.result-card[data-category="13"] {
   --card-a: #2f4a41;
   --card-b: #403653;
   --card-accent: #74d7b4;
@@ -370,6 +395,13 @@ button:disabled {
   gap: 14px;
 }
 
+.slider-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+
 .answer-label {
   justify-self: start;
   min-height: 42px;
@@ -389,6 +421,19 @@ button:disabled {
 .answer-slider {
   width: 100%;
   accent-color: var(--card-accent);
+}
+
+.skip-button {
+  min-width: 118px;
+  color: var(--ink);
+  background: rgba(17, 17, 15, 0.28);
+  border-color: color-mix(in srgb, var(--card-accent-2) 58%, var(--line));
+  white-space: nowrap;
+}
+
+.skip-button.is-skipped {
+  color: var(--bg);
+  background: color-mix(in srgb, var(--card-accent-2) 86%, var(--ink));
 }
 
 .answer-slider::-webkit-slider-runnable-track {
@@ -443,6 +488,97 @@ button:disabled {
   backdrop-filter: blur(14px);
 }
 
+.results-view {
+  display: grid;
+  gap: 16px;
+  min-height: 0;
+}
+
+.results-head {
+  display: grid;
+  gap: 6px;
+}
+
+.results-head h2,
+.results-head p {
+  margin: 0;
+}
+
+.results-head h2 {
+  font-size: clamp(1.5rem, 6vw, 2.2rem);
+}
+
+.results-head p:not(.eyebrow) {
+  color: var(--muted);
+}
+
+.results-list {
+  display: grid;
+  gap: 14px;
+  padding-bottom: 12px;
+}
+
+.result-card {
+  --card-a: #55332f;
+  --card-b: #1f3b38;
+  --card-accent: #f66f4d;
+  --card-accent-2: #3db4a2;
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  background:
+    radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--card-accent) 24%, transparent), transparent 35%),
+    linear-gradient(145deg, color-mix(in srgb, var(--card-a) 82%, #11110f), color-mix(in srgb, var(--card-b) 82%, #11110f));
+  border: 1px solid color-mix(in srgb, var(--card-accent) 28%, var(--line));
+  border-radius: 18px;
+}
+
+.result-card h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.result-items {
+  display: grid;
+  gap: 10px;
+}
+
+.result-item {
+  display: grid;
+  gap: 7px;
+  padding: 11px 0;
+  border-top: 1px solid rgba(255, 248, 237, 0.12);
+}
+
+.result-question,
+.result-note {
+  margin: 0;
+}
+
+.result-question {
+  line-height: 1.35;
+}
+
+.result-answer {
+  justify-self: start;
+  padding: 6px 10px;
+  color: var(--bg);
+  background: color-mix(in srgb, var(--card-accent) 78%, var(--ink));
+  border-radius: 999px;
+  font-weight: 760;
+}
+
+.result-note {
+  color: color-mix(in srgb, var(--ink) 82%, var(--card-accent-2));
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.result-empty {
+  margin: 0;
+  color: var(--muted);
+}
+
 #noteInput {
   width: 100%;
   max-height: 120px;
@@ -479,8 +615,38 @@ button:disabled {
     min-width: 0;
     width: 50%;
   }
+
+  .slider-row {
+    grid-template-columns: 1fr;
+  }
+
+  .skip-button {
+    justify-self: stretch;
+  }
 }
 
 [hidden] {
   display: none !important;
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--slide-direction, 22px) * -1)) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .question-card {
+    transition: none;
+  }
+
+  .question-card.is-entering {
+    animation: none;
+  }
 }

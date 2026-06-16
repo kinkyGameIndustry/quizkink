@@ -25,6 +25,16 @@ const text = {
     previous: "Vorige",
     next: "Volgende",
     done: "Klaar",
+    skip: "Skip voor nu",
+    skipped: "Geskipt",
+    skippedReturn: "Geskipte vragen",
+    resultsKicker: "Resultaten",
+    resultsTitle: "Jouw antwoorden",
+    resultsIntro: "Vergelijk per categorie wat ingevuld is.",
+    backToQuiz: "Terug naar quiz",
+    notAnswered: "Niet beantwoord",
+    noResults: "Nog geen antwoorden om te tonen.",
+    noteLabel: "Notitie",
     note: "Typ een notitie voor jezelf of partner...",
     emptyTitle: "Geen vragen actief",
     emptyHelp: "Zet minstens een categorie op Basis of Uitgebreid.",
@@ -47,6 +57,16 @@ const text = {
     previous: "Previous",
     next: "Next",
     done: "Done",
+    skip: "Skip for now",
+    skipped: "Skipped",
+    skippedReturn: "Skipped questions",
+    resultsKicker: "Results",
+    resultsTitle: "Your answers",
+    resultsIntro: "Compare what has been filled in by category.",
+    backToQuiz: "Back to quiz",
+    notAnswered: "Not answered",
+    noResults: "No answers to show yet.",
+    noteLabel: "Note",
     note: "Type a note for yourself or partner...",
     emptyTitle: "No active questions",
     emptyHelp: "Set at least one category to Basic or Extended.",
@@ -69,6 +89,16 @@ const text = {
     previous: "Precedent",
     next: "Suivant",
     done: "Termine",
+    skip: "Passer pour l'instant",
+    skipped: "Passe",
+    skippedReturn: "Questions passees",
+    resultsKicker: "Resultats",
+    resultsTitle: "Vos reponses",
+    resultsIntro: "Comparez ce qui a ete rempli par categorie.",
+    backToQuiz: "Retour au quiz",
+    notAnswered: "Pas encore repondu",
+    noResults: "Aucune reponse a afficher.",
+    noteLabel: "Note",
     note: "Ecrivez une note pour vous ou votre partenaire...",
     emptyTitle: "Aucune question active",
     emptyHelp: "Activez au moins une categorie en Base ou Etendu.",
@@ -91,6 +121,16 @@ const text = {
     previous: "Zuruck",
     next: "Weiter",
     done: "Fertig",
+    skip: "Vorerst skippen",
+    skipped: "Ubersprungen",
+    skippedReturn: "Ubersprungene Fragen",
+    resultsKicker: "Ergebnisse",
+    resultsTitle: "Deine Antworten",
+    resultsIntro: "Vergleiche nach Kategorie, was ausgefullt wurde.",
+    backToQuiz: "Zuruck zur Quiz",
+    notAnswered: "Nicht beantwortet",
+    noResults: "Noch keine Antworten vorhanden.",
+    noteLabel: "Notiz",
     note: "Notiz fur dich oder Partner eingeben...",
     emptyTitle: "Keine aktiven Fragen",
     emptyHelp: "Setze mindestens eine Kategorie auf Basis oder Erweitert.",
@@ -107,6 +147,14 @@ const refs = {
   settingsTitle: document.querySelector("#settingsTitle"),
   resetButton: document.querySelector("#resetButton"),
   categoryModes: document.querySelector("#categoryModes"),
+  cardStage: document.querySelector("#cardStage"),
+  resultsView: document.querySelector("#resultsView"),
+  resultsKicker: document.querySelector("#resultsKicker"),
+  resultsTitle: document.querySelector("#resultsTitle"),
+  resultsIntro: document.querySelector("#resultsIntro"),
+  resultsList: document.querySelector("#resultsList"),
+  backToQuizButton: document.querySelector("#backToQuizButton"),
+  navRow: document.querySelector("#navRow"),
   progressText: document.querySelector("#progressText"),
   saveText: document.querySelector("#saveText"),
   progressBar: document.querySelector("#progressBar"),
@@ -118,6 +166,7 @@ const refs = {
   answerLabel: document.querySelector("#answerLabel"),
   answerSlider: document.querySelector("#answerSlider"),
   answerTicks: document.querySelector("#answerTicks"),
+  skipButton: document.querySelector("#skipButton"),
   previousButton: document.querySelector("#previousButton"),
   nextButton: document.querySelector("#nextButton"),
   noteInput: document.querySelector("#noteInput"),
@@ -129,6 +178,9 @@ let questions = [];
 let activeQuestion = null;
 let state = loadState();
 let exampleOpen = false;
+let showingResults = false;
+let reviewingSkipped = false;
+let transitionTimer = null;
 
 init();
 
@@ -153,20 +205,28 @@ function bindEvents() {
   refs.resetButton.addEventListener("click", () => {
     if (!confirm(t("confirmReset"))) return;
     state = createDefaultState();
+    showingResults = false;
+    reviewingSkipped = false;
     saveState();
     rebuildQuestions();
     render();
   });
 
   refs.previousButton.addEventListener("click", () => move(-1));
-  refs.nextButton.addEventListener("click", () => move(1));
+  refs.nextButton.addEventListener("click", handleNext);
+  refs.skipButton.addEventListener("click", skipCurrentQuestion);
+  refs.backToQuizButton.addEventListener("click", () => {
+    showingResults = false;
+    reviewingSkipped = false;
+    render();
+  });
 
   refs.answerSlider.addEventListener("input", () => {
     if (!activeQuestion) return;
     const options = getAnswerOptions(activeQuestion);
     const selected = options[Number(refs.answerSlider.value)];
     if (!selected) return;
-    setResponse(activeQuestion.id, { answer: selected.key });
+    setResponse(activeQuestion.id, { answer: selected.key, skipped: false });
     renderAnswer(activeQuestion);
   });
 
@@ -186,7 +246,7 @@ function bindEvents() {
   window.addEventListener("keydown", (event) => {
     if (event.target === refs.noteInput) return;
     if (event.key === "ArrowLeft") move(-1);
-    if (event.key === "ArrowRight") move(1);
+    if (event.key === "ArrowRight") handleNext();
   });
 }
 
@@ -282,12 +342,21 @@ function render() {
   refs.settingsButton.setAttribute("aria-label", t("settings"));
   refs.resetButton.textContent = t("reset");
   refs.previousButton.textContent = t("previous");
-  refs.nextButton.textContent = state.currentIndex >= questions.length - 1 ? t("done") : t("next");
+  refs.skipButton.textContent = t("skip");
+  refs.resultsKicker.textContent = t("resultsKicker");
+  refs.resultsTitle.textContent = t("resultsTitle");
+  refs.resultsIntro.textContent = t("resultsIntro");
+  refs.backToQuizButton.textContent = t("backToQuiz");
   refs.saveText.textContent = refs.saveText.textContent || t("saved");
   refs.languageSelect.value = state.language;
 
   renderCategoryModes();
-  renderQuestion();
+  if (showingResults) {
+    renderResults();
+  } else {
+    showQuizView();
+    renderQuestion();
+  }
 }
 
 function renderCategoryModes() {
@@ -319,6 +388,10 @@ function renderQuestion() {
   refs.nextButton.disabled = questions.length === 0;
   refs.progressText.textContent = questions.length ? `${state.currentIndex + 1} / ${questions.length}` : "0 / 0";
   refs.progressBar.style.width = questions.length ? `${((state.currentIndex + 1) / questions.length) * 100}%` : "0%";
+  refs.nextButton.textContent = state.currentIndex >= questions.length - 1 || reviewingSkipped ? t("done") : t("next");
+  if (reviewingSkipped) {
+    refs.progressText.textContent = `${t("skippedReturn")} ${getSkippedQuestions().length || 1}`;
+  }
 
   if (!activeQuestion) {
     refs.questionCard.classList.add("empty-state");
@@ -331,6 +404,7 @@ function renderQuestion() {
     refs.answerLabel.hidden = true;
     refs.answerSlider.hidden = true;
     refs.answerTicks.hidden = true;
+    refs.skipButton.hidden = true;
     refs.noteInput.value = "";
     refs.noteInput.placeholder = t("note");
     return;
@@ -342,6 +416,7 @@ function renderQuestion() {
   refs.answerLabel.hidden = false;
   refs.answerSlider.hidden = false;
   refs.answerTicks.hidden = false;
+  refs.skipButton.hidden = false;
   refs.categoryLabel.textContent = localizeCategoryTitle(activeQuestion.category);
   refs.questionText.textContent = localizeQuestion(activeQuestion);
   refs.noteInput.value = getResponse(activeQuestion.id).note || "";
@@ -362,8 +437,10 @@ function renderAnswer(question) {
   refs.answerSlider.step = 1;
   refs.answerSlider.value = response.answer ? selectedIndex : Math.floor((options.length - 1) / 2);
 
-  refs.answerLabel.textContent = response.answer ? localizeAnswerLabel(options[selectedIndex].label) : t("slidePrompt");
+  refs.answerLabel.textContent = response.answer ? localizeAnswerLabel(options[selectedIndex].label) : response.skipped ? t("skipped") : t("slidePrompt");
   refs.answerLabel.classList.toggle("is-empty", !response.answer);
+  refs.skipButton.classList.toggle("is-skipped", Boolean(response.skipped && !response.answer));
+  refs.skipButton.textContent = response.skipped && !response.answer ? t("skipped") : t("skip");
   refs.answerTicks.innerHTML = options.map(() => "<span></span>").join("");
 }
 
@@ -376,16 +453,152 @@ function renderExample(question) {
   refs.exampleText.textContent = example || "";
 }
 
+function handleNext() {
+  if (!questions.length) return;
+
+  if (reviewingSkipped) {
+    goToNextSkippedOrResults();
+    return;
+  }
+
+  if (state.currentIndex >= questions.length - 1) {
+    goToNextSkippedOrResults();
+    return;
+  }
+
+  move(1);
+}
+
+function skipCurrentQuestion() {
+  if (!activeQuestion) return;
+  setResponse(activeQuestion.id, { answer: "", skipped: true });
+  renderAnswer(activeQuestion);
+
+  if (reviewingSkipped) {
+    goToNextSkippedOrResults(activeQuestion.id);
+    return;
+  }
+
+  if (state.currentIndex >= questions.length - 1) {
+    goToNextSkippedOrResults();
+    return;
+  }
+
+  move(1);
+}
+
+function goToNextSkippedOrResults(previousSkippedId = "") {
+  const skippedQuestions = getSkippedQuestions().filter((question) => question.id !== previousSkippedId);
+  if (skippedQuestions.length > 0) {
+    reviewingSkipped = true;
+    const nextQuestion = skippedQuestions[0];
+    const nextIndex = questions.findIndex((question) => question.id === nextQuestion.id);
+    navigateToIndex(nextIndex, 1);
+    return;
+  }
+
+  reviewingSkipped = false;
+  showResults();
+}
+
 function move(direction) {
   if (!questions.length) return;
   const nextIndex = clamp(state.currentIndex + direction, 0, questions.length - 1);
   if (nextIndex === state.currentIndex && direction > 0) {
-    refs.settingsPanel.hidden = false;
+    goToNextSkippedOrResults();
     return;
   }
-  state.currentIndex = nextIndex;
+  navigateToIndex(nextIndex, direction);
+}
+
+function navigateToIndex(nextIndex, direction) {
+  if (!questions.length || nextIndex < 0) return;
+  clearTimeout(transitionTimer);
+  refs.questionCard.style.setProperty("--slide-direction", direction >= 0 ? "24px" : "-24px");
+  refs.questionCard.classList.remove("is-entering");
+  refs.questionCard.classList.add("is-leaving");
+
+  transitionTimer = window.setTimeout(() => {
+    state.currentIndex = clamp(nextIndex, 0, questions.length - 1);
+    saveState();
+    renderQuestion();
+    refs.questionCard.classList.remove("is-leaving");
+    refs.questionCard.classList.add("is-entering");
+    transitionTimer = window.setTimeout(() => {
+      refs.questionCard.classList.remove("is-entering");
+    }, 240);
+  }, 160);
+}
+
+function getSkippedQuestions() {
+  return questions.filter((question) => {
+    const response = getResponse(question.id);
+    return response.skipped && !response.answer;
+  });
+}
+
+function showQuizView() {
+  refs.resultsView.hidden = true;
+  refs.cardStage.hidden = false;
+  refs.navRow.hidden = false;
+  refs.commentForm.hidden = false;
+}
+
+function showResults() {
+  showingResults = true;
+  renderResults();
+}
+
+function renderResults() {
+  showingResults = true;
+  refs.cardStage.hidden = true;
+  refs.navRow.hidden = true;
+  refs.commentForm.hidden = true;
+  refs.resultsView.hidden = false;
+  refs.progressText.textContent = t("resultsKicker");
+  refs.progressBar.style.width = "100%";
+  refs.resultsKicker.textContent = t("resultsKicker");
+  refs.resultsTitle.textContent = t("resultsTitle");
+  refs.resultsIntro.textContent = t("resultsIntro");
+  refs.backToQuizButton.textContent = t("backToQuiz");
+  refs.resultsList.innerHTML = buildResultsHtml();
   saveState();
-  renderQuestion();
+}
+
+function buildResultsHtml() {
+  const cards = quizData.categories.map((category, categoryIndex) => {
+    const categoryQuestions = questions.filter((question) => question.categoryIndex === categoryIndex);
+    const items = categoryQuestions
+      .map((question) => ({ question, response: getResponse(question.id) }))
+      .filter(({ response }) => response.answer || response.note || response.skipped)
+      .map(({ question, response }) => `
+        <div class="result-item">
+          <p class="result-question">${escapeHtml(localizeQuestion(question))}</p>
+          <span class="result-answer">${escapeHtml(getAnswerLabel(question, response))}</span>
+          ${response.note ? `<p class="result-note">${escapeHtml(t("noteLabel"))}: ${escapeHtml(response.note)}</p>` : ""}
+        </div>
+      `)
+      .join("");
+
+    if (!items) return "";
+
+    return `
+      <article class="result-card" data-category="${categoryIndex}">
+        <h3>${escapeHtml(localizeCategoryTitle(category.title))}</h3>
+        <div class="result-items">${items}</div>
+      </article>
+    `;
+  }).join("");
+
+  return cards || `<p class="result-empty">${escapeHtml(t("noResults"))}</p>`;
+}
+
+function getAnswerLabel(question, response) {
+  if (response.answer) {
+    const option = getAnswerOptions(question).find((answer) => answer.key === response.answer);
+    return option ? localizeAnswerLabel(option.label) : response.answer;
+  }
+  return response.skipped ? t("skipped") : t("notAnswered");
 }
 
 function getResponse(id) {
