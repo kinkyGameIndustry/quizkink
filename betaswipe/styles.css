@@ -453,6 +453,13 @@ button:disabled {
   accent-color: var(--card-accent);
 }
 
+.slider-shell {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-width: 0;
+}
+
 .skip-button {
   min-width: 104px;
   min-height: 42px;
@@ -485,19 +492,23 @@ button:disabled {
 }
 
 .answer-ticks {
-  display: grid;
-  grid-auto-flow: column;
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 50%;
+  z-index: 1;
+  display: flex;
   justify-content: space-between;
-  gap: 8px;
-  color: var(--muted);
-  font-size: 0.72rem;
+  pointer-events: none;
+  transform: translateY(-50%);
 }
 
 .answer-ticks span {
-  width: 1px;
-  height: 7px;
-  background: currentColor;
+  width: 2px;
+  height: 12px;
+  background: rgba(17, 17, 15, 0.42);
   border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(255, 248, 237, 0.18);
 }
 
 .nav-row {
@@ -697,10 +708,6 @@ button:disabled {
     min-width: 0;
     padding: 0 10px;
     font-size: 0.88rem;
-  }
-
-  .answer-ticks {
-    padding-right: 116px;
   }
 
   .story-comment {

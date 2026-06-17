@@ -54,10 +54,12 @@
           <div class="answer-area">
             <p id="answerLabel" class="answer-label">Schuif om te antwoorden</p>
             <div class="slider-row">
-              <input id="answerSlider" class="answer-slider" type="range" min="0" max="5" step="1" value="2" />
+              <div class="slider-shell">
+                <input id="answerSlider" class="answer-slider" type="range" min="0" max="5" step="1" value="2" />
+                <div id="answerTicks" class="answer-ticks" aria-hidden="true"></div>
+              </div>
               <button id="skipButton" class="skip-button" type="button">Skip voor nu</button>
             </div>
-            <div id="answerTicks" class="answer-ticks" aria-hidden="true"></div>
           </div>
         </article>
       </section>
